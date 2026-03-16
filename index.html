@@ -1587,7 +1587,7 @@ function renderTopPrepas() {
     <div class="top-card${p.coupDeCoeur?' coup-de-coeur':''}" onclick="location.hash='prepa/${p.id}'">
       <div class="top-card-header">
         ${p.coupDeCoeur?'<div class="coup-de-coeur-badge">'+ic('heartPulse',12)+' Coup de coeur</div>':''}
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px"><div class="top-card-badge">#${i+1}</div>${logoImg(p.id,36)}<h3 style="margin:0">${p.name}</h3></div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px"><div class="top-card-badge">#${i+1}</div><h3 style="margin:0">${p.name}</h3></div>
         <div class="location">${ic('mapPin',14)} ${p.ville}</div>
       </div>
       <div class="top-card-body">
