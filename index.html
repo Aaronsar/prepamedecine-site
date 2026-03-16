@@ -6,6 +6,7 @@
 <title>PrépaMédecine — Comparateur de prépas santé en France</title>
 <meta name="description" content="Comparez les meilleures prépas médecine en France : PASS, LAS, Terminale Santé. Trouvez la prépa qui vous correspond parmi 30+ établissements.">
 <script charset="utf-8" type="text/javascript" src="//js-eu1.hsforms.net/forms/embed/v2.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -649,6 +650,17 @@ input,select{font-family:inherit}
     <div class="container">
       <div class="detail-back" onclick="showPage('prepas')">&larr; Retour aux prépas</div>
       <div id="detailContent"></div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ ARTICLE PAGE ============ -->
+<div class="page" id="page-article">
+  <div class="medical-bg" style="background:linear-gradient(180deg,var(--blue-50) 0%,#fff 100%);padding:20px 0 0"></div>
+  <section class="detail-page">
+    <div class="container">
+      <div class="detail-back" onclick="location.hash='conseils'">&larr; Retour au blog</div>
+      <div id="articleContent" style="max-width:780px;margin:0 auto"></div>
     </div>
   </section>
 </div>
@@ -1580,6 +1592,10 @@ function handleHash() {
     if (prep) showPage('detail', prep);
     else showPage('prepas');
   }
+  else if (hash.startsWith('article/')) {
+    const slug = hash.split('/')[1];
+    loadArticlePage(slug);
+  }
 }
 
 window.addEventListener('hashchange', handleHash);
@@ -1704,19 +1720,59 @@ function renderFAQ() {
   `).join('');
 }
 
-function renderConseils() {
+async function loadArticlePage(slug) {
+  showPage('article');
+  const el = document.getElementById('articleContent');
+  el.innerHTML = '<div style="text-align:center;padding:60px;color:#666">Chargement...</div>';
+  try {
+    const _sb = window.supabase.createClient('https://jhopwqpbaiyjfoggvcaf.supabase.co','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impob3B3cXBiYWl5amZvZ2d2Y2FmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMwNTI2OTEsImV4cCI6MjA4ODYyODY5MX0.rz3TJZryPxEf3P5kQgpzQkwN9aF8_F4eo4F03CEYVPs');
+    const {data} = await _sb.from('prepamedecine_articles').select('*').eq('slug',slug).eq('published',true).maybeSingle();
+    if (!data) { el.innerHTML = '<div style="text-align:center;padding:60px"><h2>Article introuvable</h2><p><a href="#conseils">Retour au blog</a></p></div>'; return; }
+    let html = '<article style="padding:20px 0">';
+    html += '<div class="section-med-badge" style="margin-bottom:12px">' + ic('bookOpen',14) + ' ' + (data.category||'Blog') + '</div>';
+    html += '<h1 style="font-size:32px;margin-bottom:12px;line-height:1.3">' + (data.title||'') + '</h1>';
+    if (data.subtitle) html += '<p style="font-size:18px;color:#555;margin-bottom:24px;line-height:1.5">' + data.subtitle + '</p>';
+    if (data.meta_description) html += '<p style="font-size:15px;color:#666;margin-bottom:32px;padding:16px;background:#f0f6ff;border-radius:8px;border-left:4px solid var(--blue);line-height:1.6">' + data.meta_description + '</p>';
+    (data.sections||[]).forEach(function(sec) {
+      if (sec.heading) html += '<h2 style="font-size:22px;margin:28px 0 12px;color:var(--blue-dark)">' + sec.heading + '</h2>';
+      if (sec.html) html += '<div style="font-size:15px;line-height:1.8;color:#333;margin-bottom:16px">' + sec.html + '</div>';
+    });
+    if (data.faq && data.faq.length > 0) {
+      html += '<div style="margin-top:32px;padding-top:24px;border-top:2px solid #eee"><h2 style="font-size:22px;margin-bottom:16px">' + ic('helpCircle',20) + ' Questions frequentes</h2>';
+      data.faq.forEach(function(f) {
+        html += '<div style="margin-bottom:16px;padding:16px;background:#f9f9f9;border-radius:8px"><h4 style="margin-bottom:8px;font-size:15px;color:var(--blue-dark)">' + (f.question||'') + '</h4><p style="font-size:14px;color:#555;line-height:1.6;margin:0">' + (f.answer||'') + '</p></div>';
+      });
+      html += '</div>';
+    }
+    html += '<div style="margin-top:40px;text-align:center;padding:32px;background:linear-gradient(135deg,var(--blue-50),#fff);border-radius:12px"><h3 style="margin-bottom:12px">Besoin d\'aide pour ton orientation ?</h3><button class="cta-green" onclick="openModal(\'\')">' + ic('phone',16) + ' Etre rappele gratuitement</button></div>';
+    html += '</article>';
+    el.innerHTML = html;
+  } catch(e) { console.error(e); el.innerHTML = '<div style="text-align:center;padding:60px"><h2>Erreur de chargement</h2><p><a href="#conseils">Retour au blog</a></p></div>'; }
+}
+
+async function renderConseils() {
   const grid = document.getElementById('conseilsGrid');
-  grid.innerHTML = ARTICLES.map(a => `
-    <div class="article-card">
-      <div class="article-card-img" style="color:var(--blue)">${ic(a.iconName,40)}</div>
+  let articles = ARTICLES.map(a => ({title:a.title,category:a.cat,icon_name:a.iconName,meta_description:a.desc,created_at:null,slug:null,sections:null,faq:null}));
+  try {
+    const _sb = window.supabase.createClient('https://jhopwqpbaiyjfoggvcaf.supabase.co','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impob3B3cXBiYWl5amZvZ2d2Y2FmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMwNTI2OTEsImV4cCI6MjA4ODYyODY5MX0.rz3TJZryPxEf3P5kQgpzQkwN9aF8_F4eo4F03CEYVPs');
+    const {data} = await _sb.from('prepamedecine_articles').select('*').eq('published',true).order('created_at',{ascending:false});
+    if (data && data.length > 0) articles = data;
+  } catch(e) { console.warn('Fallback articles statiques',e); }
+
+  grid.innerHTML = articles.map(a => {
+    const date = a.created_at ? new Date(a.created_at).toLocaleDateString('fr-FR',{month:'long',year:'numeric'}) : 'Janvier 2025';
+    const hasDetail = a.slug && a.sections && a.sections.length > 0;
+    return `
+    <div class="article-card${hasDetail?' clickable':''}" ${hasDetail?`onclick="location.hash='article/${a.slug}'"`:''} style="${hasDetail?'cursor:pointer':''}" >
+      <div class="article-card-img" style="color:var(--blue)">${ic(a.icon_name||'fileText',40)}</div>
       <div class="article-card-body">
-        <div class="article-card-cat">${a.cat}</div>
+        <div class="article-card-cat">${a.category||'Blog'}</div>
         <h3>${a.title}</h3>
-        <p>${a.desc}</p>
+        <p>${a.meta_description||''}</p>
       </div>
-      <div class="article-card-meta">Janvier 2025</div>
-    </div>
-  `).join('');
+      <div class="article-card-meta">${date}</div>
+    </div>`;
+  }).join('');
 }
 
 /* ============ FILTERS ============ */
