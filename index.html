@@ -227,11 +227,11 @@ input,select{font-family:inherit}
 .page.active{display:block}
 
 /* ============ ANIMATIONS ============ */
-.fade-up{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
-.fade-up.visible{opacity:1;transform:translateY(0)}
-.fade-up:nth-child(2){transition-delay:.08s}
-.fade-up:nth-child(3){transition-delay:.16s}
-.fade-up:nth-child(4){transition-delay:.24s}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.fade-up{animation:fadeUp .6s ease forwards}
+.fade-up:nth-child(2){animation-delay:.08s}
+.fade-up:nth-child(3){animation-delay:.16s}
+.fade-up:nth-child(4){animation-delay:.24s}
 </style>
 </head>
 <body>
@@ -1111,6 +1111,45 @@ const PREPAS = [
   }
 ];
 
+/* ============ LOGOS ============ */
+const LOGOS = {
+  'diploma-sante':'https://diploma-sante.fr/wp-content/uploads/2026/01/logo-diploma-bleu.svg',
+  'medibox':'https://www.google.com/s2/favicons?domain=medibox.fr&sz=128',
+  'cours-galien':'https://www.google.com/s2/favicons?domain=cours-galien.fr&sz=128',
+  'medschool':'https://www.google.com/s2/favicons?domain=medschool.fr&sz=128',
+  'cours-agora':'https://cdn.prod.website-files.com/68b5f0163e9986d2c346677f/68bf7910184f7132f3a926ba_logo_svg.svg',
+  'biomedal':'https://www.google.com/s2/favicons?domain=biomedal-formation.fr&sz=128',
+  'stan-sante':'https://www.google.com/s2/favicons?domain=stan-sante.fr&sz=128',
+  'prepa-defi':'https://www.google.com/s2/favicons?domain=prepadefi.fr&sz=128',
+  'bersot-formation':'https://www.google.com/s2/favicons?domain=bersotformation.fr&sz=128',
+  'supexam':'https://www.google.com/s2/favicons?domain=supexam.fr&sz=128',
+  'medisup':'https://www.google.com/s2/favicons?domain=medisup.com&sz=128',
+  'cours-thales':'https://www.google.com/s2/favicons?domain=cours-thales.fr&sz=128',
+  'antemed-epsilon':'https://www.google.com/s2/favicons?domain=antemed-epsilon.fr&sz=128',
+  'cpcm':'https://www.google.com/s2/favicons?domain=cpcm.fr&sz=128',
+  'cap-sante':'https://www.google.com/s2/favicons?domain=prepa-concours-medecine.fr&sz=128',
+  'concours-sup':'https://www.google.com/s2/favicons?domain=concours-sup.fr&sz=128',
+  'cours-esquirol':'https://www.google.com/s2/favicons?domain=medisup.com&sz=128',
+  'cours-pasteur':'https://www.google.com/s2/favicons?domain=medisup.com&sz=128',
+  'paracelse-lyon':'https://www.google.com/s2/favicons?domain=paracelselyon.fr&sz=128',
+  'supdijon':'https://www.google.com/s2/favicons?domain=supdijon.fr&sz=128',
+  'cappec':'https://www.google.com/s2/favicons?domain=cappec.fr&sz=128',
+  'supexam-nantes':'https://www.google.com/s2/favicons?domain=supexam.fr&sz=128',
+  'ipe-sante':'https://www.google.com/s2/favicons?domain=ipesante.fr&sz=128',
+  'cepsup':'https://www.google.com/s2/favicons?domain=cepsup.fr&sz=128',
+  'skol-sante':'https://www.google.com/s2/favicons?domain=skolsante.fr&sz=128',
+  'segmo':'https://www.google.com/s2/favicons?domain=segmo.fr&sz=128',
+  'prepa-vesale':'https://www.google.com/s2/favicons?domain=prepavesale.fr&sz=128',
+  'alpha-prepa':'https://www.google.com/s2/favicons?domain=alpha-prepa.fr&sz=128',
+  'prepa-sante-b':'https://www.google.com/s2/favicons?domain=prepasanteb.fr&sz=128',
+  'parcoursmed':'https://www.google.com/s2/favicons?domain=parcoursmed.fr&sz=128',
+  'medisup-sciences':'https://www.google.com/s2/favicons?domain=medisup.com&sz=128'
+};
+function logoImg(id, size) {
+  const url = LOGOS[id];
+  return url ? `<img src="${url}" alt="" style="width:${size||40}px;height:${size||40}px;object-fit:contain;border-radius:8px" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><span style="display:none;width:${size||40}px;height:${size||40}px;align-items:center;justify-content:center;background:var(--blue-light);color:var(--blue);font-weight:700;border-radius:8px;font-size:${(size||40)*0.4}px">${id.charAt(0).toUpperCase()}</span>` : `<span style="display:flex;width:${size||40}px;height:${size||40}px;align-items:center;justify-content:center;background:var(--blue-light);color:var(--blue);font-weight:700;border-radius:8px;font-size:${(size||40)*0.4}px">${id.charAt(0).toUpperCase()}</span>`;
+}
+
 /* ============ FAQ DATA ============ */
 const FAQ_DATA = [
   {q:"Qu'est-ce que PrépaMédecine.fr ?",a:"PrépaMédecine.fr est une plateforme qui compare et présente différentes prépas santé (PASS, LAS, LSPS, filières lycée) pour t'aider à choisir celle qui correspond le mieux à ton profil, ton rythme et ton organisation, selon ta fac et tes objectifs."},
@@ -1157,8 +1196,6 @@ function showPage(page, data) {
   window.scrollTo({top: 0, behavior: 'smooth'});
 
   if (page === 'detail' && data) renderDetail(data);
-  // Re-observe fade-up elements after page switch
-  setTimeout(observeFadeUps, 50);
 }
 
 function handleHash() {
@@ -1185,7 +1222,7 @@ function renderTopPrepas() {
     <div class="top-card" onclick="location.hash='prepa/${p.id}'">
       <div class="top-card-header">
         <div class="top-card-badge">#${i+1}</div>
-        <h3>${p.name}</h3>
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:4px">${logoImg(p.id,36)}<h3 style="margin:0">${p.name}</h3></div>
         <div class="location">&#128205; ${p.ville}</div>
       </div>
       <div class="top-card-body">
@@ -1208,7 +1245,7 @@ function renderPrepasGrid(filtered) {
   grid.innerHTML = list.map(p => `
     <div class="prep-card" onclick="location.hash='prepa/${p.id}'">
       <div class="prep-card-top">
-        <div class="prep-avatar">${p.name.charAt(0)}</div>
+        <div class="prep-avatar" style="overflow:hidden">${logoImg(p.id,44)}</div>
         <div>
           <h3>${p.name}</h3>
           <div class="loc">&#128205; ${p.ville}</div>
@@ -1230,7 +1267,7 @@ function renderPrepasGrid(filtered) {
 function renderDetail(p) {
   document.getElementById('detailContent').innerHTML = `
     <div class="detail-hero">
-      <h1>${p.name}</h1>
+      <div style="display:flex;align-items:center;gap:16px;margin-bottom:8px">${logoImg(p.id,52)}<h1 style="margin:0">${p.name}</h1></div>
       <div class="tagline">${p.intro}</div>
       <div class="detail-stats">
         ${p.stats.map(s => s.lbl ? `<div class="detail-stat"><div class="val">${s.val}</div><div class="lbl">${s.lbl}</div></div>` : '').join('')}
@@ -1377,15 +1414,6 @@ document.querySelectorAll('.nav-links a[data-page]').forEach(a => {
     else location.hash = page;
   });
 });
-
-/* ============ SCROLL ANIMATIONS ============ */
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
-}, {threshold: 0.05, rootMargin: '0px 0px 50px 0px'});
-function observeFadeUps() {
-  document.querySelectorAll('.fade-up:not(.visible)').forEach(el => observer.observe(el));
-}
-observeFadeUps();
 
 /* ============ INIT ============ */
 renderTopPrepas();
