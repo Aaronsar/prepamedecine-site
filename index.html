@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PrépaMédecine — Comparateur de prépas santé en France</title>
 <meta name="description" content="Comparez les meilleures prépas médecine en France : PASS, LAS, Terminale Santé. Trouvez la prépa qui vous correspond parmi 30+ établissements.">
+<script charset="utf-8" type="text/javascript" src="//js-eu1.hsforms.net/forms/embed/v2.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -47,8 +48,8 @@ input,select{font-family:inherit}
 .nav-links{display:flex;align-items:center;gap:32px}
 .nav-links a{font-size:15px;font-weight:500;color:var(--text-body);transition:color .2s}
 .nav-links a:hover,.nav-links a.active{color:var(--blue)}
-.nav-cta{background:var(--blue);color:#fff;padding:10px 22px;border-radius:var(--radius-sm);font-size:14px;font-weight:600;transition:background .2s,transform .15s}
-.nav-cta:hover{background:var(--blue-dark);transform:translateY(-1px)}
+.nav-links a.nav-cta{background:var(--blue);color:#fff;padding:10px 22px;border-radius:var(--radius-sm);font-size:14px;font-weight:600;transition:background .2s,transform .15s}
+.nav-links a.nav-cta:hover{background:var(--blue-dark);transform:translateY(-1px);color:#fff}
 .nav-burger{display:none;flex-direction:column;gap:5px;padding:8px}
 .nav-burger span{display:block;width:22px;height:2px;background:var(--text);border-radius:2px;transition:transform .2s}
 
@@ -309,6 +310,16 @@ input,select{font-family:inherit}
 /* Top card medical accent */
 .top-card-header{position:relative;overflow:hidden}
 .top-card-header::after{content:'+';position:absolute;top:-8px;right:8px;font-size:60px;font-weight:200;color:var(--blue);opacity:0.06;pointer-events:none}
+/* Coup de coeur highlight */
+.top-card.coup-de-coeur{border:2px solid var(--blue);box-shadow:0 8px 30px rgba(4,107,210,0.15)}
+.top-card.coup-de-coeur .top-card-header{background:linear-gradient(135deg,var(--blue),#0284c7)}
+.top-card.coup-de-coeur .top-card-header h3,.top-card.coup-de-coeur .top-card-header .location{color:#fff}
+.top-card.coup-de-coeur .top-card-badge{background:#fff;color:var(--blue)}
+.top-card.coup-de-coeur .top-card-header::after{color:#fff;opacity:0.1}
+.coup-de-coeur-badge{display:inline-flex;align-items:center;gap:5px;background:#fff;color:var(--blue);font-size:11px;font-weight:800;padding:4px 10px;border-radius:20px;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px}
+.prep-card.coup-de-coeur-card{border:2px solid var(--blue);background:linear-gradient(180deg,var(--blue-50) 0%,#fff 40%);position:relative}
+.prep-card.coup-de-coeur-card::after{content:'Coup de coeur';position:absolute;top:12px;right:12px;background:var(--blue);color:#fff;font-size:10px;font-weight:800;padding:3px 10px;border-radius:12px;text-transform:uppercase;letter-spacing:0.5px}
+.prep-card.coup-de-coeur-card:hover{border-color:var(--blue-dark);box-shadow:0 8px 30px rgba(4,107,210,0.18)}
 
 /* How step medical design */
 .how-step{position:relative;background:var(--bg-alt);border-radius:var(--radius-lg);border:1px solid var(--border)}
@@ -745,59 +756,11 @@ input,select{font-family:inherit}
       <button class="modal-close" onclick="closeModal()">&times;</button>
     </div>
     <div class="modal-body">
-      <div id="contactForm">
-        <div class="form-row">
-          <div class="form-group">
-            <label>Prénom *</label>
-            <input type="text" id="formPrenom" placeholder="Ton prénom" required>
-          </div>
-          <div class="form-group">
-            <label>Nom *</label>
-            <input type="text" id="formNom" placeholder="Ton nom" required>
-          </div>
-        </div>
-        <div class="form-group">
-          <label>Email *</label>
-          <input type="email" id="formEmail" placeholder="ton.email@exemple.fr" required>
-        </div>
-        <div class="form-group">
-          <label>Téléphone *</label>
-          <input type="tel" id="formTel" placeholder="06 XX XX XX XX" required>
-        </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label>Tu es...</label>
-            <select id="formProfil">
-              <option value="">Sélectionner</option>
-              <option value="lyceen">Lycéen(ne)</option>
-              <option value="pass">Étudiant(e) PASS</option>
-              <option value="las">Étudiant(e) LAS</option>
-              <option value="parent">Parent</option>
-              <option value="reorientation">En réorientation</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label>Ville souhaitée</label>
-            <input type="text" id="formVille" placeholder="Ex: Paris, Lyon...">
-          </div>
-        </div>
-        <div class="form-group">
-          <label>Ton message (optionnel)</label>
-          <textarea id="formMessage" placeholder="Dis-nous en plus sur ta situation..."></textarea>
-        </div>
-        <button type="button" class="form-submit" onclick="submitForm()">
-          Envoyer ma demande <span data-ic="arrowRight" data-s="16"></span>
-        </button>
-        <div class="form-trust">
-          <span><span data-ic="shieldCheck" data-s="14"></span> 100% gratuit</span>
-          <span><span data-ic="zap" data-s="14"></span> Réponse sous 24h</span>
-          <span><span data-ic="users" data-s="14"></span> Sans engagement</span>
-        </div>
-      </div>
-      <div id="formSuccess" style="display:none;text-align:center;padding:40px 0">
-        <div style="margin-bottom:16px;color:#059669"><span data-ic="circleCheck" data-s="48"></span></div>
-        <h3 style="font-size:22px;font-weight:800;color:var(--text);margin-bottom:8px">Demande envoyée !</h3>
-        <p style="font-size:15px;color:var(--text-muted)">Un conseiller te recontactera très rapidement.</p>
+      <div id="hubspotFormContainer"></div>
+      <div class="form-trust" style="margin-top:16px">
+        <span><span data-ic="shieldCheck" data-s="14"></span> 100% gratuit</span>
+        <span><span data-ic="zap" data-s="14"></span> Réponse sous 24h</span>
+        <span><span data-ic="users" data-s="14"></span> Sans engagement</span>
       </div>
     </div>
   </div>
@@ -890,7 +853,28 @@ const PREPAS = [
       {t:"Vers l'autonomie",d:"Au-delà de la performance académique, Diploma Santé forme à la méthode, la confiance et la régularité."}
     ],
     avis:"Diploma Santé s'impose comme une référence majeure de la préparation médicale en Île-de-France. Son modèle repose sur une cohérence rare : exigence scientifique, accompagnement humain et innovation pédagogique se conjuguent dans un cadre structuré et bienveillant. Les résultats traduisent la solidité de la méthode : progression mesurable, suivi individualisé et véritable culture de la réussite.",
-    featured:true
+    featured:true,
+    coupDeCoeur:true,
+    extraSections:[
+      {title:"Pourquoi Diploma Santé est notre coup de coeur",blocks:[
+        {t:"Des résultats exceptionnels et vérifiables",d:"79% d'admis en médecine et 91% en pharmacie : Diploma Santé affiche des résultats parmi les plus élevés de France, vérifiés chaque année. Ce n'est pas un chiffre marketing mais une réalité mesurée sur les promotions successives."},
+        {t:"Un fondateur major de PACES",d:"Benjamin Haddad, fondateur de Diploma, est lui-même ancien major de PACES. Cette connaissance intime des épreuves et des exigences garantit une méthode calibrée au plus près de la réalité des concours."},
+        {t:"Un encadrement humain incomparable",d:"Chaque étudiant bénéficie d'un coaching individuel avec un tuteur Hermione Médecine certifié. Entretiens réguliers, bilans personnalisés, accompagnement dans la gestion du stress et de la motivation."},
+        {t:"Une innovation pédagogique constante",d:"Plateforme numérique avancée avec cours filmés HD, fiches actualisées en temps réel, QCM classants avec statistiques de progression, replays illimités et espace questions-réponses réactif."}
+      ]},
+      {title:"Les formations proposées",blocks:[
+        {t:"Terminale Santé (Anticipation dès le lycée)",d:"Programme complet de Première et Terminale avec stages intensifs pendant les vacances scolaires, préparation méthodologique et anticipation des cours de PASS/LAS. Idéal pour prendre de l'avance sur les matières scientifiques fondamentales."},
+        {t:"Prépa PASS annuelle",d:"Accompagnement complet sur toute l'année de PASS : pré-rentrée intensive de 3 semaines, cours hebdomadaires, concours blancs classants, coaching individuel et préparation aux oraux. Programme adapté aux spécificités de chaque fac parisienne."},
+        {t:"Prépa LAS",d:"Formule adaptée aux étudiants en LAS avec un programme ciblé sur la mineure santé, les méthodologies spécifiques et la préparation aux épreuves orales. Accompagnement personnalisé selon la licence choisie."},
+        {t:"Stages intensifs",d:"Stages de pré-rentrée en août (3 semaines intensives), stages de Noël et de printemps pour consolider les acquis et rattraper un éventuel retard. Idéal en complément de la prépa annuelle ou en formule à la carte."}
+      ]},
+      {title:"L'expérience étudiante",blocks:[
+        {t:"Des locaux modernes à Paris",d:"Centre de formation situé dans le quartier étudiant parisien, avec salles de cours équipées, espaces de travail en libre accès et ambiance studieuse propice à la concentration et à l'émulation."},
+        {t:"Une communauté soudée",d:"Plus de 1 200 étudiants par an forment une communauté active. Groupes d'entraide, parrainage par les étudiants des promotions précédentes et événements de cohésion tout au long de l'année."},
+        {t:"Témoignages d'anciens étudiants",d:"Des centaines d'anciens étudiants témoignent de l'impact de Diploma sur leur réussite. La rigueur de la méthode, la qualité de l'encadrement et le soutien moral sont systématiquement mis en avant."},
+        {t:"Tarifs et financement",d:"Différentes formules tarifaires adaptées à chaque besoin. Possibilité de paiement échelonné et tarifs préférentiels pour les inscriptions anticipées. Transparence totale sur les coûts et les prestations incluses."}
+      ]}
+    ]
   },
   {
     id:'medibox',name:'Medibox',ville:'En ligne',villes:['En ligne'],
@@ -1600,9 +1584,10 @@ function renderTopPrepas() {
   const featured = PREPAS.filter(p => p.featured);
   const grid = document.getElementById('topGrid');
   grid.innerHTML = featured.map((p, i) => `
-    <div class="top-card" onclick="location.hash='prepa/${p.id}'">
+    <div class="top-card${p.coupDeCoeur?' coup-de-coeur':''}" onclick="location.hash='prepa/${p.id}'">
       <div class="top-card-header">
         <div class="top-card-badge">#${i+1}</div>
+        ${p.coupDeCoeur?'<div class="coup-de-coeur-badge">'+ic('heartPulse',12)+' Coup de coeur</div>':''}
         <div style="display:flex;align-items:center;gap:12px;margin-bottom:4px">${logoImg(p.id,36)}<h3 style="margin:0">${p.name}</h3></div>
         <div class="location">${ic('mapPin',14)} ${p.ville}</div>
       </div>
@@ -1624,7 +1609,7 @@ function renderPrepasGrid(filtered) {
   const grid = document.getElementById('prepasGrid');
   document.getElementById('prepasCount').textContent = `${list.length} prépa${list.length > 1 ? 's' : ''} trouvée${list.length > 1 ? 's' : ''}`;
   grid.innerHTML = list.map(p => `
-    <div class="prep-card" onclick="location.hash='prepa/${p.id}'">
+    <div class="prep-card${p.coupDeCoeur?' coup-de-coeur-card':''}" onclick="location.hash='prepa/${p.id}'">
       <div class="prep-card-top">
         <div class="prep-avatar" style="overflow:hidden">${logoImg(p.id,44)}</div>
         <div>
@@ -1648,7 +1633,8 @@ function renderPrepasGrid(filtered) {
 function renderDetail(p) {
   document.getElementById('detailContent').innerHTML = `
     <div class="section-med-badge" style="margin-bottom:16px">${ic('heartPulse',14)} Fiche détaillée</div>
-    <div class="detail-hero">
+    ${p.coupDeCoeur?'<div style="display:inline-flex;align-items:center;gap:6px;background:var(--blue);color:#fff;font-size:13px;font-weight:800;padding:8px 18px;border-radius:20px;margin-bottom:16px">'+ic('heartPulse',16)+' Coup de coeur PrépaMédecine</div>':''}
+    <div class="detail-hero"${p.coupDeCoeur?' style="border:2px solid var(--blue);background:linear-gradient(135deg,var(--blue-50),#fff)"':''}>
       <div style="display:flex;align-items:center;gap:16px;margin-bottom:8px">${logoImg(p.id,52)}<h1 style="margin:0">${p.name}</h1></div>
       <div class="tagline">${p.intro}</div>
       <div class="detail-stats">
@@ -1671,6 +1657,15 @@ function renderDetail(p) {
         ${p.pedagogie.map(b => `<div class="detail-block"><h4>${b.t}</h4><p>${b.d}</p></div>`).join('')}
       </div>
     </div>
+
+    ${(p.extraSections||[]).map(sec => `
+    <div class="pulse-separator" style="margin:16px 0"><svg class="pulse-line" viewBox="0 0 400 40" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0 20H120L140 5L160 35L180 5L200 35L220 20H400" stroke="#046bd2" stroke-width="2"/></svg></div>
+    <div class="detail-section">
+      <h2>${ic('heartPulse',22)} ${sec.title}</h2>
+      <div class="detail-blocks">
+        ${sec.blocks.map(b => '<div class="detail-block"><h4>'+b.t+'</h4><p>'+b.d+'</p></div>').join('')}
+      </div>
+    </div>`).join('')}
 
     <div class="pulse-separator" style="margin:12px 0"><svg class="pulse-line" viewBox="0 0 400 40" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0 20H120L140 5L160 35L180 5L200 35L220 20H400" stroke="#046bd2" stroke-width="2"/></svg></div>
 
@@ -1808,12 +1803,18 @@ document.querySelectorAll('.nav-links a[data-page]').forEach(a => {
 });
 
 /* ============ CONTACT MODAL ============ */
+var hsFormLoaded = false;
 function openModal(prepa) {
   document.getElementById('contactModal').classList.add('active');
   document.body.style.overflow = 'hidden';
-  if (prepa) {
-    const msg = document.getElementById('formMessage');
-    if (msg) msg.value = "Je suis intéressé(e) par " + prepa;
+  if (!hsFormLoaded && typeof hbspt !== 'undefined') {
+    hbspt.forms.create({
+      portalId: "26711031",
+      formId: "21ba398a-7e85-4a0a-8621-309d35cd4d7f",
+      region: "eu1",
+      target: "#hubspotFormContainer"
+    });
+    hsFormLoaded = true;
   }
 }
 function closeModal() {
@@ -1826,47 +1827,6 @@ document.getElementById('contactModal')?.addEventListener('click', function(e) {
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') closeModal();
 });
-function submitForm() {
-  const prenom = document.getElementById('formPrenom').value.trim();
-  const email = document.getElementById('formEmail').value.trim();
-  const tel = document.getElementById('formTel').value.trim();
-  if (!prenom || !email || !tel) {
-    alert('Merci de remplir les champs obligatoires (Prénom, Email, Téléphone)');
-    return;
-  }
-  // Submit to HubSpot
-  var formData = {
-    fields: [
-      {name:'firstname',value:prenom},
-      {name:'lastname',value:document.getElementById('formNom').value.trim()},
-      {name:'email',value:email},
-      {name:'phone',value:tel},
-      {name:'profil',value:document.getElementById('formProfil').value},
-      {name:'city',value:document.getElementById('formVille').value.trim()},
-      {name:'message',value:document.getElementById('formMessage').value.trim()}
-    ],
-    context:{pageUri:window.location.href,pageName:document.title}
-  };
-  fetch('https://api.hsforms.com/submissions/v3/integration/submit/26711031/21ba398a-7e85-4a0a-8621-309d35cd4d7f',{
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify(formData)
-  }).catch(function(){});
-  document.getElementById('contactForm').style.display = 'none';
-  document.getElementById('formSuccess').style.display = 'block';
-  setTimeout(() => {
-    closeModal();
-    document.getElementById('contactForm').style.display = 'block';
-    document.getElementById('formSuccess').style.display = 'none';
-    document.getElementById('formPrenom').value = '';
-    document.getElementById('formNom').value = '';
-    document.getElementById('formEmail').value = '';
-    document.getElementById('formTel').value = '';
-    document.getElementById('formProfil').value = '';
-    document.getElementById('formVille').value = '';
-    document.getElementById('formMessage').value = '';
-  }, 3000);
-}
 
 /* ============ INIT ============ */
 renderTopPrepas();
