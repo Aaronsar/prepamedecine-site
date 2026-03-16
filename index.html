@@ -241,14 +241,17 @@ input,select{font-family:inherit}
 
 /* Floating decorative medical icons */
 .deco-icons{position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none;overflow:hidden;z-index:0}
-.deco-icons span{position:absolute;opacity:0.06;font-size:32px;animation:floatDeco 8s ease-in-out infinite}
-.deco-icons span:nth-child(2){animation-delay:-2s;font-size:26px}
-.deco-icons span:nth-child(3){animation-delay:-4s;font-size:38px}
-.deco-icons span:nth-child(4){animation-delay:-6s;font-size:22px}
-.deco-icons span:nth-child(5){animation-delay:-1s;font-size:28px}
-.deco-icons span:nth-child(6){animation-delay:-3s;font-size:34px}
+.deco-icons span{position:absolute;opacity:0.06;width:32px;height:32px;color:var(--blue);animation:floatDeco 8s ease-in-out infinite}
+.deco-icons span:nth-child(2){animation-delay:-2s;width:26px;height:26px}
+.deco-icons span:nth-child(3){animation-delay:-4s;width:38px;height:38px}
+.deco-icons span:nth-child(4){animation-delay:-6s;width:22px;height:22px}
+.deco-icons span:nth-child(5){animation-delay:-1s;width:28px;height:28px}
+.deco-icons span:nth-child(6){animation-delay:-3s;width:34px;height:34px}
+.deco-icons span svg{width:100%;height:100%}
 @keyframes floatDeco{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-12px) rotate(8deg)}}
 @media(max-width:768px){.deco-icons{display:none}}
+/* Inline SVG icons */
+.ic-svg{display:inline-block;vertical-align:middle;flex-shrink:0}
 
 /* Medical cross pattern - reusable */
 .medical-bg{position:relative;overflow:hidden}
@@ -406,15 +409,15 @@ input,select{font-family:inherit}
   <!-- HERO -->
   <section class="hero">
     <div class="deco-icons">
-      <span style="top:15%;left:6%">&#129658;</span>
-      <span style="top:25%;right:8%">&#128203;</span>
-      <span style="top:60%;left:10%">&#128138;</span>
-      <span style="top:70%;right:5%">&#129657;</span>
-      <span style="top:40%;left:3%">&#128218;</span>
-      <span style="top:50%;right:12%">&#127891;</span>
+      <span style="top:15%;left:6%" data-ic="stethoscope"></span>
+      <span style="top:25%;right:8%" data-ic="clipboard"></span>
+      <span style="top:60%;left:10%" data-ic="pill"></span>
+      <span style="top:70%;right:5%" data-ic="heartPulse"></span>
+      <span style="top:40%;left:3%" data-ic="bookOpen"></span>
+      <span style="top:50%;right:12%" data-ic="graduationCap"></span>
     </div>
     <div class="container" style="position:relative;z-index:1">
-      <div style="display:inline-flex;align-items:center;gap:8px;background:var(--green-light);color:#059669;font-size:13px;font-weight:700;padding:6px 16px;border-radius:20px;margin-bottom:20px">&#129657; Comparateur gratuit et indépendant</div>
+      <div style="display:inline-flex;align-items:center;gap:8px;background:var(--green-light);color:#059669;font-size:13px;font-weight:700;padding:6px 16px;border-radius:20px;margin-bottom:20px"><span data-ic="heartPulse" data-s="14"></span> Comparateur gratuit et indépendant</div>
       <h1>Toutes les prépas santé,<br><em>au même endroit.</em></h1>
       <p>Compare plus de 30 prépas médecine en France. PASS, LAS, Terminale Santé : trouve celle qui te correspond.</p>
       <div class="hero-search">
@@ -422,8 +425,8 @@ input,select{font-family:inherit}
         <input type="text" id="heroSearch" placeholder="Rechercher une prépa, une ville...">
       </div>
       <div style="display:flex;gap:12px;justify-content:center;margin-top:20px;flex-wrap:wrap">
-        <a href="#prepas" class="cta-green" onclick="showPage('prepas')" style="padding:14px 28px">&#128269; Comparer les prépas</a>
-        <button class="cta-green" onclick="openModal()" style="background:transparent;color:var(--blue);border:2px solid var(--blue);padding:14px 28px">&#128222; Être rappelé gratuitement</button>
+        <a href="#prepas" class="cta-green" onclick="showPage('prepas')" style="padding:14px 28px"><span data-ic="search" data-s="16"></span> Comparer les prépas</a>
+        <button class="cta-green" onclick="openModal()" style="background:transparent;color:var(--blue);border:2px solid var(--blue);padding:14px 28px"><span data-ic="phone" data-s="16"></span> Être rappelé gratuitement</button>
       </div>
     </div>
   </section>
@@ -432,28 +435,28 @@ input,select{font-family:inherit}
   <section class="audience">
     <div class="container">
       <div style="text-align:center;margin-bottom:24px">
-        <div class="section-med-badge">&#127891; Pour chaque profil</div>
+        <div class="section-med-badge"><span data-ic="graduationCap" data-s="14"></span> Pour chaque profil</div>
         <h2 style="font-size:clamp(22px,3vw,32px);font-weight:800;color:var(--text)">Quel est ton parcours ?</h2>
         <div class="medical-line"></div>
       </div>
       <div class="audience-grid">
         <div class="audience-card" onclick="filterByTag('Terminale Santé')">
-          <div class="icon" style="background:#fef3c7">&#127891;</div>
+          <div class="icon" style="background:#fef3c7;color:#b45309"><span data-ic="graduationCap" data-s="24"></span></div>
           <h3>Lycéen</h3>
           <p>Anticipe dès la Première ou Terminale</p>
         </div>
         <div class="audience-card" onclick="filterByTag('PASS')">
-          <div class="icon" style="background:var(--blue-light)">&#129658;</div>
+          <div class="icon" style="background:var(--blue-light);color:var(--blue)"><span data-ic="stethoscope" data-s="24"></span></div>
           <h3>Étudiant PASS</h3>
           <p>Maximise tes chances de réussite</p>
         </div>
         <div class="audience-card" onclick="filterByTag('LAS')">
-          <div class="icon" style="background:var(--green-light)">&#128218;</div>
+          <div class="icon" style="background:var(--green-light);color:#059669"><span data-ic="bookOpen" data-s="24"></span></div>
           <h3>Étudiant LAS</h3>
           <p>Combine licence et accès santé</p>
         </div>
         <div class="audience-card" onclick="filterByTag('En ligne')">
-          <div class="icon" style="background:#f0e7fe">&#128187;</div>
+          <div class="icon" style="background:#f0e7fe;color:#7c3aed"><span data-ic="monitor" data-s="24"></span></div>
           <h3>100% en ligne</h3>
           <p>Prépas accessibles partout</p>
         </div>
@@ -466,10 +469,10 @@ input,select{font-family:inherit}
     <div class="container">
       <div class="cta-inline-box">
         <div class="cta-left">
-          <h3>&#129658; Tu ne sais pas quelle prépa choisir ?</h3>
+          <h3><span data-ic="stethoscope" data-s="20"></span> Tu ne sais pas quelle prépa choisir ?</h3>
           <p>Reçois un conseil personnalisé gratuit en moins de 24h.</p>
         </div>
-        <button class="cta-green" onclick="openModal()">Être rappelé gratuitement &#8594;</button>
+        <button class="cta-green" onclick="openModal()">Être rappelé gratuitement <span data-ic="arrowRight" data-s="16"></span></button>
       </div>
     </div>
   </section>
@@ -480,14 +483,14 @@ input,select{font-family:inherit}
   <!-- TOP PREPAS -->
   <section class="top-prepas medical-bg">
     <div class="deco-icons">
-      <span style="top:10%;left:4%">&#128203;</span>
-      <span style="top:80%;right:3%">&#129658;</span>
-      <span style="top:50%;left:2%">&#128138;</span>
-      <span style="top:20%;right:6%">&#128218;</span>
+      <span style="top:10%;left:4%" data-ic="clipboard"></span>
+      <span style="top:80%;right:3%" data-ic="stethoscope"></span>
+      <span style="top:50%;left:2%" data-ic="pill"></span>
+      <span style="top:20%;right:6%" data-ic="bookOpen"></span>
     </div>
     <div class="container">
       <div class="section-header center">
-        <div class="section-med-badge">&#129657; Classement 2025</div>
+        <div class="section-med-badge"><span data-ic="heartPulse" data-s="14"></span> Classement 2025</div>
         <div class="section-tag">Top prépas 2025</div>
         <h2 class="section-title">Les prépas les mieux notées</h2>
         <p class="section-desc">Sélectionnées pour leurs résultats, leur accompagnement et leur méthode pédagogique.</p>
@@ -500,13 +503,13 @@ input,select{font-family:inherit}
   <!-- STATS -->
   <section class="stats-banner medical-bg">
     <div class="deco-icons">
-      <span style="top:20%;left:5%;opacity:0.08;color:#fff">&#129658;</span>
-      <span style="top:30%;right:4%;opacity:0.08;color:#fff">&#128138;</span>
-      <span style="top:60%;left:8%;opacity:0.08;color:#fff">&#128203;</span>
-      <span style="top:50%;right:10%;opacity:0.08;color:#fff">&#129657;</span>
+      <span style="top:20%;left:5%;opacity:0.08;color:#fff" data-ic="stethoscope"></span>
+      <span style="top:30%;right:4%;opacity:0.08;color:#fff" data-ic="pill"></span>
+      <span style="top:60%;left:8%;opacity:0.08;color:#fff" data-ic="clipboard"></span>
+      <span style="top:50%;right:10%;opacity:0.08;color:#fff" data-ic="heartPulse"></span>
     </div>
     <div class="container">
-      <div style="text-align:center;margin-bottom:24px"><span class="section-med-badge" style="background:rgba(255,255,255,0.15);color:#fff">&#128200; Nos chiffres clés</span></div>
+      <div style="text-align:center;margin-bottom:24px"><span class="section-med-badge" style="background:rgba(255,255,255,0.15);color:#fff"><span data-ic="barChart" data-s="14"></span> Nos chiffres clés</span></div>
       <div class="stats-row">
         <div class="stat-item"><div class="num">30+</div><div class="label">Prépas comparées</div></div>
         <div class="stat-item"><div class="num">20+</div><div class="label">Villes couvertes</div></div>
@@ -514,7 +517,7 @@ input,select{font-family:inherit}
         <div class="stat-item"><div class="num">100%</div><div class="label">Gratuit et indépendant</div></div>
       </div>
       <div style="text-align:center;margin-top:32px">
-        <button class="cta-green" onclick="openModal()" style="background:#fff;color:var(--blue);font-size:16px;padding:16px 36px">&#128222; Demander un conseil gratuit</button>
+        <button class="cta-green" onclick="openModal()" style="background:#fff;color:var(--blue);font-size:16px;padding:16px 36px"><span data-ic="phone" data-s="18"></span> Demander un conseil gratuit</button>
       </div>
     </div>
   </section>
@@ -525,13 +528,13 @@ input,select{font-family:inherit}
   <!-- HOW TO CHOOSE -->
   <section class="how-section medical-bg">
     <div class="deco-icons">
-      <span style="top:15%;right:5%">&#129657;</span>
-      <span style="top:70%;left:4%">&#128203;</span>
-      <span style="top:40%;right:3%">&#127891;</span>
+      <span style="top:15%;right:5%" data-ic="heartPulse"></span>
+      <span style="top:70%;left:4%" data-ic="clipboard"></span>
+      <span style="top:40%;right:3%" data-ic="graduationCap"></span>
     </div>
     <div class="container">
       <div class="section-header center">
-        <div class="section-med-badge">&#129658; Guide pratique</div>
+        <div class="section-med-badge"><span data-ic="stethoscope" data-s="14"></span> Guide pratique</div>
         <div class="section-tag">Guide</div>
         <h2 class="section-title">Comment choisir sa prépa ?</h2>
         <p class="section-desc">3 étapes pour trouver la prépa qui correspond à ton profil et tes objectifs.</p>
@@ -562,10 +565,10 @@ input,select{font-family:inherit}
     <div class="container">
       <div class="cta-inline-box" style="background:linear-gradient(135deg,var(--blue-light),#f0f7ff);border-color:rgba(4,107,210,0.2)">
         <div class="cta-left">
-          <h3>&#127891; Besoin d'un accompagnement personnalisé ?</h3>
+          <h3><span data-ic="graduationCap" data-s="20"></span> Besoin d'un accompagnement personnalisé ?</h3>
           <p>Un conseiller t'aide gratuitement à trouver la prépa adaptée à ton profil.</p>
         </div>
-        <button class="cta-green" onclick="openModal()">Parler à un conseiller &#8594;</button>
+        <button class="cta-green" onclick="openModal()">Parler à un conseiller <span data-ic="arrowRight" data-s="16"></span></button>
       </div>
     </div>
   </section>
@@ -573,16 +576,16 @@ input,select{font-family:inherit}
   <!-- CTA -->
   <section class="cta-section" style="position:relative">
     <div class="deco-icons">
-      <span style="top:20%;left:6%;opacity:0.04">&#129658;</span>
-      <span style="top:60%;right:5%;opacity:0.04">&#128203;</span>
+      <span style="top:20%;left:6%;opacity:0.04" data-ic="stethoscope"></span>
+      <span style="top:60%;right:5%;opacity:0.04" data-ic="clipboard"></span>
     </div>
     <div class="container" style="position:relative;z-index:1">
-      <div class="cta-box" style="position:relative;overflow:hidden"><div class="deco-icons"><span style="top:15%;left:5%;opacity:0.1;color:#fff">&#129657;</span><span style="top:60%;right:4%;opacity:0.1;color:#fff">&#128138;</span><span style="top:35%;right:15%;opacity:0.08;color:#fff">&#128203;</span></div>
-        <h2>&#129657; Prêt à trouver ta prépa idéale ?</h2>
+      <div class="cta-box" style="position:relative;overflow:hidden"><div class="deco-icons"><span style="top:15%;left:5%;opacity:0.1;color:#fff" data-ic="heartPulse"></span><span style="top:60%;right:4%;opacity:0.1;color:#fff" data-ic="pill"></span><span style="top:35%;right:15%;opacity:0.08;color:#fff" data-ic="clipboard"></span></div>
+        <h2><span data-ic="heartPulse" data-s="28"></span> Prêt à trouver ta prépa idéale ?</h2>
         <p>Compare les prépas, consulte les fiches détaillées et fais ton choix en toute sérénité.</p>
         <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
           <a href="#prepas" class="cta-btn" onclick="showPage('prepas')">Voir toutes les prépas &rarr;</a>
-          <button class="cta-btn" onclick="openModal()" style="background:rgba(255,255,255,0.15);border:2px solid #fff;color:#fff;cursor:pointer">&#128222; Être rappelé</button>
+          <button class="cta-btn" onclick="openModal()" style="background:rgba(255,255,255,0.15);border:2px solid #fff;color:#fff;cursor:pointer"><span data-ic="phone" data-s="16"></span> Être rappelé</button>
         </div>
       </div>
     </div>
@@ -594,14 +597,14 @@ input,select{font-family:inherit}
   <!-- Prepas hero banner -->
   <div class="medical-bg" style="background:linear-gradient(180deg,var(--blue-50) 0%,#fff 100%);padding:40px 0 0">
     <div class="deco-icons">
-      <span style="top:15%;left:8%">&#129658;</span>
-      <span style="top:30%;right:6%">&#128203;</span>
-      <span style="top:60%;left:5%">&#128138;</span>
-      <span style="top:50%;right:10%">&#127891;</span>
+      <span style="top:15%;left:8%" data-ic="stethoscope"></span>
+      <span style="top:30%;right:6%" data-ic="clipboard"></span>
+      <span style="top:60%;left:5%" data-ic="pill"></span>
+      <span style="top:50%;right:10%" data-ic="graduationCap"></span>
     </div>
     <div class="container" style="text-align:center;padding-bottom:24px;position:relative;z-index:1">
-      <div class="section-med-badge">&#129657; 30+ établissements comparés</div>
-      <h1 style="font-size:clamp(26px,4vw,40px);font-weight:800;color:var(--text);margin-bottom:8px">&#127973; Trouve ta prépa santé idéale</h1>
+      <div class="section-med-badge"><span data-ic="heartPulse" data-s="14"></span> 30+ établissements comparés</div>
+      <h1 style="font-size:clamp(26px,4vw,40px);font-weight:800;color:var(--text);margin-bottom:8px"><span data-ic="hospital" data-s="32"></span> Trouve ta prépa santé idéale</h1>
       <p style="font-size:17px;color:var(--text-muted);max-width:560px;margin:0 auto">Compare les prépas médecine par ville, format et filière. PASS, LAS, Terminale Santé.</p>
       <div class="medical-line"></div>
     </div>
@@ -617,9 +620,9 @@ input,select{font-family:inherit}
       <div class="prepas-count" id="prepasCount"></div>
       <div class="prepas-grid" id="prepasGrid"></div>
       <div style="text-align:center;margin-top:48px;padding:36px;background:linear-gradient(135deg,#f0fdf4,#ecfdf5);border:2px solid #bbf7d0;border-radius:var(--radius-lg)">
-        <h3 style="font-size:20px;font-weight:800;color:var(--text);margin-bottom:8px">&#129658; Tu hésites entre plusieurs prépas ?</h3>
+        <h3 style="font-size:20px;font-weight:800;color:var(--text);margin-bottom:8px"><span data-ic="stethoscope" data-s="20"></span> Tu hésites entre plusieurs prépas ?</h3>
         <p style="font-size:15px;color:var(--text-muted);margin-bottom:20px">Reçois un comparatif personnalisé gratuit selon ton profil et ta ville.</p>
-        <button class="cta-green" onclick="openModal()">Recevoir mon comparatif &#8594;</button>
+        <button class="cta-green" onclick="openModal()">Recevoir mon comparatif <span data-ic="arrowRight" data-s="16"></span></button>
       </div>
     </div>
   </section>
@@ -641,14 +644,14 @@ input,select{font-family:inherit}
   <!-- Conseils hero banner -->
   <div class="medical-bg" style="background:linear-gradient(180deg,var(--blue-50) 0%,#fff 100%);padding:40px 0 0">
     <div class="deco-icons">
-      <span style="top:15%;left:7%">&#129657;</span>
-      <span style="top:35%;right:5%">&#128203;</span>
-      <span style="top:55%;left:4%">&#127891;</span>
-      <span style="top:45%;right:11%">&#128138;</span>
+      <span style="top:15%;left:7%" data-ic="heartPulse"></span>
+      <span style="top:35%;right:5%" data-ic="clipboard"></span>
+      <span style="top:55%;left:4%" data-ic="graduationCap"></span>
+      <span style="top:45%;right:11%" data-ic="pill"></span>
     </div>
     <div class="container" style="text-align:center;padding-bottom:24px;position:relative;z-index:1">
-      <div class="section-med-badge">&#128218; Guides &amp; Ressources</div>
-      <h1 style="font-size:clamp(26px,4vw,40px);font-weight:800;color:var(--text);margin-bottom:8px">&#129657; Conseils pour réussir en santé</h1>
+      <div class="section-med-badge"><span data-ic="bookOpen" data-s="14"></span> Guides &amp; Ressources</div>
+      <h1 style="font-size:clamp(26px,4vw,40px);font-weight:800;color:var(--text);margin-bottom:8px"><span data-ic="heartPulse" data-s="32"></span> Conseils pour réussir en santé</h1>
       <p style="font-size:17px;color:var(--text-muted);max-width:560px;margin:0 auto">Articles, guides et méthodologie pour préparer au mieux ton parcours PASS/LAS.</p>
       <div class="medical-line"></div>
     </div>
@@ -665,13 +668,13 @@ input,select{font-family:inherit}
   <!-- FAQ hero banner -->
   <div class="medical-bg" style="background:linear-gradient(180deg,var(--blue-50) 0%,#fff 100%);padding:40px 0 0">
     <div class="deco-icons">
-      <span style="top:20%;left:6%">&#128203;</span>
-      <span style="top:40%;right:7%">&#129658;</span>
-      <span style="top:60%;left:10%">&#128138;</span>
+      <span style="top:20%;left:6%" data-ic="clipboard"></span>
+      <span style="top:40%;right:7%" data-ic="stethoscope"></span>
+      <span style="top:60%;left:10%" data-ic="pill"></span>
     </div>
     <div class="container" style="text-align:center;padding-bottom:24px;position:relative;z-index:1">
-      <div class="section-med-badge">&#129657; Réponses d'experts</div>
-      <h1 style="font-size:clamp(26px,4vw,40px);font-weight:800;color:var(--text);margin-bottom:8px">&#129658; Questions fréquentes</h1>
+      <div class="section-med-badge"><span data-ic="heartPulse" data-s="14"></span> Réponses d'experts</div>
+      <h1 style="font-size:clamp(26px,4vw,40px);font-weight:800;color:var(--text);margin-bottom:8px"><span data-ic="stethoscope" data-s="32"></span> Questions fréquentes</h1>
       <p style="font-size:17px;color:var(--text-muted);max-width:560px;margin:0 auto">Tout ce que tu dois savoir sur les prépas santé, le PASS et la LAS.</p>
       <div class="medical-line"></div>
     </div>
@@ -680,9 +683,9 @@ input,select{font-family:inherit}
     <div class="container">
       <div class="faq-list" id="faqList"></div>
       <div style="text-align:center;margin-top:40px;padding:36px;background:var(--bg-alt);border-radius:var(--radius-lg)">
-        <h3 style="font-size:20px;font-weight:800;color:var(--text);margin-bottom:8px">&#128172; Tu as encore des questions ?</h3>
+        <h3 style="font-size:20px;font-weight:800;color:var(--text);margin-bottom:8px"><span data-ic="messageCircle" data-s="20"></span> Tu as encore des questions ?</h3>
         <p style="font-size:15px;color:var(--text-muted);margin-bottom:20px">Nos conseillers sont là pour t'aider gratuitement.</p>
-        <button class="cta-green" onclick="openModal()">Poser ma question &#8594;</button>
+        <button class="cta-green" onclick="openModal()">Poser ma question <span data-ic="arrowRight" data-s="16"></span></button>
       </div>
     </div>
   </section>
@@ -718,8 +721,8 @@ input,select{font-family:inherit}
       </div>
     </div>
     <div style="text-align:center;padding:32px 0;border-bottom:1px solid rgba(255,255,255,0.1);margin-bottom:24px">
-      <p style="font-size:18px;font-weight:700;margin-bottom:12px">&#128222; Besoin d'aide pour choisir ta prépa ?</p>
-      <button class="cta-green" onclick="openModal()" style="font-size:16px;padding:16px 36px">Être rappelé gratuitement &#8594;</button>
+      <p style="font-size:18px;font-weight:700;margin-bottom:12px"><span data-ic="phone" data-s="18"></span> Besoin d'aide pour choisir ta prépa ?</p>
+      <button class="cta-green" onclick="openModal()" style="font-size:16px;padding:16px 36px">Être rappelé gratuitement <span data-ic="arrowRight" data-s="16"></span></button>
     </div>
     <div class="footer-bottom">&copy; 2025 PrépaMédecine.fr — Tous droits réservés</div>
   </div>
@@ -736,7 +739,7 @@ input,select{font-family:inherit}
   <div class="modal">
     <div class="modal-header">
       <div class="modal-header-text">
-        <h2>&#128222; Demande de rappel gratuit</h2>
+        <h2><span data-ic="phone" data-s="22"></span> Demande de rappel gratuit</h2>
         <p>Un conseiller te recontacte sous 24h pour t'aider dans ton choix.</p>
       </div>
       <button class="modal-close" onclick="closeModal()">&times;</button>
@@ -783,16 +786,16 @@ input,select{font-family:inherit}
           <textarea id="formMessage" placeholder="Dis-nous en plus sur ta situation..."></textarea>
         </div>
         <button type="button" class="form-submit" onclick="submitForm()">
-          Envoyer ma demande &#8594;
+          Envoyer ma demande <span data-ic="arrowRight" data-s="16"></span>
         </button>
         <div class="form-trust">
-          <span>&#128274; 100% gratuit</span>
-          <span>&#9889; Réponse sous 24h</span>
-          <span>&#128101; Sans engagement</span>
+          <span><span data-ic="shieldCheck" data-s="14"></span> 100% gratuit</span>
+          <span><span data-ic="zap" data-s="14"></span> Réponse sous 24h</span>
+          <span><span data-ic="users" data-s="14"></span> Sans engagement</span>
         </div>
       </div>
       <div id="formSuccess" style="display:none;text-align:center;padding:40px 0">
-        <div style="font-size:48px;margin-bottom:16px">&#9989;</div>
+        <div style="margin-bottom:16px;color:#059669"><span data-ic="circleCheck" data-s="48"></span></div>
         <h3 style="font-size:22px;font-weight:800;color:var(--text);margin-bottom:8px">Demande envoyée !</h3>
         <p style="font-size:15px;color:var(--text-muted)">Un conseiller te recontactera très rapidement.</p>
       </div>
@@ -801,6 +804,35 @@ input,select{font-family:inherit}
 </div>
 
 <script>
+/* ============ SVG ICON SYSTEM ============ */
+const ICON_PATHS={
+stethoscope:'<path d="M4.8 2.3A.3.3 0 1 0 5 2H4a2 2 0 0 0-2 2v5a6 6 0 0 0 6 6 6 6 0 0 0 6-6V4a2 2 0 0 0-2-2h-1a.2.2 0 1 0 .3.3"/><path d="M8 15v1a6 6 0 0 0 6 6 6 6 0 0 0 6-6v-4"/><circle cx="20" cy="10" r="2"/>',
+clipboard:'<rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4M12 16h4M8 11h.01M8 16h.01"/>',
+pill:'<path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"/><path d="m8.5 8.5 7 7"/>',
+heartPulse:'<path d="M19.5 12.572l-7.5 7.428-7.5-7.428A5 5 0 0 1 11.006 5a5 5 0 0 1 8.494 7.572z"/><path d="M5 12h2l2-4 3 8 2-4h5"/>',
+bookOpen:'<path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>',
+graduationCap:'<path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/>',
+search:'<circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>',
+phone:'<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>',
+monitor:'<rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/>',
+mapPin:'<path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/>',
+building:'<rect width="16" height="20" x="4" y="2" rx="2" ry="2"/><path d="M9 22v-4h6v4M8 6h.01M16 6h.01M12 6h.01M12 10h.01M12 14h.01M16 10h.01M16 14h.01M8 10h.01M8 14h.01"/>',
+messageCircle:'<path d="M7.9 20A9 9 0 1 0 4 16.1L2 22z"/>',
+barChart:'<line x1="12" x2="12" y1="20" y2="10"/><line x1="18" x2="18" y1="20" y2="4"/><line x1="6" x2="6" y1="20" y2="16"/>',
+shieldCheck:'<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/><path d="m9 12 2 2 4-4"/>',
+zap:'<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>',
+users:'<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+circleCheck:'<circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/>',
+wallet:'<path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4z"/>',
+fileText:'<path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/><line x1="10" x2="8" y1="9" y2="9"/>',
+alertTriangle:'<path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3z"/><path d="M12 9v4M12 17h.01"/>',
+arrowRight:'<path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>',
+cross:'<path d="M8 2h8v6h6v8h-6v6H8v-6H2v-8h6z"/>',
+hospital:'<path d="M12 6v4m-2-2h4"/><rect width="20" height="14" x="2" y="6" rx="2"/><path d="M2 12h20M12 6V2"/>',
+trendingUp:'<polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/>'
+};
+function ic(name,size){size=size||18;var p=ICON_PATHS[name];if(!p)return '';return '<svg class="ic-svg" width="'+size+'" height="'+size+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+p+'</svg>';}
+
 /* ============ LOGOS ============ */
 const LOGOS = {
   'diploma-sante':'https://diploma-sante.fr/wp-content/uploads/2026/01/logo-diploma-bleu.svg',
@@ -1519,12 +1551,12 @@ const FAQ_DATA = [
 
 /* ============ ARTICLES DATA ============ */
 const ARTICLES = [
-  {title:"PASS vs LAS : quelle voie choisir en 2025 ?",cat:"Orientation",icon:"&#129658;",desc:"Comprends les différences entre PASS et LAS pour faire le bon choix selon ton profil, tes forces et ta stratégie de réussite."},
-  {title:"Combien coûte une prépa médecine ?",cat:"Budget",icon:"&#128176;",desc:"Tour d'horizon des tarifs des prépas santé en France : de quelques centaines à plusieurs milliers d'euros selon la formule."},
-  {title:"Comment organiser son travail en PASS ?",cat:"Méthodologie",icon:"&#128221;",desc:"50 à 70h de travail par semaine : découvre comment structurer tes journées pour maximiser tes résultats."},
-  {title:"Préparer les études de santé dès le lycée",cat:"Anticipation",icon:"&#127891;",desc:"Terminale Santé, Première Santé : pourquoi et comment anticiper dès le lycée pour réussir en PASS ou LAS."},
-  {title:"Les erreurs à éviter en première année de médecine",cat:"Conseils",icon:"&#9888;&#65039;",desc:"Découvre les pièges les plus courants et les stratégies pour les éviter dès le début de ta première année."},
-  {title:"Parcoursup et études de santé : le guide complet",cat:"Parcoursup",icon:"&#128203;",desc:"Tout ce que tu dois savoir sur Parcoursup pour intégrer les filières santé : calendrier, voeux, stratégie."}
+  {title:"PASS vs LAS : quelle voie choisir en 2025 ?",cat:"Orientation",iconName:"stethoscope",desc:"Comprends les différences entre PASS et LAS pour faire le bon choix selon ton profil, tes forces et ta stratégie de réussite."},
+  {title:"Combien coûte une prépa médecine ?",cat:"Budget",iconName:"wallet",desc:"Tour d'horizon des tarifs des prépas santé en France : de quelques centaines à plusieurs milliers d'euros selon la formule."},
+  {title:"Comment organiser son travail en PASS ?",cat:"Méthodologie",iconName:"fileText",desc:"50 à 70h de travail par semaine : découvre comment structurer tes journées pour maximiser tes résultats."},
+  {title:"Préparer les études de santé dès le lycée",cat:"Anticipation",iconName:"graduationCap",desc:"Terminale Santé, Première Santé : pourquoi et comment anticiper dès le lycée pour réussir en PASS ou LAS."},
+  {title:"Les erreurs à éviter en première année de médecine",cat:"Conseils",iconName:"alertTriangle",desc:"Découvre les pièges les plus courants et les stratégies pour les éviter dès le début de ta première année."},
+  {title:"Parcoursup et études de santé : le guide complet",cat:"Parcoursup",iconName:"clipboard",desc:"Tout ce que tu dois savoir sur Parcoursup pour intégrer les filières santé : calendrier, voeux, stratégie."}
 ];
 
 /* ============ ROUTING ============ */
@@ -1572,7 +1604,7 @@ function renderTopPrepas() {
       <div class="top-card-header">
         <div class="top-card-badge">#${i+1}</div>
         <div style="display:flex;align-items:center;gap:12px;margin-bottom:4px">${logoImg(p.id,36)}<h3 style="margin:0">${p.name}</h3></div>
-        <div class="location">&#128205; ${p.ville}</div>
+        <div class="location">${ic('mapPin',14)} ${p.ville}</div>
       </div>
       <div class="top-card-body">
         <div class="top-card-stats">
@@ -1597,7 +1629,7 @@ function renderPrepasGrid(filtered) {
         <div class="prep-avatar" style="overflow:hidden">${logoImg(p.id,44)}</div>
         <div>
           <h3>${p.name}</h3>
-          <div class="loc">&#128205; ${p.ville}</div>
+          <div class="loc">${ic('mapPin',13)} ${p.ville}</div>
         </div>
       </div>
       <div class="prep-card-desc">${p.intro}</div>
@@ -1615,7 +1647,7 @@ function renderPrepasGrid(filtered) {
 
 function renderDetail(p) {
   document.getElementById('detailContent').innerHTML = `
-    <div class="section-med-badge" style="margin-bottom:16px">&#129657; Fiche détaillée</div>
+    <div class="section-med-badge" style="margin-bottom:16px">${ic('heartPulse',14)} Fiche détaillée</div>
     <div class="detail-hero">
       <div style="display:flex;align-items:center;gap:16px;margin-bottom:8px">${logoImg(p.id,52)}<h1 style="margin:0">${p.name}</h1></div>
       <div class="tagline">${p.intro}</div>
@@ -1627,14 +1659,14 @@ function renderDetail(p) {
     <div class="pulse-separator" style="margin:24px 0"><svg class="pulse-line" viewBox="0 0 400 40" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0 20H120L140 5L160 35L180 5L200 35L220 20H400" stroke="#046bd2" stroke-width="2"/></svg></div>
 
     <div class="detail-section">
-      <h2>&#127979; Le modèle ${p.name}</h2>
+      <h2>${ic('building',22)} Le modèle ${p.name}</h2>
       <div class="detail-blocks">
         ${p.modele.map(b => `<div class="detail-block"><h4>${b.t}</h4><p>${b.d}</p></div>`).join('')}
       </div>
     </div>
 
     <div class="detail-section">
-      <h2>&#128218; La pédagogie</h2>
+      <h2>${ic('bookOpen',22)} La pédagogie</h2>
       <div class="detail-blocks">
         ${p.pedagogie.map(b => `<div class="detail-block"><h4>${b.t}</h4><p>${b.d}</p></div>`).join('')}
       </div>
@@ -1643,14 +1675,14 @@ function renderDetail(p) {
     <div class="pulse-separator" style="margin:12px 0"><svg class="pulse-line" viewBox="0 0 400 40" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0 20H120L140 5L160 35L180 5L200 35L220 20H400" stroke="#046bd2" stroke-width="2"/></svg></div>
 
     <div class="avis-box">
-      <h3>&#128172; L'avis de PrépaMédecine</h3>
+      <h3>${ic('messageCircle',18)} L'avis de PrépaMédecine</h3>
       <p>${p.avis}</p>
     </div>
 
     <div class="detail-cta-box">
-      <h3>&#128222; Intéressé(e) par ${p.name} ?</h3>
+      <h3>${ic('phone',20)} Intéressé(e) par ${p.name} ?</h3>
       <p>Reçois plus d'informations et un conseil personnalisé gratuit.</p>
-      <button class="cta-btn-white" onclick="event.stopPropagation();openModal('${p.name}')">Demander plus d'infos &#8594;</button>
+      <button class="cta-btn-white" onclick="event.stopPropagation();openModal('${p.name}')">Demander plus d'infos ${ic('arrowRight',16)}</button>
     </div>
 
     <div style="margin-top:24px;text-align:center">
@@ -1676,7 +1708,7 @@ function renderConseils() {
   const grid = document.getElementById('conseilsGrid');
   grid.innerHTML = ARTICLES.map(a => `
     <div class="article-card">
-      <div class="article-card-img">${a.icon}</div>
+      <div class="article-card-img" style="color:var(--blue)">${ic(a.iconName,40)}</div>
       <div class="article-card-body">
         <div class="article-card-cat">${a.cat}</div>
         <h3>${a.title}</h3>
@@ -1802,7 +1834,24 @@ function submitForm() {
     alert('Merci de remplir les champs obligatoires (Prénom, Email, Téléphone)');
     return;
   }
-  // HubSpot integration will go here
+  // Submit to HubSpot
+  var formData = {
+    fields: [
+      {name:'firstname',value:prenom},
+      {name:'lastname',value:document.getElementById('formNom').value.trim()},
+      {name:'email',value:email},
+      {name:'phone',value:tel},
+      {name:'profil',value:document.getElementById('formProfil').value},
+      {name:'city',value:document.getElementById('formVille').value.trim()},
+      {name:'message',value:document.getElementById('formMessage').value.trim()}
+    ],
+    context:{pageUri:window.location.href,pageName:document.title}
+  };
+  fetch('https://api.hsforms.com/submissions/v3/integration/submit/26711031/21ba398a-7e85-4a0a-8621-309d35cd4d7f',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify(formData)
+  }).catch(function(){});
   document.getElementById('contactForm').style.display = 'none';
   document.getElementById('formSuccess').style.display = 'block';
   setTimeout(() => {
@@ -1826,6 +1875,12 @@ renderFAQ();
 renderConseils();
 populateFilters();
 handleHash();
+
+// Initialize data-ic SVG icons in static HTML
+document.querySelectorAll('[data-ic]').forEach(function(el){
+  var s=parseInt(el.dataset.s)||18;
+  el.innerHTML=ic(el.dataset.ic,s);
+});
 </script>
 </body>
 </html>
