@@ -94,7 +94,7 @@ input,select{font-family:inherit}
 .top-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
 .top-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;transition:box-shadow .25s,transform .25s;display:flex;flex-direction:column}
 .top-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-4px)}
-.top-card-badge{position:absolute;top:16px;left:16px;background:var(--blue);color:#fff;font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px}
+.top-card-badge{display:inline-flex;align-items:center;justify-content:center;background:var(--blue);color:#fff;font-size:12px;font-weight:700;width:32px;height:32px;border-radius:50%;flex-shrink:0}
 .top-card-header{position:relative;padding:28px 24px 20px;background:linear-gradient(135deg,var(--blue-light),#fff)}
 .top-card-header h3{font-size:20px;font-weight:800;color:var(--text)}
 .top-card-header .location{font-size:13px;color:var(--text-muted);margin-top:4px;display:flex;align-items:center;gap:4px}
@@ -314,7 +314,7 @@ input,select{font-family:inherit}
 .top-card.coup-de-coeur{border:2px solid var(--blue);box-shadow:0 8px 30px rgba(4,107,210,0.15)}
 .top-card.coup-de-coeur .top-card-header{background:linear-gradient(135deg,var(--blue),#0284c7)}
 .top-card.coup-de-coeur .top-card-header h3,.top-card.coup-de-coeur .top-card-header .location{color:#fff}
-.top-card.coup-de-coeur .top-card-badge{background:#fff;color:var(--blue)}
+.top-card.coup-de-coeur .top-card-badge{background:rgba(255,255,255,0.25);color:#fff;border:1px solid rgba(255,255,255,0.4)}
 .top-card.coup-de-coeur .top-card-header::after{color:#fff;opacity:0.1}
 .coup-de-coeur-badge{display:inline-flex;align-items:center;gap:5px;background:#fff;color:var(--blue);font-size:11px;font-weight:800;padding:4px 10px;border-radius:20px;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px}
 .prep-card.coup-de-coeur-card{border:2px solid var(--blue);background:linear-gradient(180deg,var(--blue-50) 0%,#fff 40%);position:relative}
@@ -1586,9 +1586,8 @@ function renderTopPrepas() {
   grid.innerHTML = featured.map((p, i) => `
     <div class="top-card${p.coupDeCoeur?' coup-de-coeur':''}" onclick="location.hash='prepa/${p.id}'">
       <div class="top-card-header">
-        <div class="top-card-badge">#${i+1}</div>
         ${p.coupDeCoeur?'<div class="coup-de-coeur-badge">'+ic('heartPulse',12)+' Coup de coeur</div>':''}
-        <div style="display:flex;align-items:center;gap:12px;margin-bottom:4px">${logoImg(p.id,36)}<h3 style="margin:0">${p.name}</h3></div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px"><div class="top-card-badge">#${i+1}</div>${logoImg(p.id,36)}<h3 style="margin:0">${p.name}</h3></div>
         <div class="location">${ic('mapPin',14)} ${p.ville}</div>
       </div>
       <div class="top-card-body">
