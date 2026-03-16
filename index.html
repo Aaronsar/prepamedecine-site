@@ -1641,15 +1641,20 @@ function renderTopPrepas() {
 }
 
 function sortPrepas(arr) {
-  const priority = ['diploma-sante','medibox','cours-galien'];
-  return arr.slice().sort((a,b) => {
-    var pa = priority.indexOf(a.id), pb = priority.indexOf(b.id);
-    if(pa===-1) pa=999; if(pb===-1) pb=999;
-    if(pa!==pb) return pa-pb;
-    if(a.coupDeCoeur!==b.coupDeCoeur) return a.coupDeCoeur?-1:1;
-    if(a.featured!==b.featured) return a.featured?-1:1;
-    return a.name.localeCompare(b.name);
+  /* Row 1: Diploma, Medibox, Cours Galien | Row 2: alpha | Row 3: Antemed + alpha */
+  const row1 = ['diploma-sante','medibox','cours-galien'];
+  const row3start = ['antemed-epsilon'];
+  var sorted = arr.slice().sort((a,b) => a.name.localeCompare(b.name));
+  var top = [], mid = [], ant = [], rest = [];
+  sorted.forEach(p => {
+    if(row1.indexOf(p.id)!==-1) top[row1.indexOf(p.id)] = p;
+    else if(row3start.indexOf(p.id)!==-1) ant.push(p);
+    else rest.push(p);
   });
+  /* Insert antemed at position 7 (start of row 3) = after 3 rest items */
+  var result = top.filter(Boolean);
+  result = result.concat(rest.slice(0,3), ant, rest.slice(3));
+  return result;
 }
 
 function renderPrepasGrid(filtered) {
