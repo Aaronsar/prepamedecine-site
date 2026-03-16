@@ -247,6 +247,19 @@ var SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsI
 var TABLE='prepamedecine_articles';
 var TABLE_PREPAS='prepamedecine_prepas';
 
+/* Security: admin email whitelist */
+var ADMIN_EMAILS=['aaron@diploma-sante.fr'];
+
+/* Security: rate limiting */
+var MAX_LOGIN_ATTEMPTS=5;
+var LOCKOUT_DURATION_MS=15*60*1000; /* 15 minutes */
+var loginAttempts=0;
+var lockoutUntil=0;
+
+/* Security: inactivity auto-logout */
+var INACTIVITY_TIMEOUT_MS=30*60*1000; /* 30 minutes */
+var inactivityTimer=null;
+
 var sb;
 var state={view:'dashboard',currentId:null,articleData:null,prepaData:null,unsaved:false};
 var articlesCache=[];
@@ -285,38 +298,135 @@ function scoreBadge(val){var cls=val<50?'score-low':val<=75?'score-mid':'score-g
 /* Init */
 function init(){
   sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+  loadLockoutState();
   checkSession();
 }
 
 async function checkSession(){
   var r=await sb.auth.getSession();
   if(r.data.session){
-    document.getElementById('admin-user-email').textContent=r.data.session.user.email;
+    var email=r.data.session.user.email;
+    if(!isAdminEmail(email)){
+      await sb.auth.signOut();
+      showLogin('Acces non autorise pour ce compte.');
+      return;
+    }
+    document.getElementById('admin-user-email').textContent=email;
+    startInactivityTimer();
     showDashboard();
   }else{showLogin()}
 }
 
+/* Security: check admin email */
+function isAdminEmail(email){
+  return ADMIN_EMAILS.indexOf(email.toLowerCase())!==-1;
+}
+
+/* Security: rate limiting persistence */
+function loadLockoutState(){
+  try{
+    var stored=localStorage.getItem('admin_lockout');
+    if(stored){
+      var data=JSON.parse(stored);
+      loginAttempts=data.attempts||0;
+      lockoutUntil=data.until||0;
+      if(Date.now()>lockoutUntil){loginAttempts=0;lockoutUntil=0;localStorage.removeItem('admin_lockout');}
+    }
+  }catch(e){}
+}
+function saveLockoutState(){
+  try{localStorage.setItem('admin_lockout',JSON.stringify({attempts:loginAttempts,until:lockoutUntil}));}catch(e){}
+}
+function clearLockoutState(){
+  loginAttempts=0;lockoutUntil=0;
+  try{localStorage.removeItem('admin_lockout');}catch(e){}
+}
+
+/* Security: inactivity auto-logout */
+function startInactivityTimer(){
+  clearInactivityTimer();
+  var events=['mousedown','keydown','scroll','touchstart'];
+  function resetTimer(){
+    clearTimeout(inactivityTimer);
+    inactivityTimer=setTimeout(autoLogout,INACTIVITY_TIMEOUT_MS);
+  }
+  events.forEach(function(ev){document.addEventListener(ev,resetTimer,{passive:true});});
+  resetTimer();
+}
+function clearInactivityTimer(){
+  if(inactivityTimer){clearTimeout(inactivityTimer);inactivityTimer=null;}
+}
+async function autoLogout(){
+  clearInactivityTimer();
+  await sb.auth.signOut();
+  alert('Session expiree par inactivite. Veuillez vous reconnecter.');
+  location.reload();
+}
+
 /* Login */
-function showLogin(){
+function showLogin(msg){
   document.getElementById('admin-login').style.display='flex';
   document.getElementById('admin-dashboard').style.display='none';
+  var err=document.getElementById('login-error');
+  if(msg){err.textContent=msg;err.style.display='block';}
   document.getElementById('login-form').onsubmit=async function(e){
     e.preventDefault();
-    var email=document.getElementById('login-email').value;
+    var email=document.getElementById('login-email').value.trim().toLowerCase();
     var pass=document.getElementById('login-password').value;
     var btn=this.querySelector('.btn-login');
-    var err=document.getElementById('login-error');
-    btn.disabled=true;err.style.display='none';
+    err.style.display='none';
+
+    /* Check lockout */
+    if(lockoutUntil>Date.now()){
+      var mins=Math.ceil((lockoutUntil-Date.now())/60000);
+      err.textContent='Trop de tentatives. Reessayez dans '+mins+' min.';
+      err.style.display='block';
+      return;
+    }
+
+    /* Check admin whitelist before even attempting auth */
+    if(!isAdminEmail(email)){
+      loginAttempts++;
+      if(loginAttempts>=MAX_LOGIN_ATTEMPTS){
+        lockoutUntil=Date.now()+LOCKOUT_DURATION_MS;
+        saveLockoutState();
+        err.textContent='Compte bloque pour 15 minutes.';
+      }else{
+        saveLockoutState();
+        err.textContent='Acces refuse.';
+      }
+      err.style.display='block';
+      return;
+    }
+
+    btn.disabled=true;
     var result=await sb.auth.signInWithPassword({email:email,password:pass});
     if(result.error){
-      err.textContent='Identifiants incorrects';err.style.display='block';btn.disabled=false;return;
+      loginAttempts++;
+      if(loginAttempts>=MAX_LOGIN_ATTEMPTS){
+        lockoutUntil=Date.now()+LOCKOUT_DURATION_MS;
+        saveLockoutState();
+        err.textContent='Trop de tentatives. Compte bloque 15 minutes.';
+      }else{
+        saveLockoutState();
+        var remaining=MAX_LOGIN_ATTEMPTS-loginAttempts;
+        err.textContent='Identifiants incorrects. '+remaining+' tentative'+(remaining>1?'s':'')+' restante'+(remaining>1?'s':'')+'.';
+      }
+      err.style.display='block';btn.disabled=false;return;
     }
+
+    clearLockoutState();
     document.getElementById('admin-user-email').textContent=email;
+    startInactivityTimer();
     showDashboard();
   };
 }
 
-window.adminLogout=async function(){await sb.auth.signOut();location.reload()};
+window.adminLogout=async function(){
+  clearInactivityTimer();
+  await sb.auth.signOut();
+  location.reload();
+};
 
 /* Dashboard */
 async function showDashboard(){
