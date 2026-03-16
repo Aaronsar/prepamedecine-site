@@ -1,0 +1,1399 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PrépaMédecine — Comparateur de prépas santé en France</title>
+<meta name="description" content="Comparez les meilleures prépas médecine en France : PASS, LAS, Terminale Santé. Trouvez la prépa qui vous correspond parmi 30+ établissements.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============ RESET ============ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;color:#334155;background:#fff;line-height:1.6;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+ul{list-style:none}
+button{cursor:pointer;border:none;background:none;font-family:inherit}
+input,select{font-family:inherit}
+
+/* ============ VARIABLES ============ */
+:root{
+  --blue:#046bd2;--blue-dark:#0353a4;--blue-light:#e8f2fc;--blue-50:#f0f7ff;
+  --green:#10b981;--green-light:#ecfdf5;
+  --orange:#f59e0b;--red:#ef4444;
+  --bg:#ffffff;--bg-alt:#f8fafc;--bg-card:#ffffff;
+  --text:#0f172a;--text-body:#334155;--text-muted:#64748b;--text-light:#94a3b8;
+  --border:#e2e8f0;--border-light:#f1f5f9;
+  --radius:12px;--radius-lg:16px;--radius-sm:8px;
+  --shadow:0 1px 3px rgba(0,0,0,0.06),0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md:0 4px 12px rgba(0,0,0,0.07),0 2px 4px rgba(0,0,0,0.04);
+  --shadow-lg:0 10px 30px rgba(0,0,0,0.08),0 4px 8px rgba(0,0,0,0.04);
+  --max-w:1200px;
+  --nav-h:72px;
+}
+
+/* ============ UTILITY ============ */
+.container{max-width:var(--max-w);margin:0 auto;padding:0 24px}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+.hide{display:none!important}
+
+/* ============ NAV ============ */
+.nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);height:var(--nav-h)}
+.nav .container{display:flex;align-items:center;justify-content:space-between;height:100%}
+.nav-logo{font-weight:800;font-size:20px;color:var(--blue);letter-spacing:-0.5px;display:flex;align-items:center;gap:8px}
+.nav-logo span{color:var(--text)}
+.nav-links{display:flex;align-items:center;gap:32px}
+.nav-links a{font-size:15px;font-weight:500;color:var(--text-body);transition:color .2s}
+.nav-links a:hover,.nav-links a.active{color:var(--blue)}
+.nav-cta{background:var(--blue);color:#fff;padding:10px 22px;border-radius:var(--radius-sm);font-size:14px;font-weight:600;transition:background .2s,transform .15s}
+.nav-cta:hover{background:var(--blue-dark);transform:translateY(-1px)}
+.nav-burger{display:none;flex-direction:column;gap:5px;padding:8px}
+.nav-burger span{display:block;width:22px;height:2px;background:var(--text);border-radius:2px;transition:transform .2s}
+
+@media(max-width:768px){
+  .nav-links{position:fixed;top:var(--nav-h);left:0;right:0;background:#fff;flex-direction:column;padding:24px;gap:16px;border-bottom:1px solid var(--border);transform:translateY(-120%);transition:transform .3s;z-index:99}
+  .nav-links.open{transform:translateY(0)}
+  .nav-links a{font-size:17px;padding:8px 0}
+  .nav-burger{display:flex}
+}
+
+/* ============ HERO ============ */
+.hero{padding:80px 0 60px;background:linear-gradient(180deg,var(--blue-50) 0%,#fff 100%);text-align:center}
+.hero h1{font-size:clamp(28px,5vw,52px);font-weight:800;color:var(--text);letter-spacing:-1px;line-height:1.15;margin-bottom:16px}
+.hero h1 em{font-style:normal;color:var(--blue)}
+.hero p{font-size:clamp(16px,2vw,20px);color:var(--text-muted);max-width:600px;margin:0 auto 36px}
+.hero-search{max-width:560px;margin:0 auto;position:relative}
+.hero-search input{width:100%;padding:16px 20px 16px 48px;border:2px solid var(--border);border-radius:var(--radius);font-size:16px;background:#fff;transition:border-color .2s,box-shadow .2s}
+.hero-search input:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 4px rgba(4,107,210,0.1)}
+.hero-search svg{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:var(--text-light)}
+
+/* ============ AUDIENCE CARDS ============ */
+.audience{padding:60px 0}
+.audience-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.audience-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;text-align:center;cursor:pointer;transition:border-color .2s,box-shadow .2s,transform .2s}
+.audience-card:hover{border-color:var(--blue);box-shadow:var(--shadow-md);transform:translateY(-3px)}
+.audience-card .icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:24px}
+.audience-card h3{font-size:15px;font-weight:700;color:var(--text);margin-bottom:4px}
+.audience-card p{font-size:13px;color:var(--text-muted)}
+@media(max-width:768px){.audience-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:480px){.audience-grid{grid-template-columns:1fr}}
+
+/* ============ SECTION HEADERS ============ */
+.section-tag{display:inline-block;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--blue);margin-bottom:8px}
+.section-title{font-size:clamp(24px,3vw,36px);font-weight:800;color:var(--text);letter-spacing:-0.5px;margin-bottom:12px}
+.section-desc{font-size:17px;color:var(--text-muted);max-width:560px}
+.section-header{margin-bottom:40px}
+.section-header.center{text-align:center}
+.section-header.center .section-desc{margin:0 auto}
+
+/* ============ TOP PREPAS ============ */
+.top-prepas{padding:60px 0;background:var(--bg-alt)}
+.top-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.top-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;transition:box-shadow .25s,transform .25s}
+.top-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-4px)}
+.top-card-badge{position:absolute;top:16px;left:16px;background:var(--blue);color:#fff;font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px}
+.top-card-header{position:relative;padding:28px 24px 20px;background:linear-gradient(135deg,var(--blue-light),#fff)}
+.top-card-header h3{font-size:20px;font-weight:800;color:var(--text)}
+.top-card-header .location{font-size:13px;color:var(--text-muted);margin-top:4px;display:flex;align-items:center;gap:4px}
+.top-card-body{padding:20px 24px}
+.top-card-stats{display:flex;gap:16px;margin-bottom:16px}
+.top-stat{flex:1;text-align:center;padding:10px;background:var(--bg-alt);border-radius:var(--radius-sm)}
+.top-stat .val{font-family:'DM Sans',sans-serif;font-size:20px;font-weight:700;color:var(--blue)}
+.top-stat .lbl{font-size:11px;color:var(--text-muted);margin-top:2px}
+.top-card-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+.tag{font-size:11px;font-weight:600;padding:4px 10px;border-radius:20px;background:var(--blue-light);color:var(--blue)}
+.tag.green{background:var(--green-light);color:#059669}
+.top-card-cta{display:block;text-align:center;padding:12px;background:var(--blue);color:#fff;font-size:14px;font-weight:600;border-radius:var(--radius-sm);transition:background .2s}
+.top-card-cta:hover{background:var(--blue-dark)}
+@media(max-width:900px){.top-grid{grid-template-columns:1fr}}
+
+/* ============ STATS BANNER ============ */
+.stats-banner{padding:50px 0;background:var(--blue);color:#fff}
+.stats-row{display:flex;justify-content:center;gap:60px;flex-wrap:wrap}
+.stat-item{text-align:center}
+.stat-item .num{font-family:'DM Sans',sans-serif;font-size:clamp(32px,4vw,48px);font-weight:700}
+.stat-item .label{font-size:15px;opacity:0.8;margin-top:4px}
+
+/* ============ HOW TO CHOOSE ============ */
+.how-section{padding:80px 0}
+.how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-top:40px}
+.how-step{text-align:center;padding:32px 24px}
+.how-step .num{width:48px;height:48px;border-radius:50%;background:var(--blue-light);color:var(--blue);font-weight:800;font-size:20px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px}
+.how-step h3{font-size:18px;font-weight:700;color:var(--text);margin-bottom:8px}
+.how-step p{font-size:14px;color:var(--text-muted)}
+@media(max-width:768px){.how-grid{grid-template-columns:1fr}}
+
+/* ============ CTA SECTION ============ */
+.cta-section{padding:60px 0;text-align:center}
+.cta-box{background:linear-gradient(135deg,var(--blue),#0284c7);border-radius:var(--radius-lg);padding:48px 32px;color:#fff}
+.cta-box h2{font-size:clamp(22px,3vw,32px);font-weight:800;margin-bottom:12px}
+.cta-box p{font-size:16px;opacity:0.9;margin-bottom:24px;max-width:500px;margin-left:auto;margin-right:auto}
+.cta-btn{display:inline-flex;align-items:center;gap:8px;background:#fff;color:var(--blue);padding:14px 28px;border-radius:var(--radius-sm);font-size:15px;font-weight:700;transition:transform .15s,box-shadow .2s}
+.cta-btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,0.15)}
+
+/* ============ PREPAS LISTING PAGE ============ */
+.prepas-page{padding:40px 0 80px}
+.prepas-page .section-header{padding-top:20px}
+.filter-bar{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:32px;align-items:center}
+.filter-bar input{flex:1;min-width:200px;padding:12px 16px 12px 40px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:14px;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%2394a3b8' viewBox='0 0 24 24'%3E%3Cpath d='M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16z' stroke='%2394a3b8' stroke-width='2' fill='none'/%3E%3C/svg%3E") 12px center no-repeat}
+.filter-bar input:focus{outline:none;border-color:var(--blue)}
+.filter-bar select{padding:12px 32px 12px 14px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:14px;background:#fff;color:var(--text-body);appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24'%3E%3Cpath d='M6 9l6 6 6-6' stroke='%2394a3b8' stroke-width='2' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;cursor:pointer}
+.filter-bar select:focus{outline:none;border-color:var(--blue)}
+.prepas-count{font-size:14px;color:var(--text-muted);margin-bottom:20px}
+.prepas-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:20px}
+
+/* ============ PREP CARD (LISTING) ============ */
+.prep-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:24px;transition:box-shadow .25s,transform .2s,border-color .2s;cursor:pointer;display:flex;flex-direction:column}
+.prep-card:hover{box-shadow:var(--shadow-md);transform:translateY(-3px);border-color:var(--blue)}
+.prep-card-top{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+.prep-avatar{width:48px;height:48px;border-radius:12px;background:var(--blue-light);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;color:var(--blue);flex-shrink:0}
+.prep-card-top h3{font-size:17px;font-weight:700;color:var(--text)}
+.prep-card-top .loc{font-size:13px;color:var(--text-muted);display:flex;align-items:center;gap:3px}
+.prep-card-desc{font-size:13px;color:var(--text-muted);line-height:1.5;margin-bottom:14px;flex:1;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.prep-card-stats{display:flex;gap:12px;margin-bottom:14px}
+.prep-mini-stat{font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text-body);display:flex;align-items:center;gap:4px}
+.prep-mini-stat .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.dot-blue{background:var(--blue)}
+.dot-green{background:var(--green)}
+.dot-orange{background:var(--orange)}
+.prep-card-tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:14px}
+.prep-card-btn{display:block;text-align:center;padding:10px;border:1.5px solid var(--blue);color:var(--blue);border-radius:var(--radius-sm);font-size:13px;font-weight:600;transition:background .2s,color .2s}
+.prep-card:hover .prep-card-btn{background:var(--blue);color:#fff}
+
+/* ============ PREP DETAIL PAGE ============ */
+.detail-page{padding:20px 0 80px}
+.detail-back{display:inline-flex;align-items:center;gap:6px;font-size:14px;color:var(--text-muted);margin-bottom:24px;transition:color .2s;cursor:pointer}
+.detail-back:hover{color:var(--blue)}
+.detail-hero{background:var(--bg-alt);border-radius:var(--radius-lg);padding:40px 36px;margin-bottom:32px}
+.detail-hero h1{font-size:clamp(26px,4vw,40px);font-weight:800;color:var(--text);margin-bottom:8px}
+.detail-hero .tagline{font-size:17px;color:var(--text-muted);max-width:700px;margin-bottom:20px;line-height:1.6}
+.detail-stats{display:flex;flex-wrap:wrap;gap:16px}
+.detail-stat{background:#fff;border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px 20px;min-width:140px}
+.detail-stat .val{font-family:'DM Sans',sans-serif;font-size:24px;font-weight:700;color:var(--blue)}
+.detail-stat .lbl{font-size:12px;color:var(--text-muted);margin-top:2px}
+
+.detail-section{margin-bottom:40px}
+.detail-section h2{font-size:22px;font-weight:800;color:var(--text);margin-bottom:20px;display:flex;align-items:center;gap:8px}
+.detail-blocks{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.detail-block{background:var(--bg-alt);border-radius:var(--radius);padding:20px}
+.detail-block h4{font-size:15px;font-weight:700;color:var(--text);margin-bottom:6px}
+.detail-block p{font-size:14px;color:var(--text-body);line-height:1.6}
+@media(max-width:768px){.detail-blocks{grid-template-columns:1fr}}
+
+.avis-box{background:var(--blue-50);border:1px solid rgba(4,107,210,0.15);border-radius:var(--radius-lg);padding:28px;margin-top:32px}
+.avis-box h3{font-size:16px;font-weight:700;color:var(--blue);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.avis-box p{font-size:15px;color:var(--text-body);line-height:1.7}
+
+/* ============ FAQ PAGE ============ */
+.faq-page{padding:40px 0 80px}
+.faq-list{max-width:800px;margin:0 auto}
+.faq-item{border-bottom:1px solid var(--border)}
+.faq-q{width:100%;text-align:left;padding:20px 0;font-size:16px;font-weight:600;color:var(--text);display:flex;justify-content:space-between;align-items:center;gap:16px;transition:color .2s}
+.faq-q:hover{color:var(--blue)}
+.faq-q .chevron{width:20px;height:20px;flex-shrink:0;transition:transform .3s;color:var(--text-muted)}
+.faq-q.open .chevron{transform:rotate(180deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease-out}
+.faq-a-inner{padding:0 0 20px;font-size:15px;color:var(--text-body);line-height:1.7}
+
+/* ============ CONSEILS PAGE ============ */
+.conseils-page{padding:40px 0 80px}
+.conseils-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:24px}
+.article-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:box-shadow .25s,transform .2s}
+.article-card:hover{box-shadow:var(--shadow-md);transform:translateY(-3px)}
+.article-card-img{height:180px;background:var(--blue-light);display:flex;align-items:center;justify-content:center;font-size:40px}
+.article-card-body{padding:20px}
+.article-card-cat{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--blue);margin-bottom:8px}
+.article-card-body h3{font-size:17px;font-weight:700;color:var(--text);margin-bottom:8px;line-height:1.3}
+.article-card-body p{font-size:13px;color:var(--text-muted);line-height:1.5;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.article-card-meta{padding:12px 20px;border-top:1px solid var(--border-light);font-size:12px;color:var(--text-light)}
+
+/* ============ FOOTER ============ */
+.footer{background:var(--text);color:#fff;padding:48px 0 24px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:40px}
+.footer-brand{font-size:20px;font-weight:800;margin-bottom:12px}
+.footer-brand em{color:var(--blue);font-style:normal}
+.footer p{font-size:14px;color:#94a3b8;line-height:1.6}
+.footer h4{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:16px;color:#e2e8f0}
+.footer a{font-size:14px;color:#94a3b8;display:block;margin-bottom:10px;transition:color .2s}
+.footer a:hover{color:#fff}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.1);padding-top:24px;text-align:center;font-size:13px;color:#64748b}
+@media(max-width:768px){.footer-grid{grid-template-columns:1fr 1fr;gap:24px}}
+@media(max-width:480px){.footer-grid{grid-template-columns:1fr}}
+
+/* ============ PAGE VISIBILITY ============ */
+.page{display:none}
+.page.active{display:block}
+
+/* ============ ANIMATIONS ============ */
+.fade-up{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.fade-up.visible{opacity:1;transform:translateY(0)}
+.fade-up:nth-child(2){transition-delay:.08s}
+.fade-up:nth-child(3){transition-delay:.16s}
+.fade-up:nth-child(4){transition-delay:.24s}
+</style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<nav class="nav">
+  <div class="container">
+    <a href="#accueil" class="nav-logo"><em>Prépa</em><span>Médecine</span></a>
+    <div class="nav-links" id="navLinks">
+      <a href="#accueil" data-page="home">Accueil</a>
+      <a href="#prepas" data-page="prepas">Prépas</a>
+      <a href="#conseils" data-page="conseils">Conseils</a>
+      <a href="#faq" data-page="faq">FAQ</a>
+      <a href="#prepas" class="nav-cta" data-page="prepas">Trouver ma prépa</a>
+    </div>
+    <button class="nav-burger" id="burger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ============ HOME PAGE ============ -->
+<div class="page active" id="page-home">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <h1>Toutes les prépas santé,<br><em>au même endroit.</em></h1>
+      <p>Compare plus de 30 prépas médecine en France. PASS, LAS, Terminale Santé : trouve celle qui te correspond.</p>
+      <div class="hero-search">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+        <input type="text" id="heroSearch" placeholder="Rechercher une prépa, une ville...">
+      </div>
+    </div>
+  </section>
+
+  <!-- AUDIENCE -->
+  <section class="audience">
+    <div class="container">
+      <div class="audience-grid">
+        <div class="audience-card" onclick="filterByTag('Terminale Santé')">
+          <div class="icon" style="background:#fef3c7">&#127891;</div>
+          <h3>Lycéen</h3>
+          <p>Anticipe dès la Première ou Terminale</p>
+        </div>
+        <div class="audience-card" onclick="filterByTag('PASS')">
+          <div class="icon" style="background:var(--blue-light)">&#129658;</div>
+          <h3>Étudiant PASS</h3>
+          <p>Maximise tes chances de réussite</p>
+        </div>
+        <div class="audience-card" onclick="filterByTag('LAS')">
+          <div class="icon" style="background:var(--green-light)">&#128218;</div>
+          <h3>Étudiant LAS</h3>
+          <p>Combine licence et accès santé</p>
+        </div>
+        <div class="audience-card" onclick="filterByTag('En ligne')">
+          <div class="icon" style="background:#f0e7fe">&#128187;</div>
+          <h3>100% en ligne</h3>
+          <p>Prépas accessibles partout</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TOP PREPAS -->
+  <section class="top-prepas">
+    <div class="container">
+      <div class="section-header center">
+        <div class="section-tag">Top prépas 2025</div>
+        <h2 class="section-title">Les prépas les mieux notées</h2>
+        <p class="section-desc">Sélectionnées pour leurs résultats, leur accompagnement et leur méthode pédagogique.</p>
+      </div>
+      <div class="top-grid" id="topGrid"></div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="stats-banner">
+    <div class="container">
+      <div class="stats-row">
+        <div class="stat-item"><div class="num">30+</div><div class="label">Prépas comparées</div></div>
+        <div class="stat-item"><div class="num">20+</div><div class="label">Villes couvertes</div></div>
+        <div class="stat-item"><div class="num">70%</div><div class="label">Taux moyen de réussite</div></div>
+        <div class="stat-item"><div class="num">100%</div><div class="label">Gratuit et indépendant</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW TO CHOOSE -->
+  <section class="how-section">
+    <div class="container">
+      <div class="section-header center">
+        <div class="section-tag">Guide</div>
+        <h2 class="section-title">Comment choisir sa prépa ?</h2>
+        <p class="section-desc">3 étapes pour trouver la prépa qui correspond à ton profil et tes objectifs.</p>
+      </div>
+      <div class="how-grid">
+        <div class="how-step fade-up">
+          <div class="num">1</div>
+          <h3>Identifie ton profil</h3>
+          <p>Évalue ton niveau, tes objectifs (anticipation, consolidation, réussite) et ta capacité d'organisation.</p>
+        </div>
+        <div class="how-step fade-up">
+          <div class="num">2</div>
+          <h3>Compare les formats</h3>
+          <p>En ligne, présentiel, hybride, stages intensifs, coaching personnalisé... Chaque format a ses avantages.</p>
+        </div>
+        <div class="how-step fade-up">
+          <div class="num">3</div>
+          <h3>Vérifie les résultats</h3>
+          <p>Regarde les taux de réussite, les contenus (QCM, examens blancs), l'accompagnement et les avis.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-box">
+        <h2>Prêt à trouver ta prépa idéale ?</h2>
+        <p>Compare les prépas, consulte les fiches détaillées et fais ton choix en toute sérénité.</p>
+        <a href="#prepas" class="cta-btn" onclick="showPage('prepas')">Voir toutes les prépas &rarr;</a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ PREPAS LISTING PAGE ============ -->
+<div class="page" id="page-prepas">
+  <section class="prepas-page">
+    <div class="container">
+      <div class="section-header" style="padding-top:20px">
+        <div class="section-tag">Comparateur</div>
+        <h2 class="section-title">Toutes les prépas santé</h2>
+        <p class="section-desc">Filtre par ville, format ou filière pour trouver la prépa qui te correspond.</p>
+      </div>
+      <div class="filter-bar">
+        <input type="text" id="searchInput" placeholder="Rechercher une prépa ou une ville...">
+        <select id="filterVille"><option value="">Toutes les villes</option></select>
+        <select id="filterFormat"><option value="">Tous les formats</option><option value="Présentiel">Présentiel</option><option value="En ligne">En ligne</option><option value="Hybride">Hybride</option></select>
+        <select id="filterFiliere"><option value="">Toutes les filières</option><option value="PASS">PASS</option><option value="LAS">LAS</option><option value="Terminale Santé">Terminale Santé</option><option value="P0">P0 / Année préparatoire</option></select>
+      </div>
+      <div class="prepas-count" id="prepasCount"></div>
+      <div class="prepas-grid" id="prepasGrid"></div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ DETAIL PAGE ============ -->
+<div class="page" id="page-detail">
+  <section class="detail-page">
+    <div class="container">
+      <div class="detail-back" onclick="showPage('prepas')">&larr; Retour aux prépas</div>
+      <div id="detailContent"></div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ CONSEILS PAGE ============ -->
+<div class="page" id="page-conseils">
+  <section class="conseils-page">
+    <div class="container">
+      <div class="section-header" style="padding-top:20px">
+        <div class="section-tag">Conseils &amp; Actus</div>
+        <h2 class="section-title">Réussir ses études de santé</h2>
+        <p class="section-desc">Articles, guides et conseils pour préparer au mieux ton parcours en santé.</p>
+      </div>
+      <div class="conseils-grid" id="conseilsGrid"></div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ FAQ PAGE ============ -->
+<div class="page" id="page-faq">
+  <section class="faq-page">
+    <div class="container">
+      <div class="section-header center" style="padding-top:20px">
+        <div class="section-tag">FAQ</div>
+        <h2 class="section-title">Questions fréquentes</h2>
+        <p class="section-desc">Tout ce que tu dois savoir sur les prépas santé, le PASS, la LAS et le choix de ta formation.</p>
+      </div>
+      <div class="faq-list" id="faqList"></div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand"><em>Prépa</em>Médecine</div>
+        <p>La plateforme qui compare et présente les meilleures prépas santé en France pour t'aider à choisir celle qui correspond à ton profil.</p>
+      </div>
+      <div>
+        <h4>Navigation</h4>
+        <a href="#accueil" onclick="showPage('home')">Accueil</a>
+        <a href="#prepas" onclick="showPage('prepas')">Prépas</a>
+        <a href="#conseils" onclick="showPage('conseils')">Conseils</a>
+        <a href="#faq" onclick="showPage('faq')">FAQ</a>
+      </div>
+      <div>
+        <h4>Ressources</h4>
+        <a href="#">PASS vs LAS</a>
+        <a href="#">Parcoursup Santé</a>
+        <a href="#">Méthodologie</a>
+        <a href="#">Terminale Santé</a>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <a href="mailto:contact@prepamedecine.fr">contact@prepamedecine.fr</a>
+        <a href="#">Mentions légales</a>
+        <a href="#">Politique de confidentialité</a>
+      </div>
+    </div>
+    <div class="footer-bottom">&copy; 2025 PrépaMédecine.fr — Tous droits réservés</div>
+  </div>
+</footer>
+
+<script>
+/* ============ PREPAS DATA ============ */
+const PREPAS = [
+  {
+    id:'diploma-sante',name:'Diploma Santé',ville:'Paris',villes:['Paris'],
+    taux:'79%',anciennete:'10+ ans',etudiants:'1 200+',
+    format:'Présentiel',filieres:['PASS','LAS','Terminale Santé'],
+    tags:['PASS','LAS','Terminale Santé','Présentiel','Paris'],
+    intro:"Prépa d'excellence implantée à Paris, Diploma Santé accompagne les lycéens et étudiants en santé grâce à une méthode exigeante, un encadrement humain de haut niveau et une pédagogie fondée sur la rigueur et la confiance.",
+    stats:[{val:'79%',lbl:'Admis médecine'},{val:'91%',lbl:'Admis pharmacie'},{val:'1 200+',lbl:'Étudiants/an'}],
+    modele:[
+      {t:"Une exigence académique reconnue",d:"Fondé par Benjamin Haddad, ancien major de PACES, Diploma Santé a bâti sa réputation sur la rigueur et la qualité de son encadrement. Les formations s'adaptent aux programmes des facultés franciliennes."},
+      {t:"Méthode fondée sur la progression",d:"Pré-rentrées intensives, concours blancs hebdomadaires, corrections personnalisées et analyses de performance. L'objectif : transformer la répétition en méthode et la rigueur en confiance."},
+      {t:"Accompagnement humain",d:"Suivi individuel par des coachs certifiés Hermione Médecine, spécialisés dans la planification, la motivation et la gestion du stress."},
+      {t:"Outils numériques à la pointe",d:"Plateforme interactive : cours filmés, fiches actualisées, QCM classants, replays et suivi des performances en temps réel."}
+    ],
+    pedagogie:[
+      {t:"Excellence pédagogique",d:"Cours et TD assurés par des professeurs agrégés ou universitaires, en effectifs maîtrisés."},
+      {t:"Entraînements réguliers",d:"2 pré-rentrées intensives, concours blancs hebdomadaires, classements comparatifs et simulations orales."},
+      {t:"Technologie au service de la méthode",d:"Replays, fiches, statistiques, QCM, espace Q/R. Outils modernes, fiables et pédagogiquement construits."},
+      {t:"Vers l'autonomie",d:"Au-delà de la performance académique, Diploma Santé forme à la méthode, la confiance et la régularité."}
+    ],
+    avis:"Diploma Santé s'impose comme une référence majeure de la préparation médicale en Île-de-France. Son modèle repose sur une cohérence rare : exigence scientifique, accompagnement humain et innovation pédagogique se conjuguent dans un cadre structuré et bienveillant. Les résultats traduisent la solidité de la méthode : progression mesurable, suivi individualisé et véritable culture de la réussite.",
+    featured:true
+  },
+  {
+    id:'medibox',name:'Medibox',ville:'En ligne',villes:['En ligne'],
+    taux:'82%',anciennete:'Innovation',etudiants:'2 500',
+    format:'En ligne',filieres:['PASS','LAS','Terminale Santé','LSPS'],
+    tags:['PASS','LAS','Terminale Santé','En ligne','100% digital'],
+    intro:"Prépa médicale 100% en ligne, Medibox propose un accompagnement complet et personnalisé du lycée jusqu'à la première année de santé, avec un encadrement humain exigeant et une technologie d'apprentissage de pointe.",
+    stats:[{val:'82%',lbl:'Admis 2e année'},{val:'2 500',lbl:'Étudiants'},{val:'10 000+',lbl:'QCM disponibles'}],
+    modele:[
+      {t:"100% en ligne, pensée performance",d:"Environnement numérique immersif et suivi humain constant. Cours par des enseignants agrégés et universitaires des meilleures facultés françaises."},
+      {t:"Méthode Clever® et neurosciences",d:"Mémorisation active et ancrage durable. Entraînements réguliers, feedbacks instantanés et analyse continue des performances."},
+      {t:"Coaching Hermione Médecine",d:"Coaching individuel certifié avec tuteur référent dédié. Entretiens réguliers, bilans personnalisés et accompagnement méthodologique."},
+      {t:"Plateforme à la pointe",d:"Accessible 7j/7 sur Web, iOS et Android : cours en direct, replays, 10 000+ QCM corrigés, fiches actualisées, statistiques de progression."}
+    ],
+    pedagogie:[
+      {t:"Rigueur et méthode",d:"Cours en direct, replays illimités, supports actualisés dans un environnement exigeant et stimulant."},
+      {t:"Entraînements mesurables",d:"10 000+ QCM, concours blancs et statistiques en temps réel pour suivre la progression avec précision."},
+      {t:"Technologie au service de l'humain",d:"La technologie renforce l'accompagnement. L'étudiant reste guidé par son coach et ses bilans individualisés."},
+      {t:"Accompagnement global",d:"Du lycée à la 2e année santé : organisation, gestion du stress, efficacité cognitive et préparation complète."}
+    ],
+    avis:"Medibox s'impose comme l'une des références nationales de la préparation santé en ligne. Alliant exigence académique, innovation numérique et accompagnement humain, elle réussit à reproduire — et souvent à surpasser — le cadre d'une prépa présentielle. Sa plateforme interactive et sa méthode Clever® en font une solution performante et moderne.",
+    featured:true
+  },
+  {
+    id:'cours-galien',name:'Cours Galien',ville:'National (15+ centres)',villes:['Paris','Lyon','Marseille','Lille','Rennes','Bordeaux','Montpellier','Strasbourg'],
+    taux:'93% satisfaction',anciennete:'35+ ans',etudiants:'Milliers/an',
+    format:'Hybride',filieres:['PASS','LAS','LSPS','Terminale Santé'],
+    tags:['PASS','LAS','Terminale Santé','National','Hybride'],
+    intro:"Depuis plus de 35 ans, le Cours Galien est une référence nationale. Fondé en 1987, il accompagne des générations d'étudiants vers les filières les plus sélectives avec une méthode éprouvée.",
+    stats:[{val:'93%',lbl:'Satisfaction'},{val:'35+',lbl:'Années d\'expérience'},{val:'15+',lbl:'Centres en France'}],
+    modele:[
+      {t:"Expertise reconnue depuis 35 ans",d:"Acteur historique de la préparation médicale. Chaque année, des milliers d'étudiants bénéficient d'une organisation rodée et de supports actualisés."},
+      {t:"Méthode et technologie",d:"Plateforme OptiPerf dopée par l'IA : QCM adaptatifs, suivi de progression en temps réel et plannings de révision personnalisés."},
+      {t:"Accompagnement individuel",d:"Référents pédagogiques, coaching méthodologique, parrainage par d'anciens étudiants, bilans réguliers et salles ouvertes 7j/7."},
+      {t:"Réseau national à ancrage local",d:"15+ centres répartis en France. Chaque antenne ajuste ses programmes selon les spécificités de la fac partenaire."}
+    ],
+    pedagogie:[
+      {t:"Encadrement régulier",d:"4 à 5 heures de cours hebdomadaires en petits groupes, avec interaction directe."},
+      {t:"Entraînement intensif",d:"Colles hebdomadaires avec correction détaillée et classement national, examens blancs en conditions réelles."},
+      {t:"Outils actualisés",d:"Supports mis à jour chaque semestre. Plateforme OptiPerf : QCM adaptatifs, fiches et plannings dynamiques."},
+      {t:"Vers la réussite",d:"Coaching individuel pour consolider méthode de travail, gestion du temps et confiance."}
+    ],
+    avis:"Cours Galien demeure une valeur sûre du secteur : une organisation exemplaire, des résultats solides et un encadrement régulier. L'expérience et la cohérence nationale rassurent de nombreuses familles. Tarifs entre 2 000 et 5 000 €, avec paiement échelonné et bourses au mérite.",
+    featured:true
+  },
+  {
+    id:'medschool',name:'MedSchool Prépa',ville:'St-Étienne, Clermont, Grenoble',villes:['Saint-Étienne','Clermont-Ferrand','Grenoble'],
+    taux:'~72%',anciennete:'20+ ans',etudiants:'—',
+    format:'Hybride',filieres:['PASS','LAS','P0','Terminale Santé'],
+    tags:['PASS','LAS','P0','Hybride'],
+    intro:"Réseau de prépas santé implanté à Saint-Étienne, Clermont-Ferrand et Grenoble, MedSchool accompagne les lycéens et étudiants en PASS, LAS et P0 avec une pédagogie individualisée.",
+    stats:[{val:'~72%',lbl:'Taux de réussite'},{val:'20+',lbl:'Années'},{val:'3',lbl:'Villes'}],
+    modele:[
+      {t:"Offre complète multi-sites",d:"Couvre Saint-Étienne, Clermont-Ferrand et Grenoble avec un trajet complet de la Première Santé aux oraux MMOPK."},
+      {t:"Méthode hybride",d:"Cours présentiels, modules hybrides (visioconférence + e-learning) via la plateforme LiveClass."},
+      {t:"Accompagnement individualisé",d:"Tuteur référent, plateforme numérique 24h/24, au moins 3 entretiens individuels par semestre."},
+      {t:"Formats diversifiés",d:"Lycéens, étudiants PASS/LAS, réorientation PASS-R, année P0, stages de pré-rentrée."}
+    ],
+    pedagogie:[
+      {t:"Pédagogie structurée",d:"Cours et TD en effectifs restreints, matières alignées sur les référentiels PASS/LAS/LSPS."},
+      {t:"Entraînements fréquents",d:"QCM, examens blancs, stages de pré-rentrée, simulations d'oraux."},
+      {t:"Outils numériques",d:"Plateforme LiveClass : vidéos, QCM interactifs, replays, statistiques de progression."},
+      {t:"Autonomie progressive",d:"Suivi individuel et méthodologie explicite pour guider vers une autonomie encadrée."}
+    ],
+    avis:"MedSchool Prépa est une option très sérieuse pour les filières santé : sa présence multi-sites, sa méthode hybride et ses effectifs réduits en font un cadre robuste. Particulièrement adapté aux candidats motivés souhaitant un accompagnement complet."
+  },
+  {
+    id:'cours-agora',name:'Cours Agora',ville:'Lyon, Grenoble, Montpellier, Nîmes',villes:['Lyon','Grenoble','Montpellier','Nîmes'],
+    taux:'85%',anciennete:'Depuis 2013',etudiants:'500/an',
+    format:'Présentiel',filieres:['PASS','LAS','Terminale Santé'],
+    tags:['PASS','LAS','Terminale Santé','Présentiel'],
+    intro:"Réseau de prépas implanté à Lyon, Grenoble, Montpellier et Nîmes. Cours Agora prépare les étudiants du lycée à l'internat grâce à une méthode structurée et un encadrement permanent.",
+    stats:[{val:'85%',lbl:'Réussite PASS'},{val:'500',lbl:'Étudiants/an'},{val:'4',lbl:'Villes'}],
+    modele:[
+      {t:"Structure régionale spécialisée",d:"Créée en 2013 à Lyon Est, étendue à plusieurs villes universitaires."},
+      {t:"Méthode orientée résultats",d:"Cours et TD en petits groupes, colles hebdomadaires, stages intensifs, bureau personnel 7j/7 de 6h à 23h."},
+      {t:"Encadrement individualisé",d:"Effectifs réduits, parrainage, suivi méthodologique et cadre de travail dédié."},
+      {t:"Formats flexibles",d:"Première Santé, Terminale Santé, PASS, LAS, LAS2, présentiel majoritaire."}
+    ],
+    pedagogie:[
+      {t:"Exigence et rigueur",d:"Rythme soutenu dès la Terminale ou la rentrée universitaire."},
+      {t:"Entraînements nombreux",d:"QCM, examens blancs, colles, simulation de concours."},
+      {t:"Supports numériques",d:"Vidéos de cours, replays, QCM interactifs, suivi de progression."},
+      {t:"Accompagnement complet",d:"Suivi permanent, cadre d'étude intensif et parrainage."}
+    ],
+    avis:"Cours Agora est une option très adaptée pour les étudiants motivés recherchant un cadre structuré, intensif et performant. Taux de réussite annoncé de 85% pour les inscrits PASS en 2024. Le point fort : l'immersion proposée avec bureau personnel et accès 7j/7."
+  },
+  {
+    id:'biomedal',name:'BIOMEDAL',ville:'Besançon, Dijon, Clermont, Nancy',villes:['Besançon','Dijon','Clermont-Ferrand','Nancy','Metz','Saint-Étienne'],
+    taux:'~70.6%',anciennete:'20+ ans',etudiants:'—',
+    format:'Hybride',filieres:['PASS','LAS','Terminale Santé','P0'],
+    tags:['PASS','LAS','Terminale Santé','P0','Hybride'],
+    intro:"Réseau régional de préparations implanté à Besançon, Dijon, Clermont-Ferrand, Nancy-Metz et Saint-Étienne. Effectifs limités à 25 étudiants par classe.",
+    stats:[{val:'70.6%',lbl:'PASS Besançon'},{val:'72.3%',lbl:'LAS Besançon'},{val:'25',lbl:'Étudiants/classe'}],
+    modele:[
+      {t:"Structure régionale spécialisée",d:"Plus de vingt ans d'accompagnement dans plusieurs villes universitaires régionales."},
+      {t:"Méthode structurée",d:"Enseignements alignés sur les programmes universitaires, TD, examens blancs et plateforme e-learning."},
+      {t:"Classes réduites",d:"25 étudiants maximum par classe, suivi méthodologique personnalisé."},
+      {t:"Formats flexibles",d:"Lycéens, P0, PASS/LAS, stages intensifs. Présentiel ou en ligne."}
+    ],
+    pedagogie:[
+      {t:"Rigueur et encadrement",d:"Enseignants permanents, travail en petits groupes, forte exigence scientifique."},
+      {t:"Entraînements intensifs",d:"QCM ciblés, examens blancs calibrés, classements internes et suivi de progression."},
+      {t:"Supports numériques",d:"Parcours en ligne, replays, application mobile, interface numérique complète."},
+      {t:"Autonomie accompagnée",d:"Rendre l'étudiant autonome tout en restant soutenu par un cadre souple et adapté."}
+    ],
+    avis:"BIOMEDAL se distingue comme une prépa régionale crédible avec des taux de réussite solides et une méthode axée sur l'entraînement et le suivi personnalisé."
+  },
+  {
+    id:'stan-sante',name:'Stan Santé',ville:'Nancy, Metz',villes:['Nancy','Metz'],
+    taux:'85% PASS',anciennete:'—',etudiants:'—',
+    format:'Hybride',filieres:['PASS','LAS','Terminale Santé'],
+    tags:['PASS','LAS','Terminale Santé','Hybride'],
+    intro:"Prépa médicale à Nancy et Metz, Stan Santé prépare avec un accompagnement personnalisé, des stages d'anticipation et des outils numériques performants.",
+    stats:[{val:'85%',lbl:'Réussite PASS'},{val:'72%',lbl:'Réussite LAS'},{val:'2',lbl:'Villes'}],
+    modele:[
+      {t:"Prépa régionale reconnue",d:"Structure spécialisée dans le Grand Est avec des centres à Nancy et Metz."},
+      {t:"Présentiel et numérique",d:"Supports actualisés, stages de pré-rentrée et plateforme numérique performante."},
+      {t:"Suivi renforcé",d:"Parrain/marraine étudiant + enseignant-référent pour un suivi régulier."},
+      {t:"Formats accessibles",d:"Présentiel principal, modules hybrides ou à distance selon les besoins."}
+    ],
+    pedagogie:[
+      {t:"Orientée résultats",d:"Cours et TD encadrés par des enseignants expérimentés, effectifs contenus."},
+      {t:"Entraînements réguliers",d:"Examens blancs, QCM, colles, stages intensifs d'août."},
+      {t:"Outils modernes",d:"Bibliothèque de supports, plateforme en ligne, suivi d'assiduité via app mobile."},
+      {t:"Parrainage actif",d:"Bilans réguliers, plan de travail encadré vers l'autonomie."}
+    ],
+    avis:"Stan Santé est un excellent choix à Nancy ou Metz. Avec 85% de réussite PASS en 2024 et une méthode combinant rigueur, numérique et suivi personnalisé, la structure dispose d'atouts solides."
+  },
+  {
+    id:'prepa-defi',name:'Prépa Défi',ville:'Angers, Le Mans',villes:['Angers','Le Mans'],
+    taux:'62%',anciennete:'20+ ans',etudiants:'—',
+    format:'Présentiel',filieres:['PASS','LAS','Terminale Santé','P0'],
+    tags:['PASS','LAS','Terminale Santé','P0','Présentiel'],
+    intro:"Implantée à Angers et Le Mans, Prépa Défi accompagne depuis plus de vingt ans les lycéens et étudiants dans les filières santé.",
+    stats:[{val:'62%',lbl:'En 2e année 2023'},{val:'20+',lbl:'Années'},{val:'2',lbl:'Villes'}],
+    modele:[
+      {t:"Structure régionale",d:"Bien ancrée sur le territoire Angers/Le Mans."},
+      {t:"Méthode structurée",d:"Cours et TD encadrés, stages intensifs, QCM et examens blancs réguliers."},
+      {t:"Accompagnement adapté",d:"Groupes réduits, parrainage, suivi méthodologique."},
+      {t:"Formats variés",d:"Première/Terminale Santé, P0, PASS/LAS, stages pré-rentrée."}
+    ],
+    pedagogie:[
+      {t:"Exigence et encadrement",d:"Enseignement rigoureux avec suivi régulier et accompagnement méthodologique."},
+      {t:"Entraînements nombreux",d:"QCM ciblés, examens blancs en conditions réelles, auto-évaluations."},
+      {t:"Supports numériques",d:"Vidéo-cours, forums, QCM interactifs, fiches synthétiques."},
+      {t:"Vers l'autonomie",d:"Parrainage, bilans réguliers, suivi pédagogique personnalisé."}
+    ],
+    avis:"Prépa Défi est une option sérieuse avec une forte implantation régionale et un dispositif pédagogique complet. Environ 62% d'étudiants en 2e année santé en 2023."
+  },
+  {
+    id:'bersot-formation',name:'Bersot Formation',ville:'Besançon',villes:['Besançon'],
+    taux:'~72%',anciennete:'20+ ans (depuis 1991)',etudiants:'—',
+    format:'Hybride',filieres:['PASS','LAS','Terminale Santé','P0'],
+    tags:['PASS','LAS','Terminale Santé','P0','Hybride'],
+    intro:"Institution locale à Besançon depuis 1991, spécialisée dans la préparation aux parcours santé à l'Université de Franche-Comté.",
+    stats:[{val:'~72%',lbl:'Taux de réussite'},{val:'30+',lbl:'Années'},{val:'7j/7',lbl:'Locaux ouverts'}],
+    modele:[
+      {t:"Institution locale",d:"Installée à Besançon depuis 1991, spécialisée PASS/LAS à l'Université de Franche-Comté."},
+      {t:"Méthode structurée",d:"Cours et TD, stages intensifs, examens blancs et évaluations régulières."},
+      {t:"Accompagnement individuel",d:"Parrainage, suivi pédagogique et plateforme 'Mon Espace Prépa'."},
+      {t:"Formats flexibles",d:"Lycéens, P0, PASS/LAS. Présentiel et accès digital."}
+    ],
+    pedagogie:[
+      {t:"Pédagogie rigoureuse",d:"90h de cours, 40h d'examens blancs et 60h d'évaluations. Locaux ouverts 7j/7."},
+      {t:"Entraînements intensifs",d:"Banque de QCM, concours blancs, évaluations régulières."},
+      {t:"Supports actualisés",d:"Fiches, vidéos, plateforme en ligne, lives."},
+      {t:"Vers l'autonomie",d:"Suivi individuel, tutorat, parrainage, méthodologie."}
+    ],
+    avis:"Bersot Formation est un acteur reconnu de la préparation santé dans l'Est. Organisation rigoureuse, volumes horaires conséquents et suivi pédagogique constant."
+  },
+  {
+    id:'supexam',name:'Supexam',ville:'National (10+ villes)',villes:['Paris','Angers','Le Mans','Besançon','Dijon','Nancy','Metz','Nantes','Reims','Rouen','Le Havre','Strasbourg','Lille'],
+    taux:'60-70%',anciennete:'~45 ans',etudiants:'—',
+    format:'Hybride',filieres:['PASS','LAS','Terminale Santé','P0'],
+    tags:['PASS','LAS','Terminale Santé','National','Hybride'],
+    intro:"Fondé à la fin des années 1970, Supexam est un réseau national spécialisé dans la préparation aux études médicales et paramédicales, présent dans 10+ villes.",
+    stats:[{val:'60-70%',lbl:'Taux de réussite'},{val:'~45',lbl:'Années'},{val:'10+',lbl:'Villes'}],
+    modele:[
+      {t:"Couverture nationale",d:"Présent dans un grand nombre de villes en France depuis la fin des années 1970."},
+      {t:"Méthode complète",d:"Cours et TD encadrés, supports mis à jour chaque année, examens blancs en conditions réelles."},
+      {t:"Accompagnement individuel",d:"Suivi individuel, tutorat, stages de pré-rentrée, aide à la gestion du temps."},
+      {t:"Format mixte",d:"Présentiel dans les centres régionaux, avec possibilité de modules à distance."}
+    ],
+    pedagogie:[
+      {t:"Exigence pédagogique",d:"Enseignants expérimentés pour les matières fondamentales."},
+      {t:"Entraînements fréquents",d:"QCM, concours blancs, entraînements calibrés sur les formats PASS/LAS."},
+      {t:"Outils actualisés",d:"Supports revus chaque année, QCM interactifs, banque d'annales."},
+      {t:"Vers l'autonomie",d:"Bilans pédagogiques, modules méthodologiques et conditions d'étude adaptées."}
+    ],
+    avis:"Supexam est une prépa d'envergure nationale avec une couverture géographique étendue et un dispositif pédagogique complet. Option sérieuse pour les étudiants hors Île-de-France."
+  },
+  {
+    id:'medisup',name:'Médisup',ville:'National',villes:['Paris','Lyon','Bordeaux','Marseille','Nice','Lille','Toulouse'],
+    taux:'66%',anciennete:'30+ ans',etudiants:'3 000+',
+    format:'Hybride',filieres:['PASS','LAS','LSPS','Terminale Santé'],
+    tags:['PASS','LAS','LSPS','Terminale Santé','National','Hybride'],
+    intro:"Depuis plus de 30 ans, Médisup propose des formations préparatoires aux études de santé avec un taux moyen de 66%, plus du double de la moyenne universitaire.",
+    stats:[{val:'66%',lbl:'Taux moyen'},{val:'3 000+',lbl:'Étudiants'},{val:'30+',lbl:'Années'}],
+    modele:[
+      {t:"Expérience nationale",d:"Trois décennies d'accompagnement, présent à Paris et dans de nombreuses villes universitaires."},
+      {t:"Méthode numérique",d:"Application MS Connect 24h/24, simulations médicales immersives (Body Interact)."},
+      {t:"Accompagnement humain",d:"Référents pédagogiques, coaching méthodologique, parrainage et bilans réguliers."},
+      {t:"Réseau national",d:"Au plus près des grands pôles universitaires avec adaptation aux spécificités locales."}
+    ],
+    pedagogie:[
+      {t:"Rigueur et bienveillance",d:"4 à 5 heures de cours hebdomadaires en petits groupes."},
+      {t:"Entraînements continus",d:"Colles hebdomadaires, examens blancs classants, banque de QCM et annales."},
+      {t:"Outils modernes",d:"Supports mis à jour, plateforme numérique, simulations médicales immersives."},
+      {t:"Vers la réussite",d:"Coaching individuel, bilans réguliers, parrainage et rythme structuré."}
+    ],
+    avis:"Médisup demeure une valeur sûre : réseau national solide, outils pédagogiques modernes et accompagnement complet. Taux d'admission nettement supérieurs à la moyenne nationale."
+  },
+  {
+    id:'cours-thales',name:'Cours Thalès',ville:'Paris + visio',villes:['Paris'],
+    taux:'75%',anciennete:'17 ans (depuis 2007)',etudiants:'7 000+ suivis',
+    format:'Hybride',filieres:['PASS','Terminale Santé'],
+    tags:['PASS','Terminale Santé','Hybride','Paris'],
+    intro:"Fondé en 2007, Cours Thalès met l'accent sur la continuité lycée-université avec des enseignements à Paris ou à distance via visio interactive.",
+    stats:[{val:'75%',lbl:"Taux d'admission"},{val:'7 000+',lbl:'Élèves suivis'},{val:'17',lbl:'Années'}],
+    modele:[
+      {t:"Dédié à l'excellence",d:"Spécialisé dans la préparation aux filières sélectives depuis 2007."},
+      {t:"Numérique et interactivité",d:"Présentiel à Paris + visio interactive en direct, replays, plateforme numérique."},
+      {t:"Accompagnement personnalisé",d:"Cours structurés, QCM, examens blancs, ateliers méthodologiques, tutorat individuel."},
+      {t:"Formats adaptés",d:"Première Santé, Terminale Santé, Prépa PASS : annuelles, stages vacances, mix présentiel/distanciel."}
+    ],
+    pedagogie:[
+      {t:"Rigueur et bienveillance",d:"Groupes restreints, interaction directe en visio ou en classe."},
+      {t:"Entraînements continus",d:"QCM, examens blancs, correction détaillée pour simuler les conditions du PASS."},
+      {t:"Outils modernes",d:"Plateforme numérique, replays, visio interactive HD, supports actualisés."},
+      {t:"Vers l'autonomie",d:"Tutorat individuel, bilans réguliers, suivi de l'engagement."}
+    ],
+    avis:"Cours Thalès est un acteur solide combinant innovation pédagogique, accompagnement dès le lycée et taux d'admission de 75%. Bon choix pour anticiper et structurer sa réussite."
+  },
+  {
+    id:'antemed-epsilon',name:'Antémed Epsilon',ville:'Paris, Créteil',villes:['Paris','Créteil'],
+    taux:'62-65%',anciennete:'40+ ans',etudiants:'~3 000',
+    format:'Hybride',filieres:['PASS','LAS','LSPS','P0','Terminale Santé'],
+    tags:['PASS','LAS','LSPS','P0','Terminale Santé','Hybride','Paris'],
+    intro:"Issue de la fusion de deux acteurs historiques, Antémed Epsilon propose un accompagnement global du lycée à l'université à Paris.",
+    stats:[{val:'62-65%',lbl:'Taux de réussite'},{val:'~3 000',lbl:'Étudiants'},{val:'40+',lbl:'Années'}],
+    modele:[
+      {t:"Excellence parisienne",d:"Tradition et innovation depuis 40+ ans avec enseignants spécialisés et effectifs sélectionnés."},
+      {t:"Méthode numérique",d:"Hybride présentiel/distanciel, plateforme e-learning 24h/24, replays et QCM."},
+      {t:"Accompagnement humain",d:"Tutorat, bilans réguliers, parrainage et groupes restreints."},
+      {t:"Parcours complet",d:"Du lycée à l'année préparatoire jusqu'à la première année de santé."}
+    ],
+    pedagogie:[
+      {t:"Rigueur et bienveillance",d:"Groupes restreints, enseignants expérimentés, suivi hebdomadaire."},
+      {t:"Entraînements continus",d:"Banque QCM, concours blancs classants, entraînements intensifs."},
+      {t:"Outils modernes",d:"Supports couleur, plateforme full access, replays et mises à jour régulières."},
+      {t:"Vers l'autonomie",d:"Parrainage, bilans personnalisés, coaching méthode/organisation."}
+    ],
+    avis:"Antémed Epsilon est une prépa d'excellence à Paris avec un dispositif complet, un accompagnement dense et des résultats solides. Choix sérieux pour lycéens comme étudiants PASS/LAS."
+  },
+  {
+    id:'cpcm',name:'CPCM',ville:'Paris',villes:['Paris'],
+    taux:'74%',anciennete:'38 ans (depuis 1986)',etudiants:'15 000+ (historique)',
+    format:'Hybride',filieres:['PASS','LAS','LSPS','P0','Terminale Santé'],
+    tags:['PASS','LAS','LSPS','P0','Terminale Santé','Paris'],
+    intro:"Créé en 1986, le CPCM est une structure de préparation à Paris avec effectifs réduits à 20 étudiants par classe.",
+    stats:[{val:'74%',lbl:'Admis 2e année'},{val:'38',lbl:'Années'},{val:'20',lbl:'Étudiants/classe'}],
+    modele:[
+      {t:"Expérience parisienne",d:"Depuis 1986, accompagnement dédié aux études santé à Paris-Île-de-France."},
+      {t:"Méthode interactive",d:"Effectifs limités à 20, plateforme en ligne, replays, QCM structurés."},
+      {t:"Accompagnement performant",d:"Tutoring, coaching méthodologique, suivi individualisé et bilans réguliers."},
+      {t:"Formats variés",d:"Première, Terminale, P0, PASS, LAS, LSPS adaptés selon niveau."}
+    ],
+    pedagogie:[
+      {t:"Exigence et bienveillance",d:"Groupes restreints, professeurs spécialistes, suivi hebdomadaire."},
+      {t:"Entraînements calibrés",d:"QCM, colles, examens blancs sur les programmes universitaires."},
+      {t:"Outils actualisés",d:"Supports imprimés, replays, plateforme numérique, bilans de progression."},
+      {t:"Vers l'autonomie",d:"Tutorat, coaching en méthodologie et mental, plan d'action personnalisé."}
+    ],
+    avis:"Le CPCM est une option robuste avec une longue expérience, des résultats significatifs (74% d'admis en 2024) et des classes en effectif réduit."
+  },
+  {
+    id:'cap-sante',name:"Cap'Santé",ville:'National (7 villes)',villes:['Paris','Lyon','Bordeaux','Marseille','Nice','Lille','Toulouse'],
+    taux:"6× moy. nationale",anciennete:'40+ ans (depuis 1982)',etudiants:'—',
+    format:'Hybride',filieres:['PASS','LAS','Terminale Santé'],
+    tags:['PASS','LAS','Terminale Santé','National','Hybride'],
+    intro:"Fondé en 1982, Cap'Santé est un institut national de préparation présent dans 7 grandes villes françaises.",
+    stats:[{val:'6×',lbl:'Moy. nationale'},{val:'40+',lbl:'Années'},{val:'7',lbl:'Villes'}],
+    modele:[
+      {t:"Expérience reconnue",d:"La référence depuis près de 40 ans dans la préparation PASS/LAS."},
+      {t:"Présentiel et numérique",d:"Cours et TD dans les centres, plateforme avec synthèses et QCM."},
+      {t:"Profils multiples",d:"Terminale Santé, remise à niveau, PASS0, préparation Belgique."},
+      {t:"Réseau national",d:"Présent dans les grandes villes françaises avec support digital."}
+    ],
+    pedagogie:[
+      {t:"Rigueur pédagogique",d:"Cours présentiels, TD, plateformes numériques, entraînements intensifs."},
+      {t:"Entraînements variés",d:"Banque QCM/QRM, sujets inédits, concours blancs."},
+      {t:"Outils numériques",d:"Synthèses, séquences d'entraînement, espace e-learning dédié."},
+      {t:"Accompagnement sur-mesure",d:"Choix de formule selon profil, suivi méthodologique personnalisé."}
+    ],
+    avis:"Cap'Santé est une option solide avec son expérience historique, son réseau national et la qualité de ses outils numériques."
+  },
+  {
+    id:'concours-sup',name:'Concours Sup',ville:'Tours',villes:['Tours'],
+    taux:'>50%',anciennete:'30+ ans',etudiants:'—',
+    format:'Présentiel',filieres:['PASS','LAS'],
+    tags:['PASS','LAS','Présentiel','Tours'],
+    intro:"Prépa médicale à Tours, Concours Sup prépare les étudiants en PASS et LAS depuis plus de 30 ans, exclusivement en présentiel.",
+    stats:[{val:'>50%',lbl:'Taux de réussite'},{val:'30+',lbl:'Années'},{val:'100%',lbl:'Présentiel'}],
+    modele:[
+      {t:"Spécialisée santé",d:"Établissement déclaré auprès du rectorat d'Orléans-Tours, formant les futurs professionnels de santé."},
+      {t:"Entraînement et oral",d:"Présentiel uniquement : cours, entraînements hebdomadaires en conditions réelles, préparation aux oraux."},
+      {t:"Enseignants spécialistes",d:"Équipe qualifiée, diplômée et expérimentée, conforme aux référentiels universitaires."},
+      {t:"Formules variées",d:"Annuelles, semestrielles ou stages de pré-rentrée."}
+    ],
+    pedagogie:[
+      {t:"Exigence et rigueur",d:"Rythme cadencé : QCM, colles, entraînements hebdomadaires."},
+      {t:"Conditions réelles",d:"Stages de concours blancs en décembre et mai, corrections individualisées."},
+      {t:"Supports complets",d:"Fiches, entraînements vidéos, coaching oral et tutorat."},
+      {t:"Vers la performance",d:"De la méthode de travail à la gestion du stress, montée en puissance."}
+    ],
+    avis:"Concours Sup est une prépa spécialisée solide à Tours avec un positionnement exclusivement présentiel et plus de 30 ans d'expérience."
+  },
+  {
+    id:'cours-esquirol',name:'Cours Esquirol',ville:'Toulouse',villes:['Toulouse'],
+    taux:'—',anciennete:'40 ans',etudiants:'—',
+    format:'Hybride',filieres:['PASS','LAS','Terminale Santé'],
+    tags:['PASS','LAS','Terminale Santé','Hybride','Toulouse'],
+    intro:"Au cœur de Toulouse, Cours Esquirol Médisup accompagne depuis plusieurs décennies les étudiants vers les filières santé.",
+    stats:[{val:'40',lbl:"Années d'expérience"},{val:'500m²',lbl:'Locaux'},{val:'3 190€',lbl:'Formule LAS1'}],
+    modele:[
+      {t:"Proximité universitaire",d:"Situé à proximité immédiate de la faculté de santé toulousaine."},
+      {t:"Parcours progressif",d:"Cours, TD, QCM, examens blancs. Accélération dès la Terminale Santé."},
+      {t:"Accompagnement humain",d:"Tutorat, suivi individuel, bilans de progression."},
+      {t:"Outils numériques",d:"Plateformes en ligne et modalités hybrides ou modulables."}
+    ],
+    pedagogie:[
+      {t:"Exigence et confiance",d:"Rythme soutenu avec accompagnement bienveillant."},
+      {t:"Entraînements fréquents",d:"QCM, corrections approfondies, simulations d'épreuves."},
+      {t:"Suivi individualisé",d:"Bilans réguliers et tutorat personnalisé."},
+      {t:"Adaptation constante",d:"Contenus mis à jour selon les réformes PASS/LAS."}
+    ],
+    avis:"Cours Esquirol est une option très pertinente pour les étudiants de la région Occitanie. Ancrage local solide, ressources et accompagnement de qualité."
+  },
+  {
+    id:'cours-pasteur',name:'Cours Pasteur',ville:'Rouen',villes:['Rouen'],
+    taux:'72%',anciennete:'15+ ans',etudiants:'—',
+    format:'Hybride',filieres:['PASS','LAS','Terminale Santé'],
+    tags:['PASS','LAS','Terminale Santé','Hybride','Rouen'],
+    intro:"Implanté à Rouen depuis plus de 15 ans, Cours Pasteur est une référence locale pour les filières santé.",
+    stats:[{val:'72%',lbl:'Admis 2e année'},{val:'15+',lbl:'Années'},{val:'—',lbl:''}],
+    modele:[
+      {t:"Présence locale",d:"Au cœur de Rouen, proximité avec l'université et les filières santé."},
+      {t:"Démarche progressive",d:"De la Première aux filières santé : cours, TD, QCM, examens blancs."},
+      {t:"Accompagnement individuel",d:"Tutorat, bilans réguliers, cadre d'écoute et suivi méthodologique."},
+      {t:"Ressources modernes",d:"Supports numériques, plateforme de révision, présentiel ou hybride."}
+    ],
+    pedagogie:[
+      {t:"Exigence et confiance",d:"Entraînements fréquents, colles, examens blancs dans une ambiance de proximité."},
+      {t:"Réflexes automatisés",d:"QCM chronométrés, corrections détaillées, simulations d'épreuves."},
+      {t:"Suivi sur-mesure",d:"Bilans individuels et tutorats personnalisés."},
+      {t:"Adaptation continue",d:"Supports et méthodes mis à jour chaque année."}
+    ],
+    avis:"Cours Pasteur propose un cadre sérieux et bien adapté à Rouen. Implantation locale, méthode complète et accompagnement individualisé."
+  },
+  {
+    id:'paracelse-lyon',name:'Paracelse Lyon',ville:'Lyon',villes:['Lyon'],
+    taux:'~80.3%',anciennete:'—',etudiants:'—',
+    format:'Hybride',filieres:['PASS','LAS','Terminale Santé'],
+    tags:['PASS','LAS','Terminale Santé','Hybride','Lyon'],
+    intro:"À Lyon, Paracelse accompagne les étudiants vers les filières santé sur les campus Lyon Est et Lyon Sud avec une forte exigence pédagogique.",
+    stats:[{val:'~80.3%',lbl:'Réussite 2025'},{val:'6 500€',lbl:'Prépa PASS'},{val:'400+',lbl:'Fiches de cours'}],
+    modele:[
+      {t:"Implantation stratégique",d:"Lyon Est / Lyon Sud, aligné sur les conditions universitaires."},
+      {t:"Méthode structurée",d:"Cours magistraux, TD, fiches, entraînements, colles, examens blancs."},
+      {t:"Accompagnement personnalisé",d:"Parrain/accompagnateur, suivi individuel, encadrement resserré."},
+      {t:"Formats flexibles",d:"Plateforme e-learning, horaires étendus, formules dès la Terminale."}
+    ],
+    pedagogie:[
+      {t:"Rigueur et bienveillance",d:"Colles hebdomadaires, examens blancs avec soutien méthodologique."},
+      {t:"Entraînements intensifs",d:"QCM, corrigés, examens blancs en conditions réelles."},
+      {t:"Suivi individualisé",d:"Tuteur/parrain, bilans réguliers, système de classement."},
+      {t:"Adaptation continue",d:"Programmes mis à jour selon les réformes PASS/LAS."}
+    ],
+    avis:"Paracelse Lyon est une prépa solide avec un positionnement local fort, une équipe expérimentée et des taux de réussite annoncés significatifs (~80.3%)."
+  },
+  {
+    id:'supdijon',name:'SupDijon',ville:'Dijon',villes:['Dijon'],
+    taux:'>60%',anciennete:'25+ ans',etudiants:'1 200+ (historique)',
+    format:'Hybride',filieres:['PASS','LAS','LSPS','Terminale Santé'],
+    tags:['PASS','LAS','LSPS','Terminale Santé','Hybride','Dijon'],
+    intro:"Depuis plus de 25 ans, SupDijon accompagne les étudiants au cœur du campus dijonnais avec une méthode rigoureuse.",
+    stats:[{val:'>60%',lbl:'PASS/LAS'},{val:'95%',lbl:'Satisfaction'},{val:'25+',lbl:'Années'}],
+    modele:[
+      {t:"Expertise régionale",d:"Connaissance fine des facultés dijonnaises et de leurs attentes."},
+      {t:"Méthode personnalisée",d:"Progression hebdomadaire : cours, TD, colles et bilans réguliers."},
+      {t:"Accompagnement humain",d:"Enseignants et tuteurs issus des filières santé, coaching et méthodologie."},
+      {t:"Outils modernes",d:"Plateforme numérique 7j/7, QCM interactifs, suivi de progression."}
+    ],
+    pedagogie:[
+      {t:"Rigueur et bienveillance",d:"Effort régulier, discipline et confiance en soi."},
+      {t:"Entraînements intensifs",d:"Colles hebdomadaires, concours blancs classants, corrections."},
+      {t:"Suivi individuel",d:"Référent pédagogique et points d'étape mensuels."},
+      {t:"Plateforme connectée",d:"QCM en ligne, statistiques de performance."}
+    ],
+    avis:"SupDijon se distingue par son implantation locale solide et son approche équilibrée. L'une des références les plus fiables pour réussir médecine à Dijon."
+  },
+  {
+    id:'cappec',name:'CAPPEC',ville:'Lille',villes:['Lille'],
+    taux:'61%',anciennete:'25+ ans (depuis 1996)',etudiants:'—',
+    format:'Hybride',filieres:['PASS','LAS','Terminale Santé'],
+    tags:['PASS','LAS','Terminale Santé','Hybride','Lille'],
+    intro:"Implantée à Lille depuis 1996, CAPPEC mise sur la proximité avec la faculté, des locaux 7j/7 et une équipe à temps plein.",
+    stats:[{val:'61%',lbl:'Réussite 2025'},{val:'31%',lbl:'Grands admis'},{val:'600m²',lbl:'Locaux 7j/7'}],
+    modele:[
+      {t:"Expertise régionale",d:"Connaissance fine de la faculté lilloise et de ses attentes."},
+      {t:"Méthode et numérique",d:"Cours, TD, colles, examens blancs + plateforme QCM et vidéos."},
+      {t:"Accompagnement individualisé",d:"Parrain/marraine, enseignant référent, suivi personnalisé."},
+      {t:"Formats flexibles",d:"Première/Terminale Santé, stages pré-rentrée, PASS ou LAS."}
+    ],
+    pedagogie:[
+      {t:"Rigueur et bienveillance",d:"Entraînements hebdomadaires et épreuves types avec proximité et écoute."},
+      {t:"Entraînements intensifs",d:"Colles régulières, examens blancs, banque de QCM, TD."},
+      {t:"Plateforme digitale",d:"Mon Espace Prépa : cours filmés, QCM, forum, statistiques."},
+      {t:"Suivi méthodologique",d:"Référent pédagogique, bilans de progression, parrainage."}
+    ],
+    avis:"CAPPEC se démarque par son implantation réussie à Lille, sa méthode complète et sa dimension humaine : petits groupes, parrainage et suivi personnalisé."
+  },
+  {
+    id:'supexam-nantes',name:'Supexam Nantes',ville:'Nantes',villes:['Nantes'],
+    taux:'~65%',anciennete:'—',etudiants:'25-30/classe',
+    format:'Hybride',filieres:['PASS','LAS','Terminale Santé'],
+    tags:['PASS','LAS','Terminale Santé','Hybride','Nantes'],
+    intro:"En plein cœur de Nantes, Supexam Nantes accompagne les étudiants vers les filières santé avec des classes limitées à 25-30 étudiants.",
+    stats:[{val:'~65%',lbl:'Admis PASS'},{val:'25-30',lbl:'Étudiants/classe'},{val:'7j/7',lbl:'Locaux ouverts'}],
+    modele:[
+      {t:"Emplacement stratégique",d:"À 5 minutes de la faculté de médecine de Nantes."},
+      {t:"Méthode structurée",d:"Supports optimisés, QCM, colles et examens blancs en conditions d'épreuve."},
+      {t:"Accompagnement humain",d:"Tuteur/parrain, référent pédagogique, bilans réguliers. Effectifs réduits."},
+      {t:"Supports numériques",d:"Plateforme Mon Espace Prépa : cours, QCM, forum, fichiers."}
+    ],
+    pedagogie:[
+      {t:"Rigueur et bienveillance",d:"Colles hebdomadaires, classements, entraînement intensif avec écoute et tutorat."},
+      {t:"Entraînements progressifs",d:"2 à 4h de colles/ED par semaine, méthodologie, examens blancs."},
+      {t:"Suivi individualisé",d:"Bilans réguliers pour identifier les points faibles et ajuster le plan."},
+      {t:"Adaptation santé",d:"Contenus actualisés, stages pré-universitaires, tronc commun et options santé."}
+    ],
+    avis:"Supexam Nantes s'impose comme une prépa de premier plan à Nantes. Effectifs réduits, accompagnement personnalisé et outils numériques. À partir de 4 800€/an."
+  },
+  {
+    id:'ipe-sante',name:'IpéSanté',ville:'Poitiers',villes:['Poitiers'],
+    taux:'~62-71%',anciennete:'—',etudiants:'—',
+    format:'Hybride',filieres:['LAS','Terminale Santé'],
+    tags:['LAS','Terminale Santé','Hybride','Poitiers'],
+    intro:"À Poitiers, IpéSanté se spécialise dans la préparation via la voie LAS et accompagne les étudiants vers les filières MMOPK.",
+    stats:[{val:'~62%',lbl:'LAS 1'},{val:'~71%',lbl:'Admission ext.'},{val:'4 800€',lbl:'Formule LAS'}],
+    modele:[
+      {t:"Ancrage universitaire",d:"À 10 minutes du campus santé de l'Université de Poitiers."},
+      {t:"Spécialisée LAS",d:"Conçue pour la mineure santé (UE3, UE4) avec ressources numériques et TD."},
+      {t:"Accompagnement renforcé",d:"Parrainage, coaching méthodologique, bilans individuels."},
+      {t:"Formats flexibles",d:"Présentiel ou 100% à distance selon profil et contraintes."}
+    ],
+    pedagogie:[
+      {t:"Rigueur et bienveillance",d:"Colles, examens blancs, rythme soutenu avec encadrement bienveillant."},
+      {t:"Entraînements progressifs",d:"TD, QCM hebdomadaires, examens blancs et simulations orales."},
+      {t:"Suivi individualisé",d:"Points réguliers, statistiques de performance, tuteur/parrain."},
+      {t:"Adaptation continue",d:"Programme actualisé selon les changements réglementaires."}
+    ],
+    avis:"IpéSanté est une très bonne solution à Poitiers pour la voie LAS. Bon taux de réussite, accompagnement personnalisé et formats souples."
+  },
+  {
+    id:'cepsup',name:'CEPSUP',ville:'Reims',villes:['Reims'],
+    taux:'74% médecine',anciennete:'Depuis 1996',etudiants:'—',
+    format:'Hybride',filieres:['PASS','LAS','P0'],
+    tags:['PASS','LAS','P0','Hybride','Reims'],
+    intro:"Depuis 1996, CEPSUP est une référence à Reims pour la préparation aux études de santé via la Licence Sciences pour la Santé.",
+    stats:[{val:'74%',lbl:'Médecine 2025'},{val:'35',lbl:'Grands admis/85'},{val:'6 100€',lbl:'Formule standard'}],
+    modele:[
+      {t:"Implantation locale forte",d:"Proche de l'URCA et de ses facultés santé à Reims."},
+      {t:"Méthode complète",d:"Cours écrits, fiches, TD, colles et examens blancs couvrant la Licence SpS."},
+      {t:"Accompagnement personnalisé",d:"Parrainage/tutorat par étudiants 2e année, bilans et plateforme d'échanges."},
+      {t:"Formats flexibles",d:"Présentiel ou à distance, avec vidéos, QCM et supports numériques."}
+    ],
+    pedagogie:[
+      {t:"Rigueur et bienveillance",d:"Colles régulières, interrogations hebdomadaires, examens blancs avec soutien actif."},
+      {t:"Entraînements progressifs",d:"Séances dirigées, TD, QCM, montée en charge progressive."},
+      {t:"Suivi individualisé",d:"Bilans d'avancement, tutorat, plateforme de statistiques."},
+      {t:"Adaptation aux réformes",d:"Contenus actualisés pour la LSpS/LAS et les voies d'accès."}
+    ],
+    avis:"CEPSUP à Reims est un choix solide avec un ancrage local fort, une qualité d'encadrement reconnue et des résultats notables en médecine."
+  },
+  {
+    id:'skol-sante',name:'Skol Santé',ville:'Rennes',villes:['Rennes'],
+    taux:'~73%',anciennete:'—',etudiants:'—',
+    format:'Hybride',filieres:['PASS','LAS','Terminale Santé'],
+    tags:['PASS','LAS','Terminale Santé','Hybride','Rennes'],
+    intro:"À Rennes, Skol Santé accompagne les étudiants vers les filières santé avec un ancrage fort et une méthodologie structurée.",
+    stats:[{val:'~73%',lbl:'PASS/LAS'},{val:'32%',lbl:'Grands admis'},{val:'4 500€',lbl:'Formule PASS'}],
+    modele:[
+      {t:"Implantation stratégique",d:"À proximité des amphithéâtres de santé de Rennes."},
+      {t:"Méthode structurée",d:"70 séances d'enseignements dirigés, colles, examens blancs, plateforme numérique."},
+      {t:"Accompagnement personnalisé",d:"Parrainage, bilans réguliers, enseignants accessibles."},
+      {t:"Formats flexibles",d:"Terminale Santé, annuelle PASS, annuelle LAS. Locaux 24h/24, 7j/7."}
+    ],
+    pedagogie:[
+      {t:"Rigueur et bienveillance",d:"Colles hebdomadaires, classements, rythme soutenu avec soutien humain."},
+      {t:"Entraînements intensifs",d:"TD, QCM, examens blancs, simulations d'oral."},
+      {t:"Suivi individualisé",d:"Points de suivi, bilans de progression, tuteur/parrain."},
+      {t:"Actualisation continue",d:"Contenus adaptés aux évolutions PASS/LAS et modalités d'entrée."}
+    ],
+    avis:"Skol Santé offre une préparation solide à Rennes avec des taux élevés, un accompagnement individualisé et des outils modernes."
+  },
+  {
+    id:'segmo',name:'SEGMO',ville:'Rouen, Le Havre',villes:['Rouen','Le Havre'],
+    taux:'~65%',anciennete:'25+ ans',etudiants:'5 300+ (historique)',
+    format:'Hybride',filieres:['PASS','LAS','Terminale Santé'],
+    tags:['PASS','LAS','Terminale Santé','Hybride','Rouen'],
+    intro:"Depuis plus de 25 ans, SEGMO accompagne les étudiants à Rouen et au Havre vers les filières santé.",
+    stats:[{val:'~65%',lbl:'Admis médecine'},{val:'5 300+',lbl:'Admis historique'},{val:'25+',lbl:'Années'}],
+    modele:[
+      {t:"Implantation locale",d:"Présente à Rouen et Le Havre, proche des universités normandes."},
+      {t:"Méthode actualisée",d:"Cours, TD, fiches, QCM et examens blancs adaptés aux voies PASS/LAS."},
+      {t:"Accompagnement humain",d:"Enseignants spécialisés, tuteurs/parrains, bilans réguliers."},
+      {t:"Ressources numériques",d:"Cours en ligne, ressources numériques, adaptabilité présentiel/distanciel."}
+    ],
+    pedagogie:[
+      {t:"Rigueur et bienveillance",d:"Rythme soutenu avec encadrement bienveillant et soutien méthodologique."},
+      {t:"Entraînements réguliers",d:"Colles, TD, QCM et examens blancs pour simuler les conditions d'épreuve."},
+      {t:"Suivi individualisé",d:"Rendez-vous, tutorat, parrainage, suivi de progression."},
+      {t:"Actualisation continue",d:"Supports mis à jour chaque année selon les réformes."}
+    ],
+    avis:"SEGMO est une prépa de référence Rouen-Le Havre. Ancrage local, résultats solides et accompagnement sur mesure."
+  },
+  {
+    id:'prepa-vesale',name:'Prépa Vésale',ville:'Strasbourg',villes:['Strasbourg'],
+    taux:'~71.4%',anciennete:'—',etudiants:'—',
+    format:'Hybride',filieres:['PASS','Terminale Santé'],
+    tags:['PASS','Terminale Santé','Hybride','Strasbourg'],
+    intro:"À Strasbourg, Prépa Vésale accompagne les étudiants via la voie unique de la Licence Sciences pour la Santé.",
+    stats:[{val:'~71.4%',lbl:'L1 LSpS'},{val:'5 500€',lbl:'Formule annuelle'},{val:'52',lbl:'Entraînements/an'}],
+    modele:[
+      {t:"Ancrage local",d:"Face de la faculté à Strasbourg, en phase avec le rythme universitaire."},
+      {t:"Méthode complète",d:"Couverture totale L1 SpS : santé, transversaux, hors santé. Colles et examens blancs."},
+      {t:"Accompagnement personnalisé",d:"Parrain/marraine, bilans réguliers, plateforme e-learning."},
+      {t:"Formats variés",d:"Première, Terminale, stage d'été, L1 SpS annuelle, seconde chance."}
+    ],
+    pedagogie:[
+      {t:"Rigueur et bienveillance",d:"Rythme soutenu, colles hebdomadaires, classements avec accompagnement individuel."},
+      {t:"Entraînements progressifs",d:"Simulation d'épreuves, QCM, TD, exercices par parcours."},
+      {t:"Suivi individualisé",d:"Assiduité, bilans, tutorat personnalisé."},
+      {t:"Adaptation L1 SpS",d:"Programmes actualisés selon la réforme et les spécificités de l'Université de Strasbourg."}
+    ],
+    avis:"Prépa Vésale est une très bonne option à Strasbourg avec un positionnement géographique idéal, une méthode complète et des résultats solides (~71.4%)."
+  },
+  {
+    id:'alpha-prepa',name:'Alpha Prépa',ville:'Amiens',villes:['Amiens'],
+    taux:'75%',anciennete:'—',etudiants:'—',
+    format:'Hybride',filieres:['PASS','LAS','Terminale Santé'],
+    tags:['PASS','LAS','Terminale Santé','Hybride','Amiens'],
+    intro:"À Amiens, Alpha Prépa se positionne comme une préparation d'excellence aux études de santé dès la Terminale.",
+    stats:[{val:'75%',lbl:'Réussite 2025'},{val:'24%',lbl:'Grands admis'},{val:'—',lbl:''}],
+    modele:[
+      {t:"Localité stratégique",d:"Adaptée aux spécificités de la faculté d'Amiens."},
+      {t:"Méthode structurée",d:"Cours en petits groupes, TD, entraînements intensifs, supports numériques."},
+      {t:"Accompagnement personnalisé",d:"Référent, tuteur, anciens étudiants. Cadre bienveillant mais exigeant."},
+      {t:"Formats flexibles",d:"Terminale santé, stages pré-rentrée, PASS/LAS annuels, e-learning."}
+    ],
+    pedagogie:[
+      {t:"Rigueur et bienveillance",d:"Colles, examens blancs, entraînements réguliers avec écoute et suivi."},
+      {t:"Entraînements intensifs",d:"QCM/annales, simulations d'épreuves proches de la réalité."},
+      {t:"Suivi individualisé",d:"Bilans, tutorat, supports de suivi de progression."},
+      {t:"Adaptation santé",d:"Programmes conçus pour PASS et LAS avec anticipation des notions clés."}
+    ],
+    avis:"Alpha Prépa est une très bonne option à Amiens avec une méthode complète, un accompagnement personnalisé et des résultats annoncés de 75%."
+  },
+  {
+    id:'prepa-sante-b',name:'Prépa Santé B',ville:'Clermont-Ferrand',villes:['Clermont-Ferrand'],
+    taux:'66%',anciennete:'—',etudiants:'—',
+    format:'Hybride',filieres:['PASS','LAS','Terminale Santé'],
+    tags:['PASS','LAS','Terminale Santé','Hybride','Clermont-Ferrand'],
+    intro:"À Clermont-Ferrand, Prépa Santé B se consacre exclusivement à la préparation aux études de santé et aux filières MMOPK.",
+    stats:[{val:'66%',lbl:'Global'},{val:'40%',lbl:'Grands admis PASS'},{val:'86%',lbl:'LAS2'}],
+    modele:[
+      {t:"Implantation locale",d:"Au cœur de Clermont-Ferrand avec relations avec l'université locale."},
+      {t:"Spécialisée santé",d:"Programmes : Terminale Santé, stage prérentrée, annuel PASS, annuel LAS."},
+      {t:"Accompagnement personnalisé",d:"Encadrement sur mesure, suivi individuel, supports adaptés."},
+      {t:"Outils numériques",d:"Plateforme dédiée, entraînements en ligne pour profils variés."}
+    ],
+    pedagogie:[
+      {t:"Rigueur et bienveillance",d:"Colles, entraînements, simulations, évaluations avec suivi méthodologique."},
+      {t:"Entraînements intensifs",d:"QCM, examens blancs, préparation oral, mineure santé pour LAS."},
+      {t:"Suivi individualisé",d:"Bilans de progression, mentor/parrain, outils de suivi."},
+      {t:"Actualisation continue",d:"Supports actualisés, modules oral et mineure santé."}
+    ],
+    avis:"Prépa Santé B est un acteur crédible à Clermont-Ferrand avec des résultats solides : 66% global, 40% grands admis PASS et 86% LAS2."
+  },
+  {
+    id:'parcoursmed',name:'ParcoursMed',ville:'Montpellier, Grenoble',villes:['Montpellier','Grenoble'],
+    taux:'—',anciennete:'—',etudiants:'—',
+    format:'Hybride',filieres:['PASS','LAS','Terminale Santé'],
+    tags:['PASS','LAS','Terminale Santé','Hybride','Montpellier','Grenoble'],
+    intro:"ParcoursMed accompagne les étudiants dès la Première à Montpellier et Grenoble vers les filières santé.",
+    stats:[{val:'4 980€',lbl:'PASS annuel'},{val:'86h',lbl:'Formation/module'},{val:'2',lbl:'Villes'}],
+    modele:[
+      {t:"Implantation locale",d:"Montpellier et antenne à Grenoble, en phase avec les attentes universitaires."},
+      {t:"Méthode structurée",d:"Cours hebdomadaires, supports fournis, QCM corrigés, examens blancs."},
+      {t:"Accompagnement personnalisé",d:"Professeurs expérimentés, tuteurs anciens étudiants, suivi individualisé."},
+      {t:"Formats flexibles",d:"Première/Terminale Santé, stages pré-rentrée, PASS/LAS, plateforme numérique."}
+    ],
+    pedagogie:[
+      {t:"Rigueur et bienveillance",d:"Entraînements réguliers avec proximité et bilans individuels."},
+      {t:"Entraînements intensifs",d:"Cours, TD, QCM hebdomadaires, examens blancs en conditions réelles."},
+      {t:"Suivi individualisé",d:"Entretiens individuels, référent pédagogique, tuteur dédié."},
+      {t:"Adaptation santé",d:"Supports actualisés, réformes PASS/LAS, stages pré-rentrée."}
+    ],
+    avis:"ParcoursMed est une prépa de bon niveau à Montpellier et Grenoble. Supports de qualité, accompagnement individualisé et outils numériques."
+  },
+  {
+    id:'medisup-sciences',name:'Médisup Sciences',ville:'Île-de-France (6 centres)',villes:['Paris','Créteil','Saint-Quentin-en-Yvelines'],
+    taux:'—',anciennete:'25+ ans',etudiants:'—',
+    format:'Hybride',filieres:['PASS','LAS','LSPS','Terminale Santé'],
+    tags:['PASS','LAS','LSPS','Terminale Santé','Hybride','Paris','Île-de-France'],
+    intro:"Entité du groupe Médisup spécialisée en Île-de-France, présente sur 6 sites clés proche des facultés (Paris, Sorbonne, UPEC, UVSQ, Paris-Saclay).",
+    stats:[{val:'25+',lbl:'Années'},{val:'6',lbl:'Centres'},{val:'1 000m²',lbl:'Locaux'}],
+    modele:[
+      {t:"Implantations stratégiques",d:"Proches des facultés partenaires : Université de Paris, Sorbonne, UVSQ, UPEC, Paris-Saclay."},
+      {t:"Méthode innovante",d:"Cours, TD, QCM, annales, plateformes numériques et simulateur médical."},
+      {t:"Accompagnement individualisé",d:"Bilans réguliers, parrainage, coaching méthodologique, espaces de travail 7j/7."},
+      {t:"Outils avancés",d:"Présentiel/distanciel, ressources numériques, simulateur médical, murs d'entraînement."}
+    ],
+    pedagogie:[
+      {t:"Rigueur et bienveillance",d:"Encadrement exigeant avec relation de proximité et écoute."},
+      {t:"Entraînements intensifs",d:"QCM, examens blancs, entraînements calibrés par faculté."},
+      {t:"Suivi individualisé",d:"Bilans réguliers, coaching, plateforme de progression."},
+      {t:"Adaptation continue",d:"Contenus actualisés par faculté et par réforme."}
+    ],
+    avis:"Médisup Sciences offre une couverture complète de l'Île-de-France avec 6 centres stratégiques. Solution particulièrement adaptée aux étudiants franciliens."
+  }
+];
+
+/* ============ FAQ DATA ============ */
+const FAQ_DATA = [
+  {q:"Qu'est-ce que PrépaMédecine.fr ?",a:"PrépaMédecine.fr est une plateforme qui compare et présente différentes prépas santé (PASS, LAS, LSPS, filières lycée) pour t'aider à choisir celle qui correspond le mieux à ton profil, ton rythme et ton organisation, selon ta fac et tes objectifs."},
+  {q:"À qui s'adressent les prépas listées sur ce site ?",a:"Aux lycéens qui veulent anticiper les exigences du PASS, aux étudiants en PASS, LAS ou LSPS qui souhaitent maximiser leurs chances, et aux candidats qui veulent comparer les formats avant de faire leur choix."},
+  {q:"Est-il obligatoire de faire une prépa pour réussir ?",a:"Non, une prépa n'est pas obligatoire. Cependant, elle peut offrir un cadre méthodologique, des outils d'entraînement, un accompagnement personnalisé et une régularité dans le travail qui augmentent les chances de succès."},
+  {q:"Comment choisir la bonne prépa ?",a:"Identifie ton niveau et tes objectifs. Compare les formats : en ligne vs présentiel, stages intensifs, coaching. Vérifie les contenus : cours, QCM, examens blancs, accompagnement. Prends en compte ta capacité d'organisation."},
+  {q:"Quelle est la différence entre PASS et LAS ?",a:"PASS (Parcours d'Accès Spécifique Santé) est une première année commune axée santé. LAS (Licence Accès Santé) combine une licence universitaire avec des enseignements santé spécifiques. Le choix dépend de ton profil et ta stratégie."},
+  {q:"Une prépa est-elle utile en Terminale ou Première ?",a:"Oui : une prépa dès la Première ou Terminale peut te permettre d'anticiper les exigences du PASS, de renforcer tes bases scientifiques et de développer une méthode de travail adaptée."},
+  {q:"Combien coûte une prépa santé en 2025 ?",a:"Les tarifs varient selon la formule, la durée et le format. Ils peuvent aller de plusieurs centaines à plusieurs milliers d'euros par an. Consulte directement les pages de chaque prépa pour les tarifs précis."},
+  {q:"Comment comparer les prépas entre elles ?",a:"Regarde les contenus pédagogiques (cours, QCM, annales), compare les formats (en ligne / présentiel), lis les témoignages d'anciens étudiants et analyse les services complémentaires (coaching, concours blancs)."},
+  {q:"Une prépa médecine est-elle utile si on est déjà bon élève ?",a:"Oui. Les bons élèves utilisent la prépa pour structurer leur travail, s'entraîner sur des QCM exigeants, gérer la pression et optimiser leur classement, pas seulement pour combler des lacunes."},
+  {q:"Combien d'heures de travail par semaine en PASS avec une prépa ?",a:"La charge en PASS se situe souvent entre 50 et 70 heures par semaine (cours, révisions, entraînements). La prépa aide surtout à organiser ce volume efficacement."},
+  {q:"Les prépas médecine sont-elles toutes équivalentes ?",a:"Non. Elles diffèrent par la qualité des enseignants, la densité des supports, le nombre d'entraînements, le suivi individuel et la connaissance des facultés. D'où l'intérêt de comparer."},
+  {q:"Quand s'inscrire à une prépa médecine ?",a:"Les inscriptions commencent souvent plusieurs mois avant la rentrée universitaire. S'y prendre tôt permet d'avoir plus de choix et parfois d'accéder à des stages d'anticipation."},
+  {q:"Une prépa est-elle compatible avec Parcoursup ?",a:"Oui. Les prépas sont des formations privées parallèles et n'interfèrent pas avec Parcoursup, mais peuvent aider à renforcer la stratégie en amont."},
+  {q:"Faut-il privilégier une grosse prépa ou une structure plus petite ?",a:"Les grosses structures offrent parfois plus de ressources, les plus petites un suivi plus personnalisé. Le choix dépend de ton besoin d'encadrement et de ta relation avec les enseignants."}
+];
+
+/* ============ ARTICLES DATA ============ */
+const ARTICLES = [
+  {title:"PASS vs LAS : quelle voie choisir en 2025 ?",cat:"Orientation",icon:"&#129658;",desc:"Comprends les différences entre PASS et LAS pour faire le bon choix selon ton profil, tes forces et ta stratégie de réussite."},
+  {title:"Combien coûte une prépa médecine ?",cat:"Budget",icon:"&#128176;",desc:"Tour d'horizon des tarifs des prépas santé en France : de quelques centaines à plusieurs milliers d'euros selon la formule."},
+  {title:"Comment organiser son travail en PASS ?",cat:"Méthodologie",icon:"&#128221;",desc:"50 à 70h de travail par semaine : découvre comment structurer tes journées pour maximiser tes résultats."},
+  {title:"Préparer les études de santé dès le lycée",cat:"Anticipation",icon:"&#127891;",desc:"Terminale Santé, Première Santé : pourquoi et comment anticiper dès le lycée pour réussir en PASS ou LAS."},
+  {title:"Les erreurs à éviter en première année de médecine",cat:"Conseils",icon:"&#9888;&#65039;",desc:"Découvre les pièges les plus courants et les stratégies pour les éviter dès le début de ta première année."},
+  {title:"Parcoursup et études de santé : le guide complet",cat:"Parcoursup",icon:"&#128203;",desc:"Tout ce que tu dois savoir sur Parcoursup pour intégrer les filières santé : calendrier, voeux, stratégie."}
+];
+
+/* ============ ROUTING ============ */
+function showPage(page, data) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  const el = document.getElementById('page-' + page);
+  if (el) el.classList.add('active');
+
+  // Update nav active state
+  document.querySelectorAll('.nav-links a[data-page]').forEach(a => {
+    a.classList.toggle('active', a.dataset.page === page);
+  });
+
+  // Close mobile menu
+  document.getElementById('navLinks').classList.remove('open');
+
+  // Scroll to top
+  window.scrollTo({top: 0, behavior: 'smooth'});
+
+  if (page === 'detail' && data) renderDetail(data);
+  // Re-observe fade-up elements after page switch
+  setTimeout(observeFadeUps, 50);
+}
+
+function handleHash() {
+  const hash = location.hash.slice(1) || 'accueil';
+  if (hash === 'accueil') showPage('home');
+  else if (hash === 'prepas') showPage('prepas');
+  else if (hash === 'conseils') showPage('conseils');
+  else if (hash === 'faq') showPage('faq');
+  else if (hash.startsWith('prepa/')) {
+    const id = hash.split('/')[1];
+    const prep = PREPAS.find(p => p.id === id);
+    if (prep) showPage('detail', prep);
+    else showPage('prepas');
+  }
+}
+
+window.addEventListener('hashchange', handleHash);
+
+/* ============ RENDER FUNCTIONS ============ */
+function renderTopPrepas() {
+  const featured = PREPAS.filter(p => p.featured);
+  const grid = document.getElementById('topGrid');
+  grid.innerHTML = featured.map((p, i) => `
+    <div class="top-card" onclick="location.hash='prepa/${p.id}'">
+      <div class="top-card-header">
+        <div class="top-card-badge">#${i+1}</div>
+        <h3>${p.name}</h3>
+        <div class="location">&#128205; ${p.ville}</div>
+      </div>
+      <div class="top-card-body">
+        <div class="top-card-stats">
+          ${p.stats.slice(0,3).map(s => `<div class="top-stat"><div class="val">${s.val}</div><div class="lbl">${s.lbl}</div></div>`).join('')}
+        </div>
+        <div class="top-card-tags">
+          ${p.tags.slice(0,4).map(t => `<span class="tag">${t}</span>`).join('')}
+        </div>
+        <div class="top-card-cta">Voir la fiche &rarr;</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderPrepasGrid(filtered) {
+  const list = filtered || PREPAS;
+  const grid = document.getElementById('prepasGrid');
+  document.getElementById('prepasCount').textContent = `${list.length} prépa${list.length > 1 ? 's' : ''} trouvée${list.length > 1 ? 's' : ''}`;
+  grid.innerHTML = list.map(p => `
+    <div class="prep-card" onclick="location.hash='prepa/${p.id}'">
+      <div class="prep-card-top">
+        <div class="prep-avatar">${p.name.charAt(0)}</div>
+        <div>
+          <h3>${p.name}</h3>
+          <div class="loc">&#128205; ${p.ville}</div>
+        </div>
+      </div>
+      <div class="prep-card-desc">${p.intro}</div>
+      <div class="prep-card-stats">
+        <div class="prep-mini-stat"><span class="dot dot-blue"></span>${p.taux} réussite</div>
+        <div class="prep-mini-stat"><span class="dot dot-green"></span>${p.anciennete}</div>
+      </div>
+      <div class="prep-card-tags">
+        ${p.tags.slice(0,4).map(t => `<span class="tag">${t}</span>`).join('')}
+      </div>
+      <div class="prep-card-btn">Voir la fiche &rarr;</div>
+    </div>
+  `).join('');
+}
+
+function renderDetail(p) {
+  document.getElementById('detailContent').innerHTML = `
+    <div class="detail-hero">
+      <h1>${p.name}</h1>
+      <div class="tagline">${p.intro}</div>
+      <div class="detail-stats">
+        ${p.stats.map(s => s.lbl ? `<div class="detail-stat"><div class="val">${s.val}</div><div class="lbl">${s.lbl}</div></div>` : '').join('')}
+      </div>
+    </div>
+
+    <div class="detail-section">
+      <h2>&#127979; Le modèle ${p.name}</h2>
+      <div class="detail-blocks">
+        ${p.modele.map(b => `<div class="detail-block"><h4>${b.t}</h4><p>${b.d}</p></div>`).join('')}
+      </div>
+    </div>
+
+    <div class="detail-section">
+      <h2>&#128218; La pédagogie</h2>
+      <div class="detail-blocks">
+        ${p.pedagogie.map(b => `<div class="detail-block"><h4>${b.t}</h4><p>${b.d}</p></div>`).join('')}
+      </div>
+    </div>
+
+    <div class="avis-box">
+      <h3>&#128172; L'avis de PrépaMédecine</h3>
+      <p>${p.avis}</p>
+    </div>
+
+    <div style="margin-top:32px;text-align:center">
+      <a href="#prepas" class="cta-btn" onclick="showPage('prepas')" style="background:var(--blue);color:#fff">&larr; Voir toutes les prépas</a>
+    </div>
+  `;
+}
+
+function renderFAQ() {
+  const list = document.getElementById('faqList');
+  list.innerHTML = FAQ_DATA.map((f, i) => `
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <span>${f.q}</span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="faq-a"><div class="faq-a-inner">${f.a}</div></div>
+    </div>
+  `).join('');
+}
+
+function renderConseils() {
+  const grid = document.getElementById('conseilsGrid');
+  grid.innerHTML = ARTICLES.map(a => `
+    <div class="article-card">
+      <div class="article-card-img">${a.icon}</div>
+      <div class="article-card-body">
+        <div class="article-card-cat">${a.cat}</div>
+        <h3>${a.title}</h3>
+        <p>${a.desc}</p>
+      </div>
+      <div class="article-card-meta">Janvier 2025</div>
+    </div>
+  `).join('');
+}
+
+/* ============ FILTERS ============ */
+function populateFilters() {
+  const villes = new Set();
+  PREPAS.forEach(p => p.villes.forEach(v => villes.add(v)));
+  const select = document.getElementById('filterVille');
+  [...villes].sort().forEach(v => {
+    const opt = document.createElement('option');
+    opt.value = v; opt.textContent = v;
+    select.appendChild(opt);
+  });
+}
+
+function applyFilters() {
+  const search = document.getElementById('searchInput').value.toLowerCase();
+  const ville = document.getElementById('filterVille').value;
+  const format = document.getElementById('filterFormat').value;
+  const filiere = document.getElementById('filterFiliere').value;
+
+  const filtered = PREPAS.filter(p => {
+    if (search && !p.name.toLowerCase().includes(search) && !p.ville.toLowerCase().includes(search) && !p.intro.toLowerCase().includes(search)) return false;
+    if (ville && !p.villes.includes(ville)) return false;
+    if (format && p.format !== format) return false;
+    if (filiere && !p.filieres.includes(filiere)) return false;
+    return true;
+  });
+  renderPrepasGrid(filtered);
+}
+
+function filterByTag(tag) {
+  location.hash = 'prepas';
+  setTimeout(() => {
+    // Try to match filiere first
+    const filiereSelect = document.getElementById('filterFiliere');
+    const formatSelect = document.getElementById('filterFormat');
+    if (['PASS','LAS','Terminale Santé','P0'].includes(tag)) {
+      filiereSelect.value = tag;
+    } else if (tag === 'En ligne') {
+      formatSelect.value = 'En ligne';
+    }
+    applyFilters();
+  }, 100);
+}
+
+document.getElementById('searchInput')?.addEventListener('input', applyFilters);
+document.getElementById('filterVille')?.addEventListener('change', applyFilters);
+document.getElementById('filterFormat')?.addEventListener('change', applyFilters);
+document.getElementById('filterFiliere')?.addEventListener('change', applyFilters);
+
+/* ============ FAQ TOGGLE ============ */
+function toggleFaq(btn) {
+  const isOpen = btn.classList.contains('open');
+  // Close all
+  document.querySelectorAll('.faq-q').forEach(q => {
+    q.classList.remove('open');
+    q.nextElementSibling.style.maxHeight = null;
+  });
+  if (!isOpen) {
+    btn.classList.add('open');
+    const answer = btn.nextElementSibling;
+    answer.style.maxHeight = answer.scrollHeight + 'px';
+  }
+}
+
+/* ============ HERO SEARCH ============ */
+document.getElementById('heroSearch')?.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') {
+    location.hash = 'prepas';
+    setTimeout(() => {
+      document.getElementById('searchInput').value = this.value;
+      applyFilters();
+    }, 100);
+  }
+});
+
+/* ============ MOBILE MENU ============ */
+document.getElementById('burger')?.addEventListener('click', () => {
+  document.getElementById('navLinks').classList.toggle('open');
+});
+
+/* ============ NAV LINKS ============ */
+document.querySelectorAll('.nav-links a[data-page]').forEach(a => {
+  a.addEventListener('click', function(e) {
+    const page = this.dataset.page;
+    if (page === 'home') location.hash = 'accueil';
+    else location.hash = page;
+  });
+});
+
+/* ============ SCROLL ANIMATIONS ============ */
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+}, {threshold: 0.05, rootMargin: '0px 0px 50px 0px'});
+function observeFadeUps() {
+  document.querySelectorAll('.fade-up:not(.visible)').forEach(el => observer.observe(el));
+}
+observeFadeUps();
+
+/* ============ INIT ============ */
+renderTopPrepas();
+renderPrepasGrid();
+renderFAQ();
+renderConseils();
+populateFilters();
+handleHash();
+</script>
+</body>
+</html>
