@@ -1644,6 +1644,7 @@ function renderDetail(p) {
       <div class="detail-stats">
         ${p.stats.map(s => s.lbl ? `<div class="detail-stat"><div class="val">${s.val}</div><div class="lbl">${s.lbl}</div></div>` : '').join('')}
       </div>
+      <div style="margin-top:20px"><button class="cta-green" onclick="event.stopPropagation();openModal('${p.name}')">${ic('phone',16)} Être rappelé gratuitement</button></div>
     </div>
 
     <div class="pulse-separator" style="margin:24px 0"><svg class="pulse-line" viewBox="0 0 400 40" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0 20H120L140 5L160 35L180 5L200 35L220 20H400" stroke="#046bd2" stroke-width="2"/></svg></div>
