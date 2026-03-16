@@ -1,0 +1,15 @@
+{
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "prepamedecine-site.vercel.app"
+        }
+      ],
+      "destination": "https://prepamedecine.fr/$1",
+      "permanent": true
+    }
+  ]
+}
