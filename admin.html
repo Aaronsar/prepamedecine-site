@@ -60,7 +60,7 @@ a{color:var(--wp-accent);text-decoration:none}a:hover{color:var(--wp-accent-hove
 .admin-dashboard-home{max-width:1100px}
 .admin-welcome{background:var(--wp-card);border:1px solid var(--wp-border-light);border-left:4px solid var(--wp-accent);padding:20px 24px;margin-bottom:20px}
 .admin-welcome h2{font-size:22px;font-weight:400;margin-bottom:8px}.admin-welcome p{color:var(--wp-text-light);font-size:14px;line-height:1.5}
-.admin-stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px}
+.admin-stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px}
 .admin-stat-card{background:var(--wp-card);border:1px solid var(--wp-border-light);padding:20px;text-align:center;cursor:pointer;transition:border-color .15s}
 .admin-stat-card:hover{border-color:var(--wp-accent)}
 .admin-stat-card .stat-number{font-size:36px;font-weight:600;color:var(--wp-accent)}.admin-stat-card .stat-label{font-size:13px;color:var(--wp-text-light);margin-top:4px}
@@ -245,10 +245,12 @@ a{color:var(--wp-accent);text-decoration:none}a:hover{color:var(--wp-accent-hove
 var SUPABASE_URL='https://jhopwqpbaiyjfoggvcaf.supabase.co';
 var SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impob3B3cXBiYWl5amZvZ2d2Y2FmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMwNTI2OTEsImV4cCI6MjA4ODYyODY5MX0.rz3TJZryPxEf3P5kQgpzQkwN9aF8_F4eo4F03CEYVPs';
 var TABLE='prepamedecine_articles';
+var TABLE_PREPAS='prepamedecine_prepas';
 
 var sb;
-var state={view:'dashboard',currentId:null,articleData:null,unsaved:false};
+var state={view:'dashboard',currentId:null,articleData:null,prepaData:null,unsaved:false};
 var articlesCache=[];
+var prepasCache=[];
 var competitorCache=null;
 
 /* SEO/GEO Scoring */
@@ -320,7 +322,7 @@ window.adminLogout=async function(){await sb.auth.signOut();location.reload()};
 async function showDashboard(){
   document.getElementById('admin-login').style.display='none';
   document.getElementById('admin-dashboard').style.display='flex';
-  await loadArticles();
+  await Promise.all([loadArticles(),loadPrepas()]);
   renderSidebar();
   navigate('dashboard');
 }
@@ -330,11 +332,18 @@ async function loadArticles(){
   articlesCache=r.data||[];
 }
 
+async function loadPrepas(){
+  var r=await sb.from(TABLE_PREPAS).select('*').order('name',{ascending:true});
+  prepasCache=r.data||[];
+}
+
 /* Sidebar */
 function renderSidebar(){
   var isArticles=state.view==='articles'||state.view==='editor';
+  var isPrepas=state.view==='prepas'||state.view==='prepa-editor';
   var html='';
   html+='<button class="admin-nav-item'+(state.view==='dashboard'?' active':'')+'" onclick="navigate(\'dashboard\')"><span class="nav-icon">&#9776;</span>Tableau de bord</button>';
+  html+='<button class="admin-nav-item'+(isPrepas?' active':'')+'" onclick="navigate(\'prepas\')"><span class="nav-icon">&#127979;</span>Prepas<span class="nav-count">'+prepasCache.length+'</span></button>';
   html+='<button class="admin-nav-item'+(isArticles?' active':'')+'" onclick="navigate(\'articles\')"><span class="nav-icon">&#128196;</span>Articles<span class="nav-count">'+articlesCache.length+'</span></button>';
   document.getElementById('admin-sidebar').innerHTML=html;
 }
@@ -345,6 +354,7 @@ window.navigate=function(viewId){
   state.unsaved=false;state.view=viewId;state.currentId=null;
   if(viewId==='dashboard')renderDashboardHome();
   else if(viewId==='articles')renderArticleList();
+  else if(viewId==='prepas')renderPrepaList();
   renderSidebar();
 };
 
@@ -355,19 +365,32 @@ window.editArticle=function(id){
   renderSidebar();
 };
 
+window.editPrepa=function(id){
+  if(state.unsaved&&!confirm('Modifications non sauvegardees. Continuer ?'))return;
+  state.unsaved=false;state.currentId=id;state.view='prepa-editor';
+  loadPrepaData(id);
+  renderSidebar();
+};
+
 /* Dashboard Home */
 function renderDashboardHome(){
   var main=document.getElementById('admin-main');
   var total=articlesCache.length;
   var published=articlesCache.filter(function(a){return a.published}).length;
   var drafts=total-published;
+  var totalPrepas=prepasCache.length;
+  var featuredPrepas=prepasCache.filter(function(p){return p.featured}).length;
+  var coupDeCoeur=prepasCache.filter(function(p){return p.coup_de_coeur}).length;
 
   var html='<div class="admin-dashboard-home">';
   html+='<div class="admin-welcome"><h2>Bienvenue sur le backoffice PrepaMedecine</h2>';
-  html+='<p>Gerez les articles de votre blog depuis cette interface. Creez, editez et publiez vos contenus.</p></div>';
+  html+='<p>Gerez les prepas et articles de votre site depuis cette interface.</p></div>';
   html+='<div class="admin-stats-grid">';
-  html+=statCard(total,'Articles total','articles');
-  html+=statCard(published,'Publies',null);
+  html+=statCard(totalPrepas,'Prepas','prepas');
+  html+=statCard(total,'Articles','articles');
+  html+=statCard(published,'Articles publies',null);
+  html+=statCard(featuredPrepas,'Prepas mises en avant',null);
+  html+=statCard(coupDeCoeur,'Coup de coeur',null);
   html+=statCard(drafts,'Brouillons',null);
   html+='</div>';
 
@@ -783,6 +806,271 @@ window.deleteArticle=async function(id){
     var r=await sb.from(TABLE).delete().eq('id',id);
     if(r.error)throw r.error;
     await loadArticles();showToast('Article supprime','success');navigate('articles');
+  }catch(err){showToast('Erreur : '+(err.message||'Echec'),'error')}
+};
+
+/* ============ PREPAS MANAGEMENT ============ */
+
+/* Prepa List */
+function renderPrepaList(){
+  var main=document.getElementById('admin-main');
+  var html='<div class="admin-page-list">';
+  html+='<div class="admin-page-list-header"><h2>Prepas</h2>';
+  html+='<div class="admin-page-list-actions"><button class="btn-primary" onclick="showAddPrepaModal()">+ Nouvelle prepa</button>';
+  html+='<span class="list-count">'+prepasCache.length+' prepas</span></div></div>';
+  html+='<table class="admin-table"><thead><tr><th>Nom</th><th>Ville</th><th>Format</th><th>Taux</th><th>Featured</th><th>Coup de coeur</th><th>Actions</th></tr></thead><tbody>';
+  prepasCache.forEach(function(p){
+    html+='<tr>';
+    html+='<td class="page-title-cell" onclick="editPrepa('+p.id+')">'+esc(p.name)+'</td>';
+    html+='<td>'+esc(p.ville||'')+'</td>';
+    html+='<td>'+esc(p.format||'')+'</td>';
+    html+='<td>'+esc(p.taux||'')+'</td>';
+    html+='<td>'+(p.featured?'<span class="status-dot published"></span>Oui':'<span class="status-dot draft"></span>Non')+'</td>';
+    html+='<td>'+(p.coup_de_coeur?'<span style="color:#046bd2;font-weight:700">&#10084; Oui</span>':'Non')+'</td>';
+    html+='<td class="row-actions"><a href="javascript:void(0)" onclick="editPrepa('+p.id+')">Modifier</a> ';
+    html+='<a href="javascript:void(0)" class="action-delete" onclick="deletePrepa('+p.id+')">Supprimer</a></td>';
+    html+='</tr>';
+  });
+  html+='</tbody></table></div>';
+  main.innerHTML=html;
+}
+
+/* Load prepa data */
+async function loadPrepaData(id){
+  var main=document.getElementById('admin-main');
+  main.innerHTML='<div style="padding:60px;text-align:center;color:#787c82;">Chargement...</div>';
+  var r=await sb.from(TABLE_PREPAS).select('*').eq('id',id).maybeSingle();
+  state.prepaData=r.data;
+  renderPrepaEditor();
+}
+
+/* Render Prepa Editor */
+function renderPrepaEditor(){
+  var d=state.prepaData||{};
+  var main=document.getElementById('admin-main');
+  var html='<div class="admin-editor">';
+  html+='<div class="admin-editor-breadcrumb"><a href="javascript:void(0)" onclick="navigate(\'dashboard\')">Tableau de bord</a> &rsaquo; <a href="javascript:void(0)" onclick="navigate(\'prepas\')">Prepas</a> &rsaquo; '+esc(d.name||'Nouvelle prepa')+'</div>';
+  html+='<div class="admin-editor-header"><h2>'+esc(d.name||'Nouvelle prepa')+'</h2>';
+  html+='<button class="btn-back" onclick="navigate(\'prepas\')">&larr; Retour</button></div>';
+  html+='<div class="admin-editor-layout"><div class="admin-editor-content">';
+
+  // General info
+  html+=metaBoxOpen('Informations generales',false);
+  html+=field('p_name','Nom',d.name||'','text');
+  html+=field('p_slug','Slug (URL)',d.slug||'','text','Identifiant unique (ex: diploma-sante)');
+  html+=field('p_ville','Ville principale',d.ville||'','text');
+  html+=field('p_villes','Toutes les villes',(d.villes||[]).join(', '),'text','Separees par des virgules');
+  html+=field('p_taux','Taux de reussite',d.taux||'','text','Ex: 79%, 93% satisfaction');
+  html+=field('p_anciennete','Anciennete',d.anciennete||'','text','Ex: 10+ ans, Depuis 2013');
+  html+=field('p_etudiants','Etudiants',d.etudiants||'','text','Ex: 1 200+');
+  html+='<div class="admin-field"><label>Format</label><select name="p_format" onchange="markUnsaved()">';
+  ['Présentiel','En ligne','Hybride'].forEach(function(f){html+='<option'+(d.format===f?' selected':'')+'>'+f+'</option>'});
+  html+='</select></div>';
+  html+=field('p_intro','Introduction',d.intro||'','textarea','Description courte de la prepa');
+  html+=field('p_avis','Avis PrepaMedecine',d.avis||'','textarea','Votre avis editorial');
+  html+=metaBoxClose();
+
+  // Filieres & Tags
+  html+=metaBoxOpen('Filieres & Tags',false);
+  var allFilieres=['PASS','LAS','LSPS','Terminale Santé','Première Santé','P0','Internat'];
+  html+='<div class="admin-field"><label>Filieres</label><div style="display:flex;flex-wrap:wrap;gap:8px">';
+  var curFil=d.filieres||[];
+  allFilieres.forEach(function(f){
+    html+='<label style="display:flex;align-items:center;gap:4px;font-size:12px;cursor:pointer"><input type="checkbox" class="p_filiere" value="'+f+'"'+(curFil.indexOf(f)>=0?' checked':'')+' onchange="markUnsaved()"> '+f+'</label>';
+  });
+  html+='</div></div>';
+  html+=field('p_tags','Tags',(d.tags||[]).join(', '),'text','Separees par des virgules. Ex: PASS, LAS, Paris, Présentiel');
+  html+=metaBoxClose();
+
+  // Stats
+  var stats=d.stats||[];
+  html+=metaBoxOpen('Statistiques ('+stats.length+')',false);
+  html+='<div id="prepa-stats-list">';
+  stats.forEach(function(s,i){html+=renderPrepaStatBlock(i,s)});
+  html+='</div>';
+  html+='<button class="btn-add" onclick="addPrepaStat()">+ Ajouter une stat</button>';
+  html+=metaBoxClose();
+
+  // Modele
+  var modele=d.modele||[];
+  html+=metaBoxOpen('Modele ('+modele.length+' points)',false);
+  html+='<div id="prepa-modele-list">';
+  modele.forEach(function(m,i){html+=renderPrepaBlock('modele',i,m)});
+  html+='</div>';
+  html+='<button class="btn-add" onclick="addPrepaBlock(\'modele\')">+ Ajouter un point</button>';
+  html+=metaBoxClose();
+
+  // Pedagogie
+  var ped=d.pedagogie||[];
+  html+=metaBoxOpen('Pedagogie ('+ped.length+' points)',false);
+  html+='<div id="prepa-pedagogie-list">';
+  ped.forEach(function(p,i){html+=renderPrepaBlock('pedagogie',i,p)});
+  html+='</div>';
+  html+='<button class="btn-add" onclick="addPrepaBlock(\'pedagogie\')">+ Ajouter un point</button>';
+  html+=metaBoxClose();
+
+  // Extra sections
+  var extra=d.extra_sections||[];
+  html+=metaBoxOpen('Sections supplementaires ('+extra.length+')',true);
+  html+='<div id="prepa-extra-list">';
+  extra.forEach(function(sec,i){html+=renderPrepaExtraSection(i,sec)});
+  html+='</div>';
+  html+='<button class="btn-add" onclick="addPrepaExtra()">+ Ajouter une section</button>';
+  html+=metaBoxClose();
+
+  html+='</div>'; // end content
+
+  // Right sidebar
+  html+='<div class="admin-editor-sidebar">';
+  html+='<div class="admin-publish-box"><div class="admin-publish-box-header">Publication</div>';
+  html+='<div class="admin-publish-box-body">';
+  html+='<div class="pub-info">Publiee : <strong>'+(d.published!==false?'Oui':'Non')+'</strong>';
+  html+='<label class="toggle-switch"><input type="checkbox" id="toggle-p-published" '+(d.published!==false?'checked':'')+' onchange="markUnsaved()"><span class="toggle-slider"></span></label></div>';
+  html+='<div class="pub-info">Mise en avant : <strong>'+(d.featured?'Oui':'Non')+'</strong>';
+  html+='<label class="toggle-switch"><input type="checkbox" id="toggle-p-featured" '+(d.featured?'checked':'')+' onchange="markUnsaved()"><span class="toggle-slider"></span></label></div>';
+  html+='<div class="pub-info">Coup de coeur : <strong>'+(d.coup_de_coeur?'Oui':'Non')+'</strong>';
+  html+='<label class="toggle-switch"><input type="checkbox" id="toggle-p-coeur" '+(d.coup_de_coeur?'checked':'')+' onchange="markUnsaved()"><span class="toggle-slider"></span></label></div>';
+  if(d.updated_at)html+='<div class="pub-info">Modifiee : <strong>'+formatDate(d.updated_at)+'</strong></div>';
+  html+='</div>';
+  html+='<div class="admin-publish-box-footer"><button class="btn-primary" onclick="savePrepa()" id="btn-save-prepa">Mettre a jour</button></div></div>';
+  html+='</div>'; // end sidebar
+  html+='</div></div>'; // end layout, editor
+  main.innerHTML=html;
+  main.scrollTop=0;
+}
+
+/* Prepa block renderers */
+function renderPrepaStatBlock(idx,s){
+  return'<div class="admin-content-section" data-idx="'+idx+'"><button class="btn-rm-section" onclick="removePrepaBlock(\'prepa-stats-list\','+idx+')">&#10005;</button>'+
+    field('ps_val_'+idx,'Valeur',s.val||'','text','Ex: 79%')+
+    field('ps_lbl_'+idx,'Label',s.lbl||'','text','Ex: Admis medecine')+
+    '</div>';
+}
+
+function renderPrepaBlock(type,idx,b){
+  return'<div class="admin-content-section" data-idx="'+idx+'"><button class="btn-rm-section" onclick="removePrepaBlock(\'prepa-'+type+'-list\','+idx+')">&#10005;</button>'+
+    field('p'+type[0]+'_t_'+idx,'Titre',b.t||'','text')+
+    field('p'+type[0]+'_d_'+idx,'Description',b.d||'','textarea')+
+    '</div>';
+}
+
+function renderPrepaExtraSection(idx,sec){
+  var html='<div class="admin-content-section" data-idx="'+idx+'" style="border-left:3px solid var(--wp-accent)">';
+  html+='<button class="btn-rm-section" onclick="removePrepaBlock(\'prepa-extra-list\','+idx+')">&#10005;</button>';
+  html+=field('pe_title_'+idx,'Titre de la section',sec.title||'','text');
+  html+='<div id="pe_blocks_'+idx+'">';
+  (sec.blocks||[]).forEach(function(b,j){
+    html+='<div class="admin-faq-item" data-idx="'+j+'"><button class="admin-faq-remove" onclick="this.parentElement.remove();markUnsaved()">&#10005;</button>'+
+      field('pe_bt_'+idx+'_'+j,'Titre',b.t||'','text')+
+      field('pe_bd_'+idx+'_'+j,'Description',b.d||'','textarea')+'</div>';
+  });
+  html+='</div>';
+  html+='<button class="btn-add" onclick="addPrepaExtraBlock('+idx+')">+ Ajouter un bloc</button>';
+  html+='</div>';
+  return html;
+}
+
+/* Dynamic add/remove for prepas */
+window.addPrepaStat=function(){var l=document.getElementById('prepa-stats-list');l.insertAdjacentHTML('beforeend',renderPrepaStatBlock(l.children.length,{}));markUnsaved()};
+window.addPrepaBlock=function(type){var l=document.getElementById('prepa-'+type+'-list');l.insertAdjacentHTML('beforeend',renderPrepaBlock(type,l.children.length,{}));markUnsaved()};
+window.addPrepaExtra=function(){var l=document.getElementById('prepa-extra-list');l.insertAdjacentHTML('beforeend',renderPrepaExtraSection(l.children.length,{title:'',blocks:[]}));markUnsaved()};
+window.addPrepaExtraBlock=function(secIdx){
+  var l=document.getElementById('pe_blocks_'+secIdx);if(!l)return;
+  var j=l.children.length;
+  l.insertAdjacentHTML('beforeend','<div class="admin-faq-item" data-idx="'+j+'"><button class="admin-faq-remove" onclick="this.parentElement.remove();markUnsaved()">&#10005;</button>'+
+    field('pe_bt_'+secIdx+'_'+j,'Titre','','text')+field('pe_bd_'+secIdx+'_'+j,'Description','','textarea')+'</div>');
+  markUnsaved();
+};
+window.removePrepaBlock=function(listId,idx){var l=document.getElementById(listId);if(l&&l.children[idx]){l.children[idx].remove();markUnsaved()}};
+
+/* Collect prepa form data */
+function collectPrepaData(){
+  var d={};
+  d.name=getVal('p_name');d.slug=getVal('p_slug');d.ville=getVal('p_ville');
+  d.villes=getVal('p_villes').split(',').map(function(v){return v.trim()}).filter(Boolean);
+  d.taux=getVal('p_taux');d.anciennete=getVal('p_anciennete');d.etudiants=getVal('p_etudiants');
+  d.format=getVal('p_format');d.intro=getVal('p_intro');d.avis=getVal('p_avis');
+  d.filieres=[];document.querySelectorAll('.p_filiere:checked').forEach(function(cb){d.filieres.push(cb.value)});
+  d.tags=getVal('p_tags').split(',').map(function(t){return t.trim()}).filter(Boolean);
+  d.stats=[];document.querySelectorAll('#prepa-stats-list .admin-content-section').forEach(function(el,i){
+    var v=el.querySelector('[name^="ps_val_"]');var l=el.querySelector('[name^="ps_lbl_"]');
+    if(v&&l)d.stats.push({val:v.value.trim(),lbl:l.value.trim()});
+  });
+  d.modele=[];document.querySelectorAll('#prepa-modele-list .admin-content-section').forEach(function(el){
+    var t=el.querySelector('[name^="pm_t_"]');var dd=el.querySelector('[name^="pm_d_"]');
+    if(t&&dd)d.modele.push({t:t.value.trim(),d:dd.value.trim()});
+  });
+  d.pedagogie=[];document.querySelectorAll('#prepa-pedagogie-list .admin-content-section').forEach(function(el){
+    var t=el.querySelector('[name^="pp_t_"]');var dd=el.querySelector('[name^="pp_d_"]');
+    if(t&&dd)d.pedagogie.push({t:t.value.trim(),d:dd.value.trim()});
+  });
+  d.extra_sections=[];document.querySelectorAll('#prepa-extra-list > .admin-content-section').forEach(function(secEl,i){
+    var title=secEl.querySelector('[name^="pe_title_"]');
+    var blocks=[];
+    secEl.querySelectorAll('.admin-faq-item').forEach(function(bEl){
+      var bt=bEl.querySelector('[name^="pe_bt_"]');var bd=bEl.querySelector('[name^="pe_bd_"]');
+      if(bt&&bd)blocks.push({t:bt.value.trim(),d:bd.value.trim()});
+    });
+    d.extra_sections.push({title:title?title.value.trim():'',blocks:blocks});
+  });
+  d.published=document.getElementById('toggle-p-published').checked;
+  d.featured=document.getElementById('toggle-p-featured').checked;
+  d.coup_de_coeur=document.getElementById('toggle-p-coeur').checked;
+  return d;
+}
+
+/* Save prepa */
+window.savePrepa=async function(){
+  var btn=document.getElementById('btn-save-prepa');btn.disabled=true;btn.textContent='Sauvegarde...';
+  try{
+    var d=collectPrepaData();
+    d.updated_at=new Date().toISOString();
+    var r=await sb.from(TABLE_PREPAS).update(d).eq('id',state.currentId);
+    if(r.error)throw r.error;
+    state.unsaved=false;
+    await loadPrepas();
+    showToast('Prepa enregistree','success');
+  }catch(err){console.error(err);showToast('Erreur : '+(err.message||'Echec'),'error')}
+  btn.disabled=false;btn.textContent='Mettre a jour';
+};
+
+/* Delete prepa */
+window.deletePrepa=async function(id){
+  if(!confirm('Supprimer cette prepa ? Cette action est irreversible.'))return;
+  try{
+    var r=await sb.from(TABLE_PREPAS).delete().eq('id',id);
+    if(r.error)throw r.error;
+    await loadPrepas();showToast('Prepa supprimee','success');navigate('prepas');
+  }catch(err){showToast('Erreur : '+(err.message||'Echec'),'error')}
+};
+
+/* Add prepa modal */
+window.showAddPrepaModal=function(){
+  var html='<div class="admin-modal-overlay" id="add-prepa-modal" onclick="if(event.target===this)this.remove()">';
+  html+='<div class="admin-modal"><h3>Nouvelle prepa</h3>';
+  html+='<div class="admin-field"><label>Nom</label><input type="text" id="new-prepa-name" placeholder="Ex: Ma Prepa Sante" autofocus></div>';
+  html+='<div class="admin-field"><label>Ville</label><input type="text" id="new-prepa-ville" placeholder="Ex: Paris"></div>';
+  html+='<div class="admin-field"><label>Format</label><select id="new-prepa-format"><option>Présentiel</option><option>En ligne</option><option>Hybride</option></select></div>';
+  html+='<div class="admin-modal-actions">';
+  html+='<button class="btn-secondary" onclick="document.getElementById(\'add-prepa-modal\').remove()">Annuler</button>';
+  html+='<button class="btn-primary" onclick="createPrepa()">Creer</button>';
+  html+='</div></div></div>';
+  document.body.insertAdjacentHTML('beforeend',html);
+  document.getElementById('new-prepa-name').focus();
+};
+
+window.createPrepa=async function(){
+  var name=document.getElementById('new-prepa-name').value.trim();
+  var ville=document.getElementById('new-prepa-ville').value.trim();
+  var format=document.getElementById('new-prepa-format').value;
+  if(!name){showToast('Nom requis','error');return}
+  var slug=name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
+  try{
+    var r=await sb.from(TABLE_PREPAS).insert({slug:slug,name:name,ville:ville,villes:ville?[ville]:[],format:format,published:true}).select().single();
+    if(r.error)throw r.error;
+    document.getElementById('add-prepa-modal').remove();
+    await loadPrepas();showToast('Prepa "'+name+'" creee','success');
+    editPrepa(r.data.id);
   }catch(err){showToast('Erreur : '+(err.message||'Echec'),'error')}
 };
 

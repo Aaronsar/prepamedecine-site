@@ -849,7 +849,7 @@ const LOGOS = {
 };
 
 /* ============ PREPAS DATA ============ */
-const PREPAS = [
+let PREPAS = [
   {
     id:'diploma-sante',name:'Diploma Santé',ville:'Paris',villes:['Paris'],
     taux:'79%',anciennete:'10+ ans',etudiants:'1 200+',
@@ -1890,12 +1890,38 @@ document.addEventListener('keydown', function(e) {
 });
 
 /* ============ INIT ============ */
+
+// Load prepas from Supabase (fallback to static PREPAS)
+async function loadPrepasFromSupabase() {
+  try {
+    const _sb = window.supabase.createClient('https://jhopwqpbaiyjfoggvcaf.supabase.co','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impob3B3cXBiYWl5amZvZ2d2Y2FmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMwNTI2OTEsImV4cCI6MjA4ODYyODY5MX0.rz3TJZryPxEf3P5kQgpzQkwN9aF8_F4eo4F03CEYVPs');
+    const {data} = await _sb.from('prepamedecine_prepas').select('*').eq('published',true).order('name');
+    if (data && data.length > 0) {
+      // Map Supabase fields to the format used by render functions
+      PREPAS.length = 0;
+      data.forEach(p => PREPAS.push({
+        id: p.slug, name: p.name, ville: p.ville, villes: p.villes || [],
+        taux: p.taux || '', anciennete: p.anciennete || '', etudiants: p.etudiants || '',
+        format: p.format || '', filieres: p.filieres || [], tags: p.tags || [],
+        intro: p.intro || '', avis: p.avis || '',
+        stats: p.stats || [], modele: p.modele || [], pedagogie: p.pedagogie || [],
+        extraSections: p.extra_sections || [],
+        featured: p.featured || false, coupDeCoeur: p.coup_de_coeur || false
+      }));
+      renderTopPrepas();
+      renderPrepasGrid();
+      populateFilters();
+    }
+  } catch(e) { console.warn('Fallback prepas statiques', e); }
+}
+
 renderTopPrepas();
 renderPrepasGrid();
 renderFAQ();
 renderConseils();
 populateFilters();
 handleHash();
+loadPrepasFromSupabase();
 
 // Initialize data-ic SVG icons in static HTML
 document.querySelectorAll('[data-ic]').forEach(function(el){
