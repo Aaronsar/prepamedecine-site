@@ -1653,7 +1653,7 @@ function renderTopPrepas() {
   });
   const grid = document.getElementById('topGrid');
   grid.innerHTML = featured.map((p, i) => `
-    <div class="top-card${p.coupDeCoeur?' coup-de-coeur':''} podium-${i+1}" onclick="location.hash='prepa/${p.id}'">
+    <div class="top-card${p.coupDeCoeur?' coup-de-coeur':''} podium-${i+1}" onclick="location.href='/prepa/${p.id}/'">
       <div class="top-card-header">
         ${p.coupDeCoeur?'<div class="coup-de-coeur-badge">'+ic('heartPulse',12)+' Coup de coeur</div>':''}
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px"><div class="top-card-badge">#${i+1}</div><h3 style="margin:0">${p.name}</h3></div>
@@ -1694,7 +1694,7 @@ function renderPrepasGrid(filtered) {
   const grid = document.getElementById('prepasGrid');
   document.getElementById('prepasCount').textContent = `${list.length} prépa${list.length > 1 ? 's' : ''} trouvée${list.length > 1 ? 's' : ''}`;
   grid.innerHTML = list.map(p => `
-    <div class="prep-card${p.coupDeCoeur?' coup-de-coeur-card':''}" onclick="location.hash='prepa/${p.id}'">
+    <div class="prep-card${p.coupDeCoeur?' coup-de-coeur-card':''}" onclick="location.href='/prepa/${p.id}/'">
       <div class="prep-card-top">
         <div class="prep-avatar" style="overflow:hidden">${logoImg(p.id,44)}</div>
         <div>
