@@ -49,13 +49,29 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
 .nav-links a:hover{color:var(--blue)}
 .nav-links a.nav-cta{background:var(--blue);color:#fff;padding:10px 22px;border-radius:var(--radius-sm);font-size:14px;font-weight:600;transition:background .2s,transform .15s}
 .nav-links a.nav-cta:hover{background:var(--blue-dark);transform:translateY(-1px);color:#fff}
+/* ---- Dropdown Prépas par ville ---- */
+.nav-dropdown{position:relative}
+.nav-dropdown>a{display:flex;align-items:center;gap:4px;cursor:pointer}
+.nav-dropdown>a::after{content:'';border:4px solid transparent;border-top:5px solid currentColor;margin-top:2px;transition:transform .2s}
+.nav-dropdown:hover>a::after,.nav-dropdown.open>a::after{transform:rotate(180deg)}
+.nav-dropdown-menu{position:absolute;top:calc(100% + 12px);left:50%;transform:translateX(-50%);background:#fff;border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow-lg);padding:16px 0;display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;min-width:480px;opacity:0;visibility:hidden;transition:opacity .2s,visibility .2s;z-index:200}
+.nav-dropdown:hover .nav-dropdown-menu,.nav-dropdown.open .nav-dropdown-menu{opacity:1;visibility:visible}
+.nav-dropdown-menu::before{content:'';position:absolute;top:-8px;left:50%;transform:translateX(-50%);border:8px solid transparent;border-bottom:8px solid #fff;filter:drop-shadow(0 -2px 2px rgba(0,0,0,.04))}
+.nav-dropdown-menu a{display:block;padding:7px 20px;font-size:13.5px;font-weight:500;color:var(--text-body);white-space:nowrap;transition:background .15s,color .15s}
+.nav-dropdown-menu a:hover{background:var(--blue-light);color:var(--blue)}
+.nav-dropdown-heading{padding:4px 20px 8px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--text-light);pointer-events:none}
 .nav-burger{display:none;flex-direction:column;gap:5px;padding:8px}
 .nav-burger span{display:block;width:22px;height:2px;background:var(--text);border-radius:2px;transition:transform .2s}
 @media(max-width:768px){
-  .nav-links{position:fixed;top:var(--nav-h);left:0;right:0;background:#fff;flex-direction:column;padding:24px;gap:16px;border-bottom:1px solid var(--border);transform:translateY(-120%);transition:transform .3s;z-index:99}
+  .nav-links{position:fixed;top:var(--nav-h);left:0;right:0;bottom:0;background:#fff;overflow-y:auto;flex-direction:column;padding:24px;gap:16px;border-bottom:1px solid var(--border);transform:translateY(-120%);transition:transform .3s;z-index:99}
   .nav-links.open{transform:translateY(0)}
   .nav-links a{font-size:17px;padding:8px 0}
   .nav-burger{display:flex}
+  .nav-dropdown-menu{position:static;transform:none;box-shadow:none;border:none;background:var(--bg-alt);border-radius:var(--radius-sm);grid-template-columns:1fr 1fr;min-width:0;padding:8px 0;margin-top:4px;opacity:1;visibility:visible;display:none}
+  .nav-dropdown.open .nav-dropdown-menu{display:grid}
+  .nav-dropdown-menu::before{display:none}
+  .nav-dropdown-menu a{font-size:15px;padding:8px 16px}
+  .nav-dropdown-heading{padding:4px 16px 6px}
 }
 .breadcrumbs{padding:16px 0;font-size:13px;color:var(--text-muted)}
 .breadcrumbs a{color:var(--blue);text-decoration:underline;text-underline-offset:2px}
@@ -191,6 +207,14 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
     <div class="nav-links" id="navLinks">
       <a href="/">Accueil</a>
       <a href="/#prepas">Prépas</a>
+      <div class="nav-dropdown" id="navDropdownVilles">
+        <a>Prépas par ville</a>
+        <div class="nav-dropdown-menu">
+          <div><div class="nav-dropdown-heading">Grandes villes</div><a href="/prepa-medecine-paris/">Paris</a><a href="/prepa-medecine-lyon/">Lyon</a><a href="/prepa-medecine-marseille/">Marseille</a><a href="/prepa-medecine-toulouse/">Toulouse</a><a href="/prepa-medecine-bordeaux/">Bordeaux</a><a href="/prepa-medecine-lille/">Lille</a><a href="/prepa-medecine-nice/">Nice</a><a href="/prepa-medecine-montpellier/">Montpellier</a></div>
+          <div><div class="nav-dropdown-heading">Nord &amp; Ouest</div><a href="/prepa-medecine-strasbourg/">Strasbourg</a><a href="/prepa-medecine-nantes/">Nantes</a><a href="/prepa-medecine-rennes/">Rennes</a><a href="/prepa-medecine-rouen/">Rouen</a><a href="/prepa-medecine-amiens/">Amiens</a><a href="/prepa-medecine-reims/">Reims</a><a href="/prepa-medecine-angers/">Angers</a><a href="/prepa-medecine-tours/">Tours</a></div>
+          <div><div class="nav-dropdown-heading">Sud &amp; Est</div><a href="/prepa-medecine-grenoble/">Grenoble</a><a href="/prepa-medecine-dijon/">Dijon</a><a href="/prepa-medecine-nancy/">Nancy</a><a href="/prepa-medecine-clermont-ferrand/">Clermont-Ferrand</a><a href="/prepa-medecine-besancon/">Besançon</a><a href="/prepa-medecine-poitiers/">Poitiers</a><a href="/prepa-medecine-saint-etienne/">Saint-Étienne</a><a href="/prepa-medecine-en-ligne/">En ligne</a></div>
+        </div>
+      </div>
       <a href="/#blog">Blog</a>
       <a href="/#faq">FAQ</a>
       <a href="/#prepas" class="nav-cta">Trouver ma prépa</a>
@@ -429,6 +453,21 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
 document.getElementById('burger').addEventListener('click', function(){
   document.getElementById('navLinks').classList.toggle('open');
 });
+/* Dropdown villes mobile toggle */
+(function(){
+  var dd = document.getElementById('navDropdownVilles');
+  if (!dd) return;
+  dd.querySelector(':scope > a').addEventListener('click', function(e){
+    e.preventDefault();
+    if (window.innerWidth <= 768) dd.classList.toggle('open');
+  });
+  dd.querySelectorAll('.nav-dropdown-menu a').forEach(function(a){
+    a.addEventListener('click', function(){
+      document.getElementById('navLinks').classList.remove('open');
+      dd.classList.remove('open');
+    });
+  });
+})();
 function toggleFaq(btn){
   const wasOpen = btn.classList.contains('open');
   document.querySelectorAll('.faq-q').forEach(q => {
