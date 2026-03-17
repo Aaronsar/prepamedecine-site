@@ -155,6 +155,7 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
 .tarif-card .tarif-name{font-size:20px;font-weight:800;color:var(--text);margin-bottom:4px}
 .tarif-card .tarif-sub{font-size:13px;color:var(--text-muted);margin-bottom:16px}
 .tarif-card .tarif-price{font-size:36px;font-weight:800;color:var(--blue);margin-bottom:4px}
+.tarif-card .tarif-price small{font-size:14px;font-weight:600;display:block;color:var(--text-muted);margin-bottom:2px}
 .tarif-card .tarif-price span{font-size:16px;font-weight:500;color:var(--text-muted)}
 .tarif-card .tarif-details{list-style:none;padding:0;margin:16px 0 0;text-align:left}
 .tarif-card .tarif-details li{font-size:14px;color:var(--text-body);padding:6px 0;border-top:1px solid var(--border-light);display:flex;align-items:flex-start;gap:8px}
@@ -222,7 +223,7 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
       "name": "Combien coûte la prépa Diploma Santé ?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Les tarifs de Diploma Santé varient selon la formation : Première Élite à 1 990€, Terminale Santé à 3 490€ en présentiel ou 2 490€ en visio-conférence, et Prépa PASS/LSPS à 8 490€ (formule complète n°1) ou 7 990€ (formule n°2). Le paiement peut être échelonné jusqu'à 10 mensualités sans frais."
+        "text": "Les tarifs de Diploma Santé varient selon la formation : Première Élite à 1 990€, Terminale Santé à partir de 2 490€, Prépa PASS/LSPS à partir de 7 990€, et Prépa LAS à partir de 3 290€. Le paiement peut être échelonné jusqu'à 10 mensualités sans frais."
       }
     },
     {
@@ -481,39 +482,39 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
         <div class="tarif-label">En Terminale</div>
         <div class="tarif-name">Terminale Santé</div>
         <div class="tarif-sub">178h d'enseignement &bull; Cours + stages</div>
-        <div class="tarif-price">3 490 <span>€</span></div>
+        <div class="tarif-price"><small>à partir de</small>2 490 <span>€</span></div>
         <ul class="tarif-details">
           <li>126h de cours d'anticipation médecine</li>
           <li>Coaching individuel Parcoursup</li>
           <li>Préparation bac + Grand Oral</li>
           <li>Stage intensif pré-bac</li>
-          <li>Formule visio-conférence : 2 490€</li>
+          <li>Formule présentiel : 3 490€</li>
         </ul>
       </div>
       <div class="tarif-card featured">
         <div class="tarif-label">En PASS / LSPS</div>
         <div class="tarif-name">Prépa PASS &amp; LSPS</div>
         <div class="tarif-sub">204h de cours &bull; 74h d'évaluations</div>
-        <div class="tarif-price">8 490 <span>€</span></div>
+        <div class="tarif-price"><small>à partir de</small>7 990 <span>€</span></div>
         <ul class="tarif-details">
           <li>2 pré-rentrées intensives (S1 + S2)</li>
           <li>Concours blancs hebdomadaires classants</li>
           <li>Coaching individualisé toute l'année</li>
           <li>Préparation aux oraux incluse</li>
-          <li>Formule n°2 (pré-rentrée visio) : 7 990€</li>
+          <li>Formule n°1 (tout présentiel) : 8 490€</li>
         </ul>
       </div>
       <div class="tarif-card">
         <div class="tarif-label">En LAS</div>
         <div class="tarif-name">Prépa LAS</div>
-        <div class="tarif-sub">Mineure santé &bull; Prépa oraux</div>
-        <div class="tarif-price">Sur devis</div>
+        <div class="tarif-sub">156h de préparation &bull; Prépa oraux incluse</div>
+        <div class="tarif-price"><small>à partir de</small>3 290 <span>€</span></div>
         <ul class="tarif-details">
-          <li>Accompagnement ciblé mineure santé</li>
-          <li>Stage de pré-rentrée spécifique</li>
-          <li>Préparation continue toute l'année</li>
-          <li>Préparation aux oraux d'admission</li>
-          <li><a href="https://diploma-sante.fr" target="_blank" rel="noopener" style="color:var(--blue);text-decoration:underline">Contactez Diploma Santé</a></li>
+          <li>72h de cours ciblés mineure santé</li>
+          <li>Stage de pré-rentrée (42h)</li>
+          <li>24h d'évaluations &amp; concours blancs</li>
+          <li>Préparation aux oraux d'admission (18h)</li>
+          <li>Formule n°1 (tout présentiel) : 3 990€</li>
         </ul>
       </div>
     </div>
@@ -676,7 +677,7 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
     </div>
     <div class="faq-item">
       <button class="faq-q" onclick="toggleFaq(this)">Combien coûte la prépa Diploma Santé ?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
-      <div class="faq-a"><div class="faq-a-inner">Les tarifs 2025-2026 sont : Première Élite à 1 990€, Terminale Santé à 3 490€ en présentiel (2 490€ en visio), et Prépa PASS/LSPS à 8 490€ (formule n°1) ou 7 990€ (formule n°2). Le paiement peut être échelonné jusqu'à 10 mensualités sans frais. Découvrez notre <a href="/prepa-pass-prix/">comparatif des prix des prépas PASS</a>.</div></div>
+      <div class="faq-a"><div class="faq-a-inner">Les tarifs 2025-2026 sont : Première Élite à 1 990€, Terminale Santé à partir de 2 490€, Prépa PASS/LSPS à partir de 7 990€, et Prépa LAS à partir de 3 290€. Le paiement peut être échelonné jusqu'à 10 mensualités sans frais. Découvrez notre <a href="/prepa-pass-prix/">comparatif des prix des prépas PASS</a>.</div></div>
     </div>
     <div class="faq-item">
       <button class="faq-q" onclick="toggleFaq(this)">Quelles filières prépare Diploma Santé ?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
