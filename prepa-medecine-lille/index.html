@@ -65,8 +65,9 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
 .nav-burger{display:none;flex-direction:column;gap:5px;padding:8px}
 .nav-burger span{display:block;width:22px;height:2px;background:var(--text);border-radius:2px;transition:transform .2s}
 @media(max-width:768px){
-  .nav-links{position:fixed;top:var(--nav-h);left:0;right:0;bottom:0;background:#fff;overflow-y:auto;flex-direction:column;padding:24px;gap:16px;border-bottom:1px solid var(--border);transform:translateY(-120%);visibility:hidden;transition:transform .3s,visibility .3s;z-index:99}
-  .nav-links.open{transform:translateY(0);visibility:visible}
+  .nav-links{position:fixed;top:0;right:0;bottom:0;width:min(300px,85vw);background:#fff;overflow-y:auto;flex-direction:column;padding:calc(var(--nav-h) + 16px) 24px 24px;gap:16px;box-shadow:-4px 0 28px rgba(0,0,0,.15);transform:translateX(100%);visibility:hidden;transition:transform .3s,visibility .3s;z-index:999}
+  .nav-links.open{transform:translateX(0);visibility:visible}
+  .nav-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:998;cursor:pointer}.nav-overlay.open{display:block}
   .nav-links a{font-size:17px;padding:8px 0}
   .nav-burger{display:flex}
   .nav-dropdown-menu{position:static;transform:none;box-shadow:none;border:none;background:var(--bg-alt);border-radius:var(--radius-sm);grid-template-columns:1fr 1fr;min-width:0;padding:8px 0;margin-top:4px;opacity:1;visibility:visible;display:none}
@@ -206,7 +207,9 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
 <nav class="nav">
   <div class="container">
     <a href="/" class="nav-logo"><svg width="34" height="34" viewBox="0 0 40 40" fill="none"><defs><linearGradient id="logoGrad" x1="0" y1="0" x2="40" y2="40"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#046bd2"/></linearGradient></defs><rect x="1" y="1" width="38" height="38" rx="12" fill="url(#logoGrad)"/><path d="M11 27c0-1.5 1-2.5 2.5-2.5H20v-9.5" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M29 27c0-1.5-1-2.5-2.5-2.5H20v-9.5" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M13.5 24.5V16.5c0-.8.4-1.2 1.2-1.2H20" stroke="#fff" stroke-width="1.6" stroke-linecap="round" fill="none" opacity=".5"/><path d="M26.5 24.5V16.5c0-.8-.4-1.2-1.2-1.2H20" stroke="#fff" stroke-width="1.6" stroke-linecap="round" fill="none" opacity=".5"/><circle cx="30" cy="11" r="4" fill="#046bd2" stroke="#fff" stroke-width="1.6"/><path d="M28.8 11h2.4M30 9.8v2.4" stroke="#fff" stroke-width="1.2" stroke-linecap="round"/></svg><div class="logo-text"><em>prépa</em><span>médecine</span><span class="logo-dot">.</span><span class="logo-tld">fr</span></div></a>
+    <div class="nav-overlay" id="navOverlay"></div>
     <div class="nav-links" id="navLinks">
+      <button class="nav-close" id="navClose" aria-label="Fermer le menu" style="align-self:flex-end;background:none;border:none;cursor:pointer;padding:4px;margin-bottom:8px;color:var(--text);font-size:24px;line-height:1">✕</button>
       <a href="/">Accueil</a>
       <a href="/#prepas">Prépas</a>
       <div class="nav-dropdown" id="navDropdownVilles">
@@ -476,6 +479,7 @@ document.getElementById('burger').addEventListener('click', function(){
   dd.querySelectorAll('.nav-dropdown-menu a').forEach(function(a){
     a.addEventListener('click', function(){
       document.getElementById('navLinks').classList.remove('open');
+      document.getElementById('navOverlay')?.classList.remove('open');
       dd.classList.remove('open');
     });
   });
