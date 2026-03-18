@@ -70,6 +70,7 @@ input,select{font-family:inherit}
 .nav-links a:hover,.nav-links a.active{color:var(--blue)}
 .nav-links a.nav-cta{background:var(--blue);color:#fff;padding:10px 22px;border-radius:var(--radius-sm);font-size:14px;font-weight:600;transition:background .2s,transform .15s}
 .nav-links a.nav-cta:hover{background:var(--blue-dark);transform:translateY(-1px);color:#fff}
+.nav-close{display:none}
 .nav-burger{display:none;flex-direction:column;gap:5px;padding:8px}
 .nav-burger span{display:block;width:22px;height:2px;background:var(--text);border-radius:2px;transition:transform .2s}
 
@@ -464,26 +465,6 @@ input,select{font-family:inherit}
 .detail-cta-box .cta-btn-white:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,0.15)}
   body{overflow-x:hidden}
 </style>
-<style id="nav-mobile-css">
-@media(max-width:768px){
-  .nav{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
-  .nav-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:998}
-  .nav-overlay.open{display:block}
-  .nav-links{position:fixed;top:0;right:0;bottom:0;width:280px;background:#fff;padding:24px 20px;overflow-y:auto;transform:translateX(110%);transition:transform .28s ease;z-index:999;display:flex!important;flex-direction:column;gap:2px;box-shadow:-4px 0 20px rgba(0,0,0,.12)}
-  .nav-links.open{transform:translateX(0)}
-  .nav-close{align-self:flex-end;background:none;border:none;font-size:22px;cursor:pointer;padding:4px 8px;color:#64748b;line-height:1;margin-bottom:8px}
-  .nav-links>a{padding:11px 12px;border-radius:8px;font-size:15px;font-weight:500;color:#1e293b!important;text-decoration:none!important;display:block}
-  .nav-links>a:hover{background:#f1f5f9;color:#0284c7!important}
-  .nav-sep{border:none;border-top:1px solid #f1f5f9;margin:6px 0}
-  .nav-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#94a3b8;padding:6px 12px 2px;display:block}
-  .nav-cities{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-bottom:4px}
-  .nav-cities a{padding:9px 10px;border-radius:8px;font-size:13px;color:#475569!important;text-decoration:none!important;display:block}
-  .nav-cities a:hover{background:#f1f5f9;color:#0284c7!important}
-  .nav-cta-mobile{background:#0284c7!important;color:#fff!important;text-align:center;border-radius:10px;font-weight:700!important;margin-top:auto;padding:13px 12px!important;display:block}
-  .nav-cta-mobile:hover{background:#0369a1!important}
-  .nav-burger{display:flex}
-}
-</style>
 </head>
 <body>
 
@@ -493,29 +474,29 @@ input,select{font-family:inherit}
     <a href="#accueil" class="nav-logo"><svg width="34" height="34" viewBox="0 0 40 40" fill="none"><defs><linearGradient id="logoGrad" x1="0" y1="0" x2="40" y2="40"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#046bd2"/></linearGradient></defs><rect x="1" y="1" width="38" height="38" rx="12" fill="url(#logoGrad)"/><path d="M11 27c0-1.5 1-2.5 2.5-2.5H20v-9.5" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M29 27c0-1.5-1-2.5-2.5-2.5H20v-9.5" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M13.5 24.5V16.5c0-.8.4-1.2 1.2-1.2H20" stroke="#fff" stroke-width="1.6" stroke-linecap="round" fill="none" opacity=".5"/><path d="M26.5 24.5V16.5c0-.8-.4-1.2-1.2-1.2H20" stroke="#fff" stroke-width="1.6" stroke-linecap="round" fill="none" opacity=".5"/><circle cx="30" cy="11" r="4" fill="#046bd2" stroke="#fff" stroke-width="1.6"/><path d="M28.8 11h2.4M30 9.8v2.4" stroke="#fff" stroke-width="1.2" stroke-linecap="round"/></svg><div class="logo-text"><em>prepa</em><span>medecine</span><span class="logo-dot">.</span><span class="logo-tld">fr</span></div></a>
     <div class="nav-overlay" id="navOverlay"></div>
     <div class="nav-links" id="navLinks">
-  <button class="nav-close" id="navClose" aria-label="Fermer">✕</button>
-  <a href="#accueil" data-page="home">Accueil</a>
-  <a href="#prepas" data-page="prepas">Comparer les prépas</a>
-  <hr class="nav-sep">
-  <span class="nav-label">Prépas par ville</span>
-  <div class="nav-cities">
-    <a href="/prepa-medecine-paris/">Paris</a>
-    <a href="/prepa-medecine-lyon/">Lyon</a>
-    <a href="/prepa-medecine-marseille/">Marseille</a>
-    <a href="/prepa-medecine-toulouse/">Toulouse</a>
-    <a href="/prepa-medecine-bordeaux/">Bordeaux</a>
-    <a href="/prepa-medecine-lille/">Lille</a>
-    <a href="/prepa-medecine-nice/">Nice</a>
-    <a href="/prepa-medecine-montpellier/">Montpellier</a>
-    <a href="/prepa-medecine-nantes/">Nantes</a>
-    <a href="/prepa-medecine-rennes/">Rennes</a>
-    <a href="/prepa-medecine-en-ligne/">En ligne</a>
-  </div>
-  <hr class="nav-sep">
-  <a href="#conseils" data-page="conseils">Guides &amp; Blog</a>
-  <a href="#faq" data-page="faq">FAQ</a>
-  <a href="#prepas" class="nav-cta-mobile" data-page="prepas">Trouver ma prépa</a>
-</div>
+      <button class="nav-close" id="navClose" aria-label="Fermer">✕</button>
+      <a href="#accueil" data-page="home">Accueil</a>
+      <a href="#prepas" data-page="prepas">Comparer les prépas</a>
+      <div class="nav-dropdown" id="navDropdownVilles">
+        <a href="#">Prépas par ville</a>
+        <div class="nav-dropdown-menu">
+          <a href="/prepa-medecine-paris/">Paris</a>
+          <a href="/prepa-medecine-lyon/">Lyon</a>
+          <a href="/prepa-medecine-marseille/">Marseille</a>
+          <a href="/prepa-medecine-toulouse/">Toulouse</a>
+          <a href="/prepa-medecine-bordeaux/">Bordeaux</a>
+          <a href="/prepa-medecine-lille/">Lille</a>
+          <a href="/prepa-medecine-nice/">Nice</a>
+          <a href="/prepa-medecine-montpellier/">Montpellier</a>
+          <a href="/prepa-medecine-nantes/">Nantes</a>
+          <a href="/prepa-medecine-rennes/">Rennes</a>
+          <a href="/prepa-medecine-en-ligne/">En ligne</a>
+        </div>
+      </div>
+      <a href="#conseils" data-page="conseils">Blog</a>
+      <a href="#faq" data-page="faq">FAQ</a>
+      <a href="#prepas" class="nav-cta" data-page="prepas">Trouver ma prépa</a>
+    </div>
     <button class="nav-burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
   </div>
 </nav>
@@ -2032,8 +2013,7 @@ document.getElementById('heroSearch')?.addEventListener('keydown', function(e) {
   var drawer  = document.getElementById('navLinks');
   var burger  = document.getElementById('burger');
   var btnClose= document.getElementById('navClose');
-  if(overlay) document.body.appendChild(overlay);
-  if(drawer)  document.body.appendChild(drawer);
+  /* Elements stay inside nav — backdrop-filter:none on mobile handles containing block */
   function open(){
     if(drawer)  drawer.classList.add('open');
     if(overlay) overlay.classList.add('open');
