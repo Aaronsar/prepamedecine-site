@@ -376,7 +376,7 @@ input,select{font-family:inherit}
 .top-card.coup-de-coeur{border:2px solid var(--blue);box-shadow:0 8px 30px rgba(4,107,210,0.15)}
 .top-card.coup-de-coeur .top-card-header{background:linear-gradient(135deg,var(--blue),#0284c7)}
 .top-card.coup-de-coeur .top-card-header h3,.top-card.coup-de-coeur .top-card-header .location{color:#fff}
-.top-card.coup-de-coeur .top-card-badge{background:rgba(255,255,255,0.25);color:#fff;border:1px solid rgba(255,255,255,0.4)}
+.top-card.coup-de-coeur .top-card-badge{background:rgba(255,255,255,0.25);color:#fff;border:1px solid rgba(255,255,255,0.4);width:auto;height:auto;border-radius:20px;padding:6px 14px;gap:4px;font-size:11px;text-transform:uppercase;letter-spacing:0.5px}
 .top-card.coup-de-coeur .top-card-header::after{color:#fff;opacity:0.1}
 /* Podium layout */
 .top-card.podium-1{transform:scale(1.04);z-index:2;order:2;box-shadow:0 12px 40px rgba(4,107,210,0.18)}
@@ -386,7 +386,6 @@ input,select{font-family:inherit}
 .top-card.podium-2 .top-card-badge{background:linear-gradient(135deg,#94a3b8,#64748b)}
 .top-card.podium-3 .top-card-badge{background:linear-gradient(135deg,#d97706,#b45309)}
 @media(max-width:900px){.top-card.podium-1{transform:scale(1);order:0}.top-card.podium-2{order:1}.top-card.podium-3{order:2}}
-.coup-de-coeur-badge{display:inline-flex;align-items:center;gap:5px;background:#fff;color:var(--blue);font-size:11px;font-weight:800;padding:4px 10px;border-radius:20px;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px}
 .prep-card.coup-de-coeur-card{border:2px solid var(--blue);background:linear-gradient(180deg,var(--blue-50) 0%,#fff 40%);position:relative}
 .prep-card.coup-de-coeur-card::after{content:'Coup de coeur';position:absolute;top:12px;right:12px;background:var(--blue);color:#fff;font-size:10px;font-weight:800;padding:3px 10px;border-radius:12px;text-transform:uppercase;letter-spacing:0.5px}
 .prep-card.coup-de-coeur-card:hover{border-color:var(--blue-dark);box-shadow:0 8px 30px rgba(4,107,210,0.18)}
@@ -1746,8 +1745,7 @@ function renderTopPrepas() {
   grid.innerHTML = featured.map((p, i) => `
     <div class="top-card${p.coupDeCoeur?' coup-de-coeur':''} podium-${i+1}" onclick="location.href='/prepa/${p.id}/'">
       <div class="top-card-header">
-        ${p.coupDeCoeur?'<div class="coup-de-coeur-badge">'+ic('heartPulse',12)+' Coup de coeur</div>':''}
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px"><div class="top-card-badge">#${i+1}</div><h3 style="margin:0">${p.name}</h3></div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px"><div class="top-card-badge">${p.coupDeCoeur?ic('heartPulse',12)+' Coup de coeur':'#'+(i+1)}</div><h3 style="margin:0">${p.name}</h3></div>
         <div class="location">${ic('mapPin',14)} ${p.ville}</div>
         <div class="top-stars-row" style="margin-top:8px">${renderStars(p.note)}</div>
       </div>
