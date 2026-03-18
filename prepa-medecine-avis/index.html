@@ -269,45 +269,24 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
   "dateModified": "2026-02-01"
 }
 </script>
-<style>
-/* ═══════ MOBILE DRAWER REDESIGN ═══════ */
+<style id="nav-mobile-css">
 @media(max-width:768px){
   .nav{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
-  .nav-links{position:fixed;top:0;right:0;bottom:0;width:min(320px,88vw);background:#fff;flex-direction:column;padding:0;gap:0;overflow:hidden;transform:translateX(100%);visibility:hidden;transition:transform .35s cubic-bezier(.4,0,.2,1),visibility .35s;z-index:999;box-shadow:-8px 0 40px rgba(0,0,0,.18)}
-  .nav-links.open{transform:translateX(0);visibility:visible}
-  .nav-overlay{display:none;position:fixed;inset:0;background:rgba(15,23,42,.55);z-index:998;cursor:pointer}.nav-overlay.open{display:block}
-  /* Header gradient */
-  .drawer-header{display:flex;align-items:center;justify-content:space-between;padding:20px 20px;background:linear-gradient(135deg,#0284c7 0%,#0369a1 100%);flex-shrink:0;min-height:72px}
-  .drawer-logo-wrap{display:flex;align-items:center;gap:10px;text-decoration:none}
-  .drawer-logo-text{font-family:'Nunito',sans-serif;font-weight:900;font-size:18px;color:#fff;display:flex;align-items:baseline;gap:1px;line-height:1}
-  .drawer-logo-text em{font-style:italic}
-  .drawer-logo-text .dl-tld{font-size:13px;opacity:0.6}
-  .nav-close{display:flex!important;align-items:center;justify-content:center;width:36px;height:36px;min-width:36px;background:rgba(255,255,255,.18)!important;border:1.5px solid rgba(255,255,255,.35)!important;border-radius:50%;cursor:pointer;color:#fff!important;padding:0;transition:background .2s;flex-shrink:0}
-  .nav-close:hover{background:rgba(255,255,255,.3)!important}
-  /* Body */
-  .drawer-body{flex:1;padding:12px 16px;overflow-y:auto;-webkit-overflow-scrolling:touch}
-  .drawer-link{display:flex!important;align-items:center;gap:12px;padding:13px 14px;border-radius:12px;font-size:15px!important;font-weight:600!important;color:#1e293b!important;text-decoration:none!important;transition:background .15s,color .15s;margin-bottom:2px;cursor:pointer}
-  .drawer-link:hover,.drawer-link:active{background:#eff6ff!important;color:#0284c7!important}
-  .dl-icon{flex-shrink:0;color:#94a3b8;transition:color .15s}
-  .drawer-link:hover .dl-icon{color:#0284c7}
-  .drawer-sep{height:1px;background:#f1f5f9;margin:8px 0}
-  .drawer-section-label{display:flex;align-items:center;gap:10px;padding:10px 14px 6px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:#94a3b8}
-  /* Cities grid */
-  .drawer-cities-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px;padding-bottom:8px}
-  .drawer-cities-grid a{display:block;padding:10px 12px;border-radius:10px;font-size:13.5px;font-weight:500;color:#475569!important;text-decoration:none!important;transition:background .15s,color .15s}
-  .drawer-cities-grid a:hover,.drawer-cities-grid a:active{background:#eff6ff!important;color:#0284c7!important}
-  .drawer-all-cities{grid-column:1/-1;font-weight:700!important;color:#0284c7!important;background:#eff6ff;border-radius:10px;text-align:center}
-  /* Footer */
-  .drawer-footer{padding:16px 20px 28px;border-top:1px solid #f1f5f9;flex-shrink:0;background:#f8fafc}
-  .drawer-cta{display:flex!important;align-items:center;justify-content:center;background:linear-gradient(135deg,#0284c7,#0369a1)!important;color:#fff!important;padding:15px 20px;border-radius:14px;font-size:15px!important;font-weight:700!important;text-decoration:none!important;box-shadow:0 4px 16px rgba(2,132,199,.3);transition:transform .15s,box-shadow .15s;margin-bottom:2px}
-  .drawer-cta:hover{transform:translateY(-1px);box-shadow:0 6px 24px rgba(2,132,199,.4)!important}
-  .drawer-tagline{font-size:12px;color:#94a3b8;text-align:center;margin:10px 0 0;line-height:1.4}
-  /* Burger X animation */
-  .nav-burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
-  .nav-burger.open span:nth-child(2){opacity:0;transform:scaleX(0)}
-  .nav-burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
-  /* Hide old nav elements that no longer exist in new drawer */
-  .nav-links > a:not(.drawer-link), .nav-links > .nav-dropdown{display:none!important}
+  .nav-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:998}
+  .nav-overlay.open{display:block}
+  .nav-links{position:fixed;top:0;right:0;bottom:0;width:280px;background:#fff;padding:24px 20px;overflow-y:auto;transform:translateX(110%);transition:transform .28s ease;z-index:999;display:flex!important;flex-direction:column;gap:2px;box-shadow:-4px 0 20px rgba(0,0,0,.12)}
+  .nav-links.open{transform:translateX(0)}
+  .nav-close{align-self:flex-end;background:none;border:none;font-size:22px;cursor:pointer;padding:4px 8px;color:#64748b;line-height:1;margin-bottom:8px}
+  .nav-links>a{padding:11px 12px;border-radius:8px;font-size:15px;font-weight:500;color:#1e293b!important;text-decoration:none!important;display:block}
+  .nav-links>a:hover{background:#f1f5f9;color:#0284c7!important}
+  .nav-sep{border:none;border-top:1px solid #f1f5f9;margin:6px 0}
+  .nav-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#94a3b8;padding:6px 12px 2px;display:block}
+  .nav-cities{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-bottom:4px}
+  .nav-cities a{padding:9px 10px;border-radius:8px;font-size:13px;color:#475569!important;text-decoration:none!important;display:block}
+  .nav-cities a:hover{background:#f1f5f9;color:#0284c7!important}
+  .nav-cta-mobile{background:#0284c7!important;color:#fff!important;text-align:center;border-radius:10px;font-weight:700!important;margin-top:auto;padding:13px 12px!important;display:block}
+  .nav-cta-mobile:hover{background:#0369a1!important}
+  .nav-burger{display:flex}
 }
 </style>
 </head>
@@ -318,44 +297,29 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
     <a href="/" class="nav-logo"><svg width="34" height="34" viewBox="0 0 40 40" fill="none"><defs><linearGradient id="logoGrad" x1="0" y1="0" x2="40" y2="40"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#046bd2"/></linearGradient></defs><rect x="1" y="1" width="38" height="38" rx="12" fill="url(#logoGrad)"/><path d="M11 27c0-1.5 1-2.5 2.5-2.5H20v-9.5" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M29 27c0-1.5-1-2.5-2.5-2.5H20v-9.5" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M13.5 24.5V16.5c0-.8.4-1.2 1.2-1.2H20" stroke="#fff" stroke-width="1.6" stroke-linecap="round" fill="none" opacity=".5"/><path d="M26.5 24.5V16.5c0-.8-.4-1.2-1.2-1.2H20" stroke="#fff" stroke-width="1.6" stroke-linecap="round" fill="none" opacity=".5"/><circle cx="30" cy="11" r="4" fill="#046bd2" stroke="#fff" stroke-width="1.6"/><path d="M28.8 11h2.4M30 9.8v2.4" stroke="#fff" stroke-width="1.2" stroke-linecap="round"/></svg><div class="logo-text"><em>prépa</em><span>médecine</span><span class="logo-dot">.</span><span class="logo-tld">fr</span></div></a>
     <div class="nav-overlay" id="navOverlay"></div>
     <div class="nav-links" id="navLinks">
-      <!-- DRAWER HEADER -->
-      <div class="drawer-header">
-        <div class="drawer-logo-wrap">
-          <svg width="30" height="30" viewBox="0 0 40 40" fill="none"><defs><linearGradient id="dlg" x1="0" y1="0" x2="40" y2="40"><stop offset="0%" stop-color="#38bdf8"/><stop offset="100%" stop-color="#7dd3fc"/></linearGradient></defs><rect width="40" height="40" rx="10" fill="url(#dlg)"/><path d="M11 27c0-1.5 1-2.5 2.5-2.5H20v-9.5" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M29 27c0-1.5-1-2.5-2.5-2.5H20v-9.5" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
-          <div class="drawer-logo-text"><em>prépa</em><span>médecine</span><span class="dl-tld">.fr</span></div>
-        </div>
-        <button class="nav-close" id="navClose" aria-label="Fermer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
-      </div>
-      <!-- DRAWER BODY -->
-      <div class="drawer-body">
-        <a href="/" class="drawer-link"><svg class="dl-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Accueil</a>
-        <a href="/#prepas" class="drawer-link"><svg class="dl-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>Comparer les prépas</a>
-        <div class="drawer-sep"></div>
-        <div class="drawer-section-label"><svg class="dl-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Prépas par ville</div>
-        <div class="drawer-cities-grid">
-          <a href="/prepa-medecine-paris/">Paris</a>
-          <a href="/prepa-medecine-lyon/">Lyon</a>
-          <a href="/prepa-medecine-marseille/">Marseille</a>
-          <a href="/prepa-medecine-toulouse/">Toulouse</a>
-          <a href="/prepa-medecine-bordeaux/">Bordeaux</a>
-          <a href="/prepa-medecine-lille/">Lille</a>
-          <a href="/prepa-medecine-nice/">Nice</a>
-          <a href="/prepa-medecine-montpellier/">Montpellier</a>
-          <a href="/prepa-medecine-nantes/">Nantes</a>
-          <a href="/prepa-medecine-rennes/">Rennes</a>
-          <a href="/prepa-medecine-en-ligne/">En ligne 💻</a>
-          <a href="/#prepas" class="drawer-all-cities">Toutes les villes →</a>
-        </div>
-        <div class="drawer-sep"></div>
-        <a href="/#blog" class="drawer-link"><svg class="dl-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>Guides &amp; Blog</a>
-        <a href="/#faq" class="drawer-link"><svg class="dl-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>FAQ</a>
-      </div>
-      <!-- DRAWER FOOTER -->
-      <div class="drawer-footer">
-        <a href="/#prepas" class="drawer-cta">Trouver ma prépa →</a>
-        <p class="drawer-tagline">Comparateur 100% gratuit &amp; indépendant</p>
-      </div>
-    </div>
+  <button class="nav-close" id="navClose" aria-label="Fermer">✕</button>
+  <a href="/">Accueil</a>
+  <a href="/#prepas">Comparer les prépas</a>
+  <hr class="nav-sep">
+  <span class="nav-label">Prépas par ville</span>
+  <div class="nav-cities">
+    <a href="/prepa-medecine-paris/">Paris</a>
+    <a href="/prepa-medecine-lyon/">Lyon</a>
+    <a href="/prepa-medecine-marseille/">Marseille</a>
+    <a href="/prepa-medecine-toulouse/">Toulouse</a>
+    <a href="/prepa-medecine-bordeaux/">Bordeaux</a>
+    <a href="/prepa-medecine-lille/">Lille</a>
+    <a href="/prepa-medecine-nice/">Nice</a>
+    <a href="/prepa-medecine-montpellier/">Montpellier</a>
+    <a href="/prepa-medecine-nantes/">Nantes</a>
+    <a href="/prepa-medecine-rennes/">Rennes</a>
+    <a href="/prepa-medecine-en-ligne/">En ligne</a>
+  </div>
+  <hr class="nav-sep">
+  <a href="/#blog">Guides &amp; Blog</a>
+  <a href="/#faq">FAQ</a>
+  <a href="/#prepas" class="nav-cta-mobile">Trouver ma prépa</a>
+</div>
     <button class="nav-burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
   </div>
 </nav>
