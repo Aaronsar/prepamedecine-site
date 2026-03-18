@@ -69,8 +69,8 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
 .nav-burger{display:none;flex-direction:column;gap:5px;padding:8px}
 .nav-burger span{display:block;width:22px;height:2px;background:var(--text);border-radius:2px;transition:transform .2s}
 @media(max-width:768px){
-  .nav-links{position:fixed;top:var(--nav-h);left:0;right:0;bottom:0;background:#fff;overflow-y:auto;flex-direction:column;padding:24px;gap:16px;border-bottom:1px solid var(--border);transform:translateY(-120%);transition:transform .3s;z-index:99}
-  .nav-links.open{transform:translateY(0)}
+  .nav-links{position:fixed;top:var(--nav-h);left:0;right:0;bottom:0;background:#fff;overflow-y:auto;flex-direction:column;padding:24px;gap:16px;border-bottom:1px solid var(--border);transform:translateY(-120%);visibility:hidden;transition:transform .3s,visibility .3s;z-index:99}
+  .nav-links.open{transform:translateY(0);visibility:visible}
   .nav-links a{font-size:17px;padding:8px 0}
   .nav-burger{display:flex}
   .nav-dropdown-menu{position:static;transform:none;box-shadow:none;border:none;background:var(--bg-alt);border-radius:var(--radius-sm);grid-template-columns:1fr 1fr;min-width:0;padding:8px 0;margin-top:4px;opacity:1;visibility:visible;display:none}
@@ -312,8 +312,8 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
 </div>
 
 <div style="background:linear-gradient(135deg,#f0fdf4,#ecfdf5);border:1px solid #bbf7d0;border-radius:12px;padding:20px 24px;margin:24px 0">
-<h4 style="font-size:16px;font-weight:700;color:#059669;margin-bottom:6px">Coaching Hermione Médecine</h4>
-<p style="font-size:14px;color:#334155;line-height:1.6;margin:0">Complétez votre prépa avec un accompagnement individuel en méthodologie et organisation. <a href="https://hermione.co/" target="_blank" rel="noopener" style="color:#059669;font-weight:600;text-decoration:underline">Découvrir Hermione Médecine &rarr;</a></p>
+<h4 style="font-size:16px;font-weight:700;color:#059669;margin-bottom:6px">Anticipe dès la Terminale</h4>
+<p style="font-size:14px;color:#334155;line-height:1.6;margin:0">Tu vises médecine après le bac ? Commence dès maintenant à poser les bonnes habitudes avec un coaching Hermione en méthode et organisation. <a href="https://hermione.co/" target="_blank" rel="noopener" style="color:#059669;font-weight:600;text-decoration:underline">Découvrir Hermione Médecine &rarr;</a></p>
 </div>
 
 <h3>Continue ta recherche</h3>
@@ -331,11 +331,11 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
 
 <section style="padding:32px 0">
   <div class="container">
-    <h3 style="font-size:18px;font-weight:700;color:#0f172a;margin-bottom:16px">Ressources officielles</h3>
-    <div style="display:flex;flex-wrap:wrap;gap:10px">
-      <a href="https://www.parcoursup.gouv.fr/" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;font-size:13px;font-weight:500;color:#334155;transition:border-color .2s">Parcoursup.gouv.fr ↗</a>
-      <a href="https://www.letudiant.fr/" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;font-size:13px;font-weight:500;color:#334155;transition:border-color .2s">L'Étudiant ↗</a>
-      <a href="https://hermione.co/" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;font-size:13px;font-weight:500;color:#334155;transition:border-color .2s">Hermione Médecine ↗</a>
+    <h3 style="font-size:18px;font-weight:700;color:#0f172a;margin-bottom:16px">Liens et ressources</h3>
+    <div style="display:flex;flex-wrap:wrap;gap:8px">
+      <a href="https://www.parcoursup.gouv.fr/" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:transparent;border:1px solid #e2e8f0;border-radius:6px;font-size:13px;font-weight:500;color:#334155;transition:border-color .2s">Voir Parcoursup ↗</a>
+      <a href="https://www.letudiant.fr/" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:transparent;border:1px solid #e2e8f0;border-radius:6px;font-size:13px;font-weight:500;color:#334155;transition:border-color .2s">L'Étudiant lycéen ↗</a>
+      <a href="https://hermione.co/" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:transparent;border:1px solid #e2e8f0;border-radius:6px;font-size:13px;font-weight:500;color:#334155;transition:border-color .2s">hermione.co ↗</a>
     </div>
   </div>
 </section>

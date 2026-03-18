@@ -65,8 +65,8 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
 .nav-burger{display:none;flex-direction:column;gap:5px;padding:8px}
 .nav-burger span{display:block;width:22px;height:2px;background:var(--text);border-radius:2px;transition:transform .2s}
 @media(max-width:768px){
-  .nav-links{position:fixed;top:var(--nav-h);left:0;right:0;bottom:0;background:#fff;overflow-y:auto;flex-direction:column;padding:24px;gap:16px;border-bottom:1px solid var(--border);transform:translateY(-120%);transition:transform .3s;z-index:99}
-  .nav-links.open{transform:translateY(0)}
+  .nav-links{position:fixed;top:var(--nav-h);left:0;right:0;bottom:0;background:#fff;overflow-y:auto;flex-direction:column;padding:24px;gap:16px;border-bottom:1px solid var(--border);transform:translateY(-120%);visibility:hidden;transition:transform .3s,visibility .3s;z-index:99}
+  .nav-links.open{transform:translateY(0);visibility:visible}
   .nav-links a{font-size:17px;padding:8px 0}
   .nav-burger{display:flex}
   .nav-dropdown-menu{position:static;transform:none;box-shadow:none;border:none;background:var(--bg-alt);border-radius:var(--radius-sm);grid-template-columns:1fr 1fr;min-width:0;padding:8px 0;margin-top:4px;opacity:1;visibility:visible;display:none}
@@ -408,8 +408,8 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
     </div>
 
     <div style="background:linear-gradient(135deg,#f0fdf4,#ecfdf5);border:1px solid #bbf7d0;border-radius:12px;padding:20px 24px;margin:24px 0">
-      <h4 style="font-size:16px;font-weight:700;color:#059669;margin-bottom:6px">Coaching Hermione Médecine</h4>
-      <p style="font-size:14px;color:#334155;line-height:1.6;margin:0">Complétez votre prépa avec un accompagnement individuel en méthodologie et organisation. <a href="https://hermione.co/" target="_blank" rel="noopener" style="color:#059669;font-weight:600;text-decoration:underline">Découvrir Hermione Médecine &rarr;</a></p>
+      <h4 style="font-size:16px;font-weight:700;color:#059669;margin-bottom:6px">Un coup de pouce à Nancy ?</h4>
+      <p style="font-size:14px;color:#334155;line-height:1.6;margin:0">Prépare ton concours à Nancy avec l'aide d'un coach Hermione. Gestion du planning, techniques de mémorisation et suivi personnalisé tout au long de l'année. <a href="https://hermione.co/" target="_blank" rel="noopener" style="color:#059669;font-weight:600;text-decoration:underline">En savoir plus &rarr;</a></p>
     </div>
 
     <h3>Découvre aussi</h3>

@@ -64,8 +64,8 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
 .nav-burger{display:none;flex-direction:column;gap:5px;padding:8px}
 .nav-burger span{display:block;width:22px;height:2px;background:var(--text);border-radius:2px;transition:transform .2s}
 @media(max-width:768px){
-  .nav-links{position:fixed;top:var(--nav-h);left:0;right:0;bottom:0;background:#fff;overflow-y:auto;flex-direction:column;padding:24px;gap:16px;border-bottom:1px solid var(--border);transform:translateY(-120%);transition:transform .3s;z-index:99}
-  .nav-links.open{transform:translateY(0)}
+  .nav-links{position:fixed;top:var(--nav-h);left:0;right:0;bottom:0;background:#fff;overflow-y:auto;flex-direction:column;padding:24px;gap:16px;border-bottom:1px solid var(--border);transform:translateY(-120%);visibility:hidden;transition:transform .3s,visibility .3s;z-index:99}
+  .nav-links.open{transform:translateY(0);visibility:visible}
   .nav-links a{font-size:17px;padding:8px 0}
   .nav-burger{display:flex}
   .nav-dropdown-menu{position:static;transform:none;box-shadow:none;border:none;background:var(--bg-alt);border-radius:var(--radius-sm);grid-template-columns:1fr 1fr;min-width:0;padding:8px 0;margin-top:4px;opacity:1;visibility:visible;display:none}

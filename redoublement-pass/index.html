@@ -68,8 +68,8 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
 .nav-burger{display:none;flex-direction:column;gap:5px;padding:8px}
 .nav-burger span{display:block;width:22px;height:2px;background:var(--text);border-radius:2px;transition:transform .2s}
 @media(max-width:768px){
-  .nav-links{position:fixed;top:var(--nav-h);left:0;right:0;bottom:0;background:#fff;overflow-y:auto;flex-direction:column;padding:24px;gap:16px;border-bottom:1px solid var(--border);transform:translateY(-120%);transition:transform .3s;z-index:99}
-  .nav-links.open{transform:translateY(0)}
+  .nav-links{position:fixed;top:var(--nav-h);left:0;right:0;bottom:0;background:#fff;overflow-y:auto;flex-direction:column;padding:24px;gap:16px;border-bottom:1px solid var(--border);transform:translateY(-120%);visibility:hidden;transition:transform .3s,visibility .3s;z-index:99}
+  .nav-links.open{transform:translateY(0);visibility:visible}
   .nav-links a{font-size:17px;padding:8px 0}
   .nav-burger{display:flex}
   .nav-dropdown-menu{position:static;transform:none;box-shadow:none;border:none;background:var(--bg-alt);border-radius:var(--radius-sm);grid-template-columns:1fr 1fr;min-width:0;padding:8px 0;margin-top:4px;opacity:1;visibility:visible;display:none}
@@ -600,11 +600,11 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
 
 <section style="padding:32px 0">
   <div class="container">
-    <h3 style="font-size:18px;font-weight:700;color:#0f172a;margin-bottom:16px">Ressources officielles</h3>
-    <div style="display:flex;flex-wrap:wrap;gap:10px">
-      <a href="https://www.letudiant.fr/" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;font-size:13px;font-weight:500;color:#334155;transition:border-color .2s">L'Étudiant ↗</a>
-      <a href="https://hermione.co/" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;font-size:13px;font-weight:500;color:#334155;transition:border-color .2s">Hermione Médecine ↗</a>
-      <a href="https://www.anemf.org/" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;font-size:13px;font-weight:500;color:#334155;transition:border-color .2s">ANEMF ↗</a>
+    <h3 style="font-size:18px;font-weight:700;color:#0f172a;margin-bottom:16px">À consulter aussi</h3>
+    <div style="display:flex;flex-wrap:wrap;gap:12px">
+      <a href="https://www.letudiant.fr/" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;font-size:13px;font-weight:500;color:#334155;transition:border-color .2s">letudiant.fr ↗</a>
+      <a href="https://hermione.co/" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;font-size:13px;font-weight:500;color:#334155;transition:border-color .2s">Hermione.co ↗</a>
+      <a href="https://www.anemf.org/" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;font-size:13px;font-weight:500;color:#334155;transition:border-color .2s">Site de l'ANEMF ↗</a>
     </div>
   </div>
 </section>

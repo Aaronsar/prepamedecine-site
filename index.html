@@ -75,8 +75,8 @@ input,select{font-family:inherit}
 .nav-dropdown-heading{padding:4px 20px 8px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--text-light);pointer-events:none}
 
 @media(max-width:768px){
-  .nav-links{position:fixed;top:var(--nav-h);left:0;right:0;bottom:0;background:#fff;flex-direction:column;padding:24px;gap:16px;border-bottom:1px solid var(--border);transform:translateY(-120%);transition:transform .3s;z-index:99;overflow-y:auto}
-  .nav-links.open{transform:translateY(0)}
+  .nav-links{position:fixed;top:var(--nav-h);left:0;right:0;bottom:0;background:#fff;flex-direction:column;padding:24px;gap:16px;border-bottom:1px solid var(--border);transform:translateY(-120%);visibility:hidden;transition:transform .3s,visibility .3s;z-index:99;overflow-y:auto}
+  .nav-links.open{transform:translateY(0);visibility:visible}
   .nav-links a{font-size:17px;padding:8px 0}
   .nav-burger{display:flex}
   .nav-dropdown-menu{position:static;transform:none;box-shadow:none;border:none;background:var(--bg-alt);border-radius:var(--radius-sm);grid-template-columns:1fr 1fr;min-width:0;padding:8px 0;margin-top:4px;opacity:1;visibility:visible;display:none}
@@ -784,15 +784,15 @@ input,select{font-family:inherit}
     </div>
 
     <!-- Ressources externes -->
-    <h3 style="font-size:18px;font-weight:700;color:#0f172a;margin:40px 0 16px;text-align:center">Ressources officielles</h3>
+    <h3 style="font-size:18px;font-weight:700;color:#0f172a;margin:40px 0 16px;text-align:center">Sites et ressources externes</h3>
     <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center">
       <a href="https://www.parcoursup.gouv.fr/" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:#fff;border:1px solid #e2e8f0;border-radius:8px;font-size:13px;font-weight:500;color:#334155;transition:border-color .2s;text-decoration:none">Parcoursup.gouv.fr ↗</a>
-      <a href="https://www.enseignementsup-recherche.gouv.fr/" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:#fff;border:1px solid #e2e8f0;border-radius:8px;font-size:13px;font-weight:500;color:#334155;transition:border-color .2s;text-decoration:none">Min. Enseignement Supérieur ↗</a>
+      <a href="https://www.enseignementsup-recherche.gouv.fr/" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:#fff;border:1px solid #e2e8f0;border-radius:8px;font-size:13px;font-weight:500;color:#334155;transition:border-color .2s;text-decoration:none">Enseignement Supérieur ↗</a>
       <a href="https://www.letudiant.fr/" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:#fff;border:1px solid #e2e8f0;border-radius:8px;font-size:13px;font-weight:500;color:#334155;transition:border-color .2s;text-decoration:none">L'Étudiant ↗</a>
       <a href="https://etudiant.lefigaro.fr/" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:#fff;border:1px solid #e2e8f0;border-radius:8px;font-size:13px;font-weight:500;color:#334155;transition:border-color .2s;text-decoration:none">Le Figaro Étudiant ↗</a>
       <a href="https://www.studyrama.com/" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:#fff;border:1px solid #e2e8f0;border-radius:8px;font-size:13px;font-weight:500;color:#334155;transition:border-color .2s;text-decoration:none">Studyrama ↗</a>
       <a href="https://www.onisep.fr/" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:#fff;border:1px solid #e2e8f0;border-radius:8px;font-size:13px;font-weight:500;color:#334155;transition:border-color .2s;text-decoration:none">ONISEP ↗</a>
-      <a href="https://hermione.co/" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:#fff;border:1px solid #e2e8f0;border-radius:8px;font-size:13px;font-weight:500;color:#334155;transition:border-color .2s;text-decoration:none">Hermione Médecine ↗</a>
+      <a href="https://hermione.co/" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:#fff;border:1px solid #e2e8f0;border-radius:8px;font-size:13px;font-weight:500;color:#334155;transition:border-color .2s;text-decoration:none">Hermione ↗</a>
     </div>
   </div>
 </section>
