@@ -160,7 +160,7 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
 /* INTERNAL LINKS */
 .internal-links{padding:48px 0}
 .internal-links h3{font-size:20px;font-weight:700;color:var(--text);margin-bottom:20px;text-align:center}
-.links-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;max-width:900px;margin:0 auto}
+.links-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;max-width:900px;margin:0 auto}
 .link-card{display:flex;align-items:center;gap:12px;padding:16px 20px;background:#fff;border:1px solid var(--border);border-radius:var(--radius-sm);transition:border-color .2s,box-shadow .2s,transform .2s;text-decoration:none}
 .link-card:hover{border-color:var(--blue);box-shadow:var(--shadow-md);transform:translateY(-2px)}
 .link-card .link-icon{width:40px;height:40px;border-radius:10px;background:var(--blue-light);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--blue)}
@@ -204,6 +204,9 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
   .comparateur-box{padding:24px 16px}
   .highlight-box{padding:20px}
 }
+  .table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:28px 0;border-radius:var(--radius,8px)}
+  .table-scroll table,.table-scroll .stats-table{margin:0;width:100%;min-width:500px}
+  body{overflow-x:hidden}
 </style>
 
 <script type="application/ld+json">
@@ -373,7 +376,7 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
     </div>
 
     <div class="price-table-wrapper">
-      <table class="price-table">
+      <div class="table-scroll"><table class="price-table">
         <thead>
           <tr>
             <th>Type de prépa</th>
@@ -420,7 +423,7 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
             <td>Anticipation du programme, méthodologie</td>
           </tr>
         </tbody>
-      </table>
+      </table></div>
     </div>
 
     <p>Les prix indiques sont des fourchettes moyennes constatées aupres d'une trentaine de prépas en France. Les tarifs varient aussi selon la ville : Paris et Lyon sont généralement plus chers que les villes moyennes.</p>

@@ -160,7 +160,7 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
 /* INTERNAL LINKS */
 .internal-links{padding:48px 0}
 .internal-links h3{font-size:20px;font-weight:700;color:var(--text);margin-bottom:20px;text-align:center}
-.links-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;max-width:900px;margin:0 auto}
+.links-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;max-width:900px;margin:0 auto}
 .link-card{display:flex;align-items:center;gap:12px;padding:16px 20px;background:#fff;border:1px solid var(--border);border-radius:var(--radius-sm);transition:border-color .2s,box-shadow .2s,transform .2s;text-decoration:none}
 .link-card:hover{border-color:var(--blue);box-shadow:var(--shadow-md);transform:translateY(-2px)}
 .link-card .link-icon{width:40px;height:40px;border-radius:10px;background:var(--blue-light);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--blue)}
@@ -204,6 +204,9 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
   .comparateur-box{padding:24px 16px}
   .highlight-box{padding:20px}
 }
+  .table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:28px 0;border-radius:var(--radius,8px)}
+  .table-scroll table,.table-scroll .stats-table{margin:0;width:100%;min-width:500px}
+  body{overflow-x:hidden}
 </style>
 
 <script type="application/ld+json">
@@ -389,7 +392,7 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
     <p>Le challenge de la LAS, c'est de gérer deux cursus en parallele. Tu dois réussir ta licence tout en obtenant des résultats suffisants en mineure santé pour candidater en deuxième année de médecine. C'est un exercice d'equilibriste qui demande une organisation milimetree.</p>
 
     <div class="price-table-wrapper">
-      <table class="price-table">
+      <div class="table-scroll"><table class="price-table">
         <thead>
           <tr>
             <th>Critere</th>
@@ -424,7 +427,7 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
             <td>Poursuite de la licence</td>
           </tr>
         </tbody>
-      </table>
+      </table></div>
     </div>
 
     <div class="highlight-box">
@@ -461,7 +464,7 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
     <p>Attention, toutes les matières n'ont pas le même poids. En général, l'anatomie, la biochimie et la biophysique ont les plus gros coefficients. Mais ne neglige surtout pas les matières a petit coefficient comme les SSH ou les biostatistiques. Dans un classement très serre ou quelques dixiemes de points separent les admis des refoules, chaque matière compte. Les étudiants malins gagnent des places au classement en maitrisant les matières que les autres negligent.</p>
 
     <div class="price-table-wrapper">
-      <table class="price-table">
+      <div class="table-scroll"><table class="price-table">
         <thead>
           <tr>
             <th>Matiere</th>
@@ -514,7 +517,7 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
             <td>Lecture et analyse</td>
           </tr>
         </tbody>
-      </table>
+      </table></div>
     </div>
   </div>
 </section>

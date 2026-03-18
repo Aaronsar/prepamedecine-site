@@ -136,7 +136,7 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
 .faq-a-inner{padding:0 24px 20px;font-size:15px;color:var(--text-body);line-height:1.7}
 .internal-links{padding:48px 0}
 .internal-links h3{font-size:20px;font-weight:700;color:var(--text);margin-bottom:20px;text-align:center}
-.links-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;max-width:900px;margin:0 auto}
+.links-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;max-width:900px;margin:0 auto}
 .link-card{display:flex;align-items:center;gap:12px;padding:16px 20px;background:#fff;border:1px solid var(--border);border-radius:var(--radius-sm);transition:border-color .2s,box-shadow .2s,transform .2s;text-decoration:none}
 .link-card:hover{border-color:var(--blue);box-shadow:var(--shadow-md);transform:translateY(-2px)}
 .link-card .link-icon{width:40px;height:40px;border-radius:10px;background:var(--blue-light);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--blue)}
@@ -167,6 +167,9 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
 .summary-box ul li{padding:6px 0 6px 20px;font-size:15px;color:var(--text-body);position:relative}
 .summary-box ul li::before{content:'';position:absolute;left:0;top:14px;width:6px;height:6px;background:var(--green);border-radius:50%}
 
+  .table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:28px 0;border-radius:var(--radius,8px)}
+  .table-scroll table,.table-scroll .stats-table{margin:0;width:100%;min-width:500px}
+  body{overflow-x:hidden}
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Le PASS est-il plus facile que la LAS ?","acceptedAnswer":{"@type":"Answer","text":"En taux de réussite brut, le PASS est legerement plus favorable (20-30 % contre 10-15 % en LAS). Mais le choix depend du profil personnel de l'étudiant, pas des statistiques globales."}},{"@type":"Question","name":"Pourquoi le taux de réussite de la LAS est plus bas ?","acceptedAnswer":{"@type":"Answer","text":"Le taux brut est plus bas car beaucoup d'étudiants LAS ne candidatent pas en santé. La LAS offre aussi moins de places (30-40 % du numerus apertus)."}},{"@type":"Question","name":"Peut-on passer de PASS à LAS en cas d'échec ?","acceptedAnswer":{"@type":"Answer","text":"Oui, c'est la stratégie la plus courante. Apres un échec en PASS, l'inscription en LAS permet une deuxieme tentative avec l'avantage des acquis de PASS."}},{"@type":"Question","name":"Quel profil est plus adapté à la LAS ?","acceptedAnswer":{"@type":"Answer","text":"La LAS convient aux profils polyvalents, non-scientifiques, et à ceux qui veulent un plan B solide avec une licence."}},{"@type":"Question","name":"Combien de chances a-t-on pour accéder à médecine ?","acceptedAnswer":{"@type":"Answer","text":"2 tentatives maximum via PASS et LAS. Les passerelles offrent une voie supplémentaire après bac+2."}}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"LAS ou PASS Plus Facile 2026 ?","description":"Analyse comparative des taux de réussite PASS et LAS.","author":{"@type":"Organization","name":"prepamédecine.fr"},"publisher":{"@type":"Organization","name":"prepamédecine.fr"},"datePublished":"2025-09-01","dateModified":"2026-01-15"}</script>
@@ -213,7 +216,7 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
 <p>Voici les données comparatives réelles entre PASS et LAS dans plusieurs facs françaises. Ces chiffres sont des estimations basées sur les publications des universités et les retours d'étudiants pour 2024-2025.</p>
 
 <div class="price-table-wrapper">
-<table class="price-table">
+<div class="table-scroll"><table class="price-table">
 <thead><tr><th>Université</th><th>Taux réussite PASS</th><th>Taux réussite LAS</th><th>Places PASS/LAS</th></tr></thead>
 <tbody>
 <tr><td><strong>Paris Cite</strong></td><td class="price-highlight">22 %</td><td class="price-highlight">12 %</td><td>65 % / 35 %</td></tr>
@@ -224,7 +227,7 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
 <tr><td><strong>Lille</strong></td><td class="price-highlight">27 %</td><td class="price-highlight">12 %</td><td>65 % / 35 %</td></tr>
 <tr><td><strong>Strasbourg</strong></td><td class="price-highlight">30 %</td><td class="price-highlight">16 %</td><td>60 % / 40 %</td></tr>
 </tbody>
-</table>
+</table></div>
 </div>
 
 <p>Ces chiffres confirment une tendance nette : le PASS offre statistiquement un meilleur taux de réussite brut que la LAS. Mais rappelons que ces chiffres ne tiennent pas compte des profils des étudiants. Les étudiants les plus motives et les plus scientifiques choisissent massivement le PASS, ce qui biaise la comparaison.</p>
@@ -270,7 +273,7 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
 </ul>
 
 <div class="price-table-wrapper">
-<table class="price-table">
+<div class="table-scroll"><table class="price-table">
 <thead><tr><th>Critere</th><th>PASS</th><th>LAS</th></tr></thead>
 <tbody>
 <tr><td><strong>Focus principal</strong></td><td>100 % santé</td><td>Licence + santé</td></tr>
@@ -280,7 +283,7 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
 <tr><td><strong>Profil idéal</strong></td><td>Scientifique détermine</td><td>Polyvalent stratégique</td></tr>
 <tr class="best-value"><td><strong>Stratégie optimale</strong></td><td>PASS en 1ere tentative</td><td>LAS en rebond ou profil polyvalent</td></tr>
 </tbody>
-</table>
+</table></div>
 </div>
 </div></section>
 

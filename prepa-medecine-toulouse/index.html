@@ -135,7 +135,7 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
 .faq-a-inner{padding:0 24px 20px;font-size:15px;color:var(--text-body);line-height:1.7}
 .internal-links{padding:48px 0}
 .internal-links h3{font-size:20px;font-weight:700;color:var(--text);margin-bottom:20px;text-align:center}
-.links-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;max-width:900px;margin:0 auto}
+.links-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;max-width:900px;margin:0 auto}
 .link-card{display:flex;align-items:center;gap:12px;padding:16px 20px;background:#fff;border:1px solid var(--border);border-radius:var(--radius-sm);transition:border-color .2s,box-shadow .2s,transform .2s;text-decoration:none}
 .link-card:hover{border-color:var(--blue);box-shadow:var(--shadow-md);transform:translateY(-2px)}
 .link-card .link-icon{width:40px;height:40px;border-radius:10px;background:var(--blue-light);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--blue)}
@@ -172,6 +172,9 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
   .comparateur-box{padding:24px 16px}
   .highlight-box{padding:20px}
 }
+  .table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:28px 0;border-radius:var(--radius,8px)}
+  .table-scroll table,.table-scroll .stats-table{margin:0;width:100%;min-width:500px}
+  body{overflow-x:hidden}
 </style>
 
 <script type="application/ld+json">
@@ -313,7 +316,7 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
     <p>Voici les prépas disponibles à Toulouse pour préparer ton PASS. Compare les formats, les prix et les spécialités de chaque organisme.</p>
 
     <div class="price-table-wrapper">
-      <table class="price-table">
+      <div class="table-scroll"><table class="price-table">
         <thead><tr><th>Prépa</th><th>Voies couvertes</th><th>Format</th><th>Prix annuel</th></tr></thead>
         <tbody>
 <tr><td><strong>Sciences Plus</strong></td><td>PASS, LAS</td><td>Présentiel</td><td class="price-highlight">NC</td></tr>
@@ -321,7 +324,7 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
 <tr><td><strong>Cours Ducos</strong></td><td>PASS, LAS</td><td>Présentiel</td><td class="price-highlight">NC</td></tr>
 <tr><td><strong>Prépa Lauréa</strong></td><td>PASS, LAS</td><td>Présentiel</td><td class="price-highlight">NC</td></tr>
         </tbody>
-      </table>
+      </table></div>
     </div>
 
     <p style="font-size:14px;color:var(--text-muted)">Les prépas de cette ville ne communiquent pas leurs tarifs publiquement. Contacte-les directement pour obtenir un devis.</p>
@@ -347,7 +350,7 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
 
     <h3>Budget mensuel estimé à Toulouse</h3>
     <div class="price-table-wrapper">
-      <table class="price-table">
+      <div class="table-scroll"><table class="price-table">
         <thead><tr><th>Poste de dépense</th><th>Budget mensuel</th></tr></thead>
         <tbody>
           <tr><td>Loyer (studio/coloc)</td><td class="price-highlight">400–600€</td></tr>
@@ -355,7 +358,7 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
           <tr><td>Alimentation</td><td>180–260€</td></tr>
           <tr><td>Divers (téléphone, loisirs...)</td><td>80–120€</td></tr>
         </tbody>
-      </table>
+      </table></div>
     </div>
 
     <p>N'oublie pas d'ajouter le coût de la prépa (lissé sur 12 mois) à ton budget mensuel. Les bourses CROUS et les APL peuvent significativement réduire ta facture.</p>

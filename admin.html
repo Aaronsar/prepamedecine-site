@@ -198,6 +198,9 @@ a{color:var(--wp-accent);text-decoration:none}a:hover{color:var(--wp-accent-hove
 /* Responsive */
 @media(max-width:960px){.admin-editor-layout{grid-template-columns:1fr}.admin-editor-sidebar{position:static}.admin-stats-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:768px){.admin-sidebar{display:none}.admin-main{margin-left:0}}
+  .table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:28px 0;border-radius:var(--radius,8px)}
+  .table-scroll table,.table-scroll .stats-table{margin:0;width:100%;min-width:500px}
+  body{overflow-x:hidden}
 </style>
 </head>
 <body>
@@ -534,7 +537,7 @@ function renderArticleList(){
   html+='<div class="admin-page-list-actions"><button class="btn-primary" onclick="showAddModal()">+ Nouvel article</button>';
   html+='<span class="list-count">'+articlesCache.length+' articles</span></div></div>';
 
-  html+='<table class="admin-table"><thead><tr><th>Titre</th><th>Categorie</th><th>SEO</th><th>GEO</th><th>Statut</th><th>Date</th><th>Actions</th></tr></thead><tbody>';
+  html+='<div class="table-scroll"><table class="admin-table"><thead><tr><th>Titre</th><th>Categorie</th><th>SEO</th><th>GEO</th><th>Statut</th><th>Date</th><th>Actions</th></tr></thead><tbody>';
   articlesCache.forEach(function(a){
     var seo=calculateSEO(a);var geo=calculateGEO(a);
     html+='<tr>';
@@ -548,7 +551,7 @@ function renderArticleList(){
     html+='<a href="javascript:void(0)" class="action-delete" onclick="deleteArticle('+a.id+')">Supprimer</a></td>';
     html+='</tr>';
   });
-  html+='</tbody></table></div>';
+  html+='</tbody></table></div></div>';
   main.innerHTML=html;
 }
 
@@ -929,7 +932,7 @@ function renderPrepaList(){
   html+='<div class="admin-page-list-header"><h2>Prepas</h2>';
   html+='<div class="admin-page-list-actions"><button class="btn-primary" onclick="showAddPrepaModal()">+ Nouvelle prepa</button>';
   html+='<span class="list-count">'+prepasCache.length+' prepas</span></div></div>';
-  html+='<table class="admin-table"><thead><tr><th>Nom</th><th>Ville</th><th>Format</th><th>Taux</th><th>Featured</th><th>Coup de coeur</th><th>Actions</th></tr></thead><tbody>';
+  html+='<div class="table-scroll"><table class="admin-table"><thead><tr><th>Nom</th><th>Ville</th><th>Format</th><th>Taux</th><th>Featured</th><th>Coup de coeur</th><th>Actions</th></tr></thead><tbody>';
   prepasCache.forEach(function(p){
     html+='<tr>';
     html+='<td class="page-title-cell" onclick="editPrepa('+p.id+')">'+esc(p.name)+'</td>';
@@ -942,7 +945,7 @@ function renderPrepaList(){
     html+='<a href="javascript:void(0)" class="action-delete" onclick="deletePrepa('+p.id+')">Supprimer</a></td>';
     html+='</tr>';
   });
-  html+='</tbody></table></div>';
+  html+='</tbody></table></div></div>';
   main.innerHTML=html;
 }
 
