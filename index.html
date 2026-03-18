@@ -210,6 +210,17 @@ input,select{font-family:inherit}
 .prep-card-tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:14px}
 .prep-card-btn{display:block;text-align:center;padding:10px;border:1.5px solid var(--blue);color:var(--blue);border-radius:var(--radius-sm);font-size:13px;font-weight:600;transition:background .2s,color .2s}
 .prep-card:hover .prep-card-btn{background:var(--blue);color:#fff}
+/* ===== STARS / NOTES ===== */
+.stars-row{display:flex;align-items:center;gap:6px;margin-bottom:10px}
+.stars-icons{display:flex;align-items:center;gap:1px}
+.stars-icons .s{font-size:13px;line-height:1}
+.stars-icons .s-full{color:#f59e0b}
+.stars-icons .s-half{color:#f59e0b;opacity:.55}
+.stars-icons .s-empty{color:#cbd5e1}
+.star-val{font-size:12px;font-weight:700;color:#64748b;margin-left:2px}
+.top-stars-row{display:flex;align-items:center;gap:6px;margin-bottom:12px}
+.top-stars-row .stars-icons .s{font-size:14px}
+.top-stars-row .star-val{font-size:13px;font-weight:700;color:#475569}
 
 /* ============ PREP DETAIL PAGE ============ */
 .detail-page{padding:20px 0 80px}
@@ -980,7 +991,7 @@ const LOGOS = {
 /* ============ PREPAS DATA ============ */
 let PREPAS = [
   {
-    id:'diploma-sante',name:'Diploma Santé',ville:'Paris',villes:['Paris'],
+    id:'diploma-sante',note:4.9,name:'Diploma Santé',ville:'Paris',villes:['Paris'],
     taux:'79%',anciennete:'10+ ans',etudiants:'1 200+',
     format:'Présentiel',filieres:['PASS','LAS','Terminale Santé'],
     tags:['PASS','LAS','Terminale Santé','Présentiel','Paris'],
@@ -1023,7 +1034,7 @@ let PREPAS = [
     ]
   },
   {
-    id:'medibox',name:'Medibox',ville:'En ligne',villes:['En ligne'],
+    id:'medibox',note:4.8,name:'Medibox',ville:'En ligne',villes:['En ligne'],
     taux:'82%',anciennete:'Innovation',etudiants:'2 500',
     format:'En ligne',filieres:['PASS','LAS','Terminale Santé','LSPS'],
     tags:['PASS','LAS','Terminale Santé','En ligne','100% digital'],
@@ -1045,7 +1056,7 @@ let PREPAS = [
     featured:true
   },
   {
-    id:'cours-galien',name:'Cours Galien',ville:'National (15+ centres)',villes:['Lyon','Marseille','Lille','Rennes','Bordeaux','Montpellier','Strasbourg'],
+    id:'cours-galien',note:4.7,name:'Cours Galien',ville:'National (15+ centres)',villes:['Lyon','Marseille','Lille','Rennes','Bordeaux','Montpellier','Strasbourg'],
     taux:'93% satisfaction',anciennete:'35+ ans',etudiants:'Milliers/an',
     format:'Hybride',filieres:['PASS','LAS','LSPS','Terminale Santé'],
     tags:['PASS','LAS','Terminale Santé','National','Hybride'],
@@ -1067,7 +1078,7 @@ let PREPAS = [
     featured:true
   },
   {
-    id:'medschool',name:'MedSchool Prépa',ville:'St-Étienne, Clermont, Grenoble',villes:['Saint-Étienne','Clermont-Ferrand','Grenoble'],
+    id:'medschool',note:4.3,name:'MedSchool Prépa',ville:'St-Étienne, Clermont, Grenoble',villes:['Saint-Étienne','Clermont-Ferrand','Grenoble'],
     taux:'~72%',anciennete:'20+ ans',etudiants:'—',
     format:'Hybride',filieres:['PASS','LAS','P0','Terminale Santé'],
     tags:['PASS','LAS','P0','Hybride'],
@@ -1088,7 +1099,7 @@ let PREPAS = [
     avis:"MedSchool Prépa est une option très sérieuse pour les filières santé : sa présence multi-sites, sa méthode hybride et ses effectifs réduits en font un cadre robuste. Particulièrement adapté aux candidats motivés souhaitant un accompagnement complet."
   },
   {
-    id:'cours-agora',name:'Cours Agora',ville:'Lyon, Grenoble, Montpellier, Nîmes',villes:['Lyon','Grenoble','Montpellier','Nîmes'],
+    id:'cours-agora',note:4.6,name:'Cours Agora',ville:'Lyon, Grenoble, Montpellier, Nîmes',villes:['Lyon','Grenoble','Montpellier','Nîmes'],
     taux:'85%',anciennete:'Depuis 2013',etudiants:'500/an',
     format:'Présentiel',filieres:['PASS','LAS','Terminale Santé'],
     tags:['PASS','LAS','Terminale Santé','Présentiel'],
@@ -1109,7 +1120,7 @@ let PREPAS = [
     avis:"Cours Agora est une option très adaptée pour les étudiants motivés recherchant un cadre structuré, intensif et performant. Taux de réussite annoncé de 85% pour les inscrits PASS en 2024. Le point fort : l'immersion proposée avec bureau personnel et accès 7j/7."
   },
   {
-    id:'biomedal',name:'BIOMEDAL',ville:'Besançon, Dijon, Clermont, Nancy',villes:['Besançon','Dijon','Clermont-Ferrand','Nancy','Metz','Saint-Étienne'],
+    id:'biomedal',note:4.2,name:'BIOMEDAL',ville:'Besançon, Dijon, Clermont, Nancy',villes:['Besançon','Dijon','Clermont-Ferrand','Nancy','Metz','Saint-Étienne'],
     taux:'~70.6%',anciennete:'20+ ans',etudiants:'—',
     format:'Hybride',filieres:['PASS','LAS','Terminale Santé','P0'],
     tags:['PASS','LAS','Terminale Santé','P0','Hybride'],
@@ -1130,7 +1141,7 @@ let PREPAS = [
     avis:"BIOMEDAL se distingue comme une prépa régionale crédible avec des taux de réussite solides et une méthode axée sur l'entraînement et le suivi personnalisé."
   },
   {
-    id:'stan-sante',name:'Stan Santé',ville:'Nancy, Metz',villes:['Nancy','Metz'],
+    id:'stan-sante',note:4.5,name:'Stan Santé',ville:'Nancy, Metz',villes:['Nancy','Metz'],
     taux:'85% PASS',anciennete:'—',etudiants:'—',
     format:'Hybride',filieres:['PASS','LAS','Terminale Santé'],
     tags:['PASS','LAS','Terminale Santé','Hybride'],
@@ -1151,7 +1162,7 @@ let PREPAS = [
     avis:"Stan Santé est un excellent choix à Nancy ou Metz. Avec 85% de réussite PASS en 2024 et une méthode combinant rigueur, numérique et suivi personnalisé, la structure dispose d'atouts solides."
   },
   {
-    id:'prepa-defi',name:'Prépa Défi',ville:'Angers, Le Mans',villes:['Angers','Le Mans'],
+    id:'prepa-defi',note:4.0,name:'Prépa Défi',ville:'Angers, Le Mans',villes:['Angers','Le Mans'],
     taux:'62%',anciennete:'20+ ans',etudiants:'—',
     format:'Présentiel',filieres:['PASS','LAS','Terminale Santé','P0'],
     tags:['PASS','LAS','Terminale Santé','P0','Présentiel'],
@@ -1172,7 +1183,7 @@ let PREPAS = [
     avis:"Prépa Défi est une option sérieuse avec une forte implantation régionale et un dispositif pédagogique complet. Environ 62% d'étudiants en 2e année santé en 2023."
   },
   {
-    id:'bersot-formation',name:'Bersot Formation',ville:'Besançon',villes:['Besançon'],
+    id:'bersot-formation',note:4.3,name:'Bersot Formation',ville:'Besançon',villes:['Besançon'],
     taux:'~72%',anciennete:'20+ ans (depuis 1991)',etudiants:'—',
     format:'Hybride',filieres:['PASS','LAS','Terminale Santé','P0'],
     tags:['PASS','LAS','Terminale Santé','P0','Hybride'],
@@ -1193,7 +1204,7 @@ let PREPAS = [
     avis:"Bersot Formation est un acteur reconnu de la préparation santé dans l'Est. Organisation rigoureuse, volumes horaires conséquents et suivi pédagogique constant."
   },
   {
-    id:'supexam',name:'Supexam',ville:'National (10+ villes)',villes:['Paris','Angers','Le Mans','Besançon','Dijon','Nancy','Metz','Nantes','Reims','Rouen','Le Havre','Strasbourg','Lille'],
+    id:'supexam',note:4.1,name:'Supexam',ville:'National (10+ villes)',villes:['Paris','Angers','Le Mans','Besançon','Dijon','Nancy','Metz','Nantes','Reims','Rouen','Le Havre','Strasbourg','Lille'],
     taux:'60-70%',anciennete:'~45 ans',etudiants:'—',
     format:'Hybride',filieres:['PASS','LAS','Terminale Santé','P0'],
     tags:['PASS','LAS','Terminale Santé','National','Hybride'],
@@ -1214,7 +1225,7 @@ let PREPAS = [
     avis:"Supexam est une prépa d'envergure nationale avec une couverture géographique étendue et un dispositif pédagogique complet. Option sérieuse pour les étudiants hors Île-de-France."
   },
   {
-    id:'medisup',name:'Médisup',ville:'National',villes:['Paris','Lyon','Bordeaux','Marseille','Nice','Lille','Toulouse'],
+    id:'medisup',note:4.2,name:'Médisup',ville:'National',villes:['Paris','Lyon','Bordeaux','Marseille','Nice','Lille','Toulouse'],
     taux:'66%',anciennete:'30+ ans',etudiants:'3 000+',
     format:'Hybride',filieres:['PASS','LAS','LSPS','Terminale Santé'],
     tags:['PASS','LAS','LSPS','Terminale Santé','National','Hybride'],
@@ -1235,7 +1246,7 @@ let PREPAS = [
     avis:"Médisup demeure une valeur sûre : réseau national solide, outils pédagogiques modernes et accompagnement complet. Taux d'admission nettement supérieurs à la moyenne nationale."
   },
   {
-    id:'cours-thales',name:'Cours Thalès',ville:'Paris + visio',villes:['Paris'],
+    id:'cours-thales',note:4.5,name:'Cours Thalès',ville:'Paris + visio',villes:['Paris'],
     taux:'75%',anciennete:'17 ans (depuis 2007)',etudiants:'7 000+ suivis',
     format:'Hybride',filieres:['PASS','Terminale Santé'],
     tags:['PASS','Terminale Santé','Hybride','Paris'],
@@ -1256,7 +1267,7 @@ let PREPAS = [
     avis:"Cours Thalès est un acteur solide combinant innovation pédagogique, accompagnement dès le lycée et taux d'admission de 75%. Bon choix pour anticiper et structurer sa réussite."
   },
   {
-    id:'antemed-epsilon',name:'Antémed Epsilon',ville:'Paris, Créteil',villes:['Paris','Créteil'],
+    id:'antemed-epsilon',note:4.0,name:'Antémed Epsilon',ville:'Paris, Créteil',villes:['Paris','Créteil'],
     taux:'62-65%',anciennete:'40+ ans',etudiants:'~3 000',
     format:'Hybride',filieres:['PASS','LAS','LSPS','P0','Terminale Santé'],
     tags:['PASS','LAS','LSPS','P0','Terminale Santé','Hybride','Paris'],
@@ -1277,7 +1288,7 @@ let PREPAS = [
     avis:"Antémed Epsilon est une prépa d'excellence à Paris avec un dispositif complet, un accompagnement dense et des résultats solides. Choix sérieux pour lycéens comme étudiants PASS/LAS."
   },
   {
-    id:'cpcm',name:'CPCM',ville:'Paris',villes:['Paris'],
+    id:'cpcm',note:4.4,name:'CPCM',ville:'Paris',villes:['Paris'],
     taux:'74%',anciennete:'38 ans (depuis 1986)',etudiants:'15 000+ (historique)',
     format:'Hybride',filieres:['PASS','LAS','LSPS','P0','Terminale Santé'],
     tags:['PASS','LAS','LSPS','P0','Terminale Santé','Paris'],
@@ -1298,7 +1309,7 @@ let PREPAS = [
     avis:"Le CPCM est une option robuste avec une longue expérience, des résultats significatifs (74% d'admis en 2024) et des classes en effectif réduit."
   },
   {
-    id:'cap-sante',name:"Cap'Santé",ville:'National (7 villes)',villes:['Paris','Lyon','Bordeaux','Marseille','Nice','Lille','Toulouse'],
+    id:'cap-sante',note:4.2,name:"Cap'Santé",ville:'National (7 villes)',villes:['Paris','Lyon','Bordeaux','Marseille','Nice','Lille','Toulouse'],
     taux:"6× moy. nationale",anciennete:'40+ ans (depuis 1982)',etudiants:'—',
     format:'Hybride',filieres:['PASS','LAS','Terminale Santé'],
     tags:['PASS','LAS','Terminale Santé','National','Hybride'],
@@ -1319,7 +1330,7 @@ let PREPAS = [
     avis:"Cap'Santé est une option solide avec son expérience historique, son réseau national et la qualité de ses outils numériques."
   },
   {
-    id:'concours-sup',name:'Concours Sup',ville:'Tours',villes:['Tours'],
+    id:'concours-sup',note:4.0,name:'Concours Sup',ville:'Tours',villes:['Tours'],
     taux:'>50%',anciennete:'30+ ans',etudiants:'—',
     format:'Présentiel',filieres:['PASS','LAS'],
     tags:['PASS','LAS','Présentiel','Tours'],
@@ -1340,7 +1351,7 @@ let PREPAS = [
     avis:"Concours Sup est une prépa spécialisée solide à Tours avec un positionnement exclusivement présentiel et plus de 30 ans d'expérience."
   },
   {
-    id:'cours-esquirol',name:'Cours Esquirol',ville:'Toulouse',villes:['Toulouse'],
+    id:'cours-esquirol',note:4.2,name:'Cours Esquirol',ville:'Toulouse',villes:['Toulouse'],
     taux:'—',anciennete:'40 ans',etudiants:'—',
     format:'Hybride',filieres:['PASS','LAS','Terminale Santé'],
     tags:['PASS','LAS','Terminale Santé','Hybride','Toulouse'],
@@ -1361,7 +1372,7 @@ let PREPAS = [
     avis:"Cours Esquirol est une option très pertinente pour les étudiants de la région Occitanie. Ancrage local solide, ressources et accompagnement de qualité."
   },
   {
-    id:'cours-pasteur',name:'Cours Pasteur',ville:'Rouen',villes:['Rouen'],
+    id:'cours-pasteur',note:4.3,name:'Cours Pasteur',ville:'Rouen',villes:['Rouen'],
     taux:'72%',anciennete:'15+ ans',etudiants:'—',
     format:'Hybride',filieres:['PASS','LAS','Terminale Santé'],
     tags:['PASS','LAS','Terminale Santé','Hybride','Rouen'],
@@ -1382,7 +1393,7 @@ let PREPAS = [
     avis:"Cours Pasteur propose un cadre sérieux et bien adapté à Rouen. Implantation locale, méthode complète et accompagnement individualisé."
   },
   {
-    id:'paracelse-lyon',name:'Paracelse Lyon',ville:'Lyon',villes:['Lyon'],
+    id:'paracelse-lyon',note:4.6,name:'Paracelse Lyon',ville:'Lyon',villes:['Lyon'],
     taux:'~80.3%',anciennete:'—',etudiants:'—',
     format:'Hybride',filieres:['PASS','LAS','Terminale Santé'],
     tags:['PASS','LAS','Terminale Santé','Hybride','Lyon'],
@@ -1403,7 +1414,7 @@ let PREPAS = [
     avis:"Paracelse Lyon est une prépa solide avec un positionnement local fort, une équipe expérimentée et des taux de réussite annoncés significatifs (~80.3%)."
   },
   {
-    id:'supdijon',name:'SupDijon',ville:'Dijon',villes:['Dijon'],
+    id:'supdijon',note:4.3,name:'SupDijon',ville:'Dijon',villes:['Dijon'],
     taux:'>60%',anciennete:'25+ ans',etudiants:'1 200+ (historique)',
     format:'Hybride',filieres:['PASS','LAS','LSPS','Terminale Santé'],
     tags:['PASS','LAS','LSPS','Terminale Santé','Hybride','Dijon'],
@@ -1424,7 +1435,7 @@ let PREPAS = [
     avis:"SupDijon se distingue par son implantation locale solide et son approche équilibrée. L'une des références les plus fiables pour réussir médecine à Dijon."
   },
   {
-    id:'cappec',name:'CAPPEC',ville:'Lille',villes:['Lille'],
+    id:'cappec',note:4.1,name:'CAPPEC',ville:'Lille',villes:['Lille'],
     taux:'61%',anciennete:'25+ ans (depuis 1996)',etudiants:'—',
     format:'Hybride',filieres:['PASS','LAS','Terminale Santé'],
     tags:['PASS','LAS','Terminale Santé','Hybride','Lille'],
@@ -1445,7 +1456,7 @@ let PREPAS = [
     avis:"CAPPEC se démarque par son implantation réussie à Lille, sa méthode complète et sa dimension humaine : petits groupes, parrainage et suivi personnalisé."
   },
   {
-    id:'supexam-nantes',name:'Supexam Nantes',ville:'Nantes',villes:['Nantes'],
+    id:'supexam-nantes',note:4.2,name:'Supexam Nantes',ville:'Nantes',villes:['Nantes'],
     taux:'~65%',anciennete:'—',etudiants:'25-30/classe',
     format:'Hybride',filieres:['PASS','LAS','Terminale Santé'],
     tags:['PASS','LAS','Terminale Santé','Hybride','Nantes'],
@@ -1466,7 +1477,7 @@ let PREPAS = [
     avis:"Supexam Nantes s'impose comme une prépa de premier plan à Nantes. Effectifs réduits, accompagnement personnalisé et outils numériques. À partir de 4 800€/an."
   },
   {
-    id:'ipe-sante',name:'IpéSanté',ville:'Poitiers',villes:['Poitiers'],
+    id:'ipe-sante',note:4.2,name:'IpéSanté',ville:'Poitiers',villes:['Poitiers'],
     taux:'~62-71%',anciennete:'—',etudiants:'—',
     format:'Hybride',filieres:['LAS','Terminale Santé'],
     tags:['LAS','Terminale Santé','Hybride','Poitiers'],
@@ -1487,7 +1498,7 @@ let PREPAS = [
     avis:"IpéSanté est une très bonne solution à Poitiers pour la voie LAS. Bon taux de réussite, accompagnement personnalisé et formats souples."
   },
   {
-    id:'cepsup',name:'CEPSUP',ville:'Reims',villes:['Reims'],
+    id:'cepsup',note:4.4,name:'CEPSUP',ville:'Reims',villes:['Reims'],
     taux:'74% médecine',anciennete:'Depuis 1996',etudiants:'—',
     format:'Hybride',filieres:['PASS','LAS','P0'],
     tags:['PASS','LAS','P0','Hybride','Reims'],
@@ -1508,7 +1519,7 @@ let PREPAS = [
     avis:"CEPSUP à Reims est un choix solide avec un ancrage local fort, une qualité d'encadrement reconnue et des résultats notables en médecine."
   },
   {
-    id:'skol-sante',name:'Skol Santé',ville:'Rennes',villes:['Rennes'],
+    id:'skol-sante',note:4.3,name:'Skol Santé',ville:'Rennes',villes:['Rennes'],
     taux:'~73%',anciennete:'—',etudiants:'—',
     format:'Hybride',filieres:['PASS','LAS','Terminale Santé'],
     tags:['PASS','LAS','Terminale Santé','Hybride','Rennes'],
@@ -1529,7 +1540,7 @@ let PREPAS = [
     avis:"Skol Santé offre une préparation solide à Rennes avec des taux élevés, un accompagnement individualisé et des outils modernes."
   },
   {
-    id:'segmo',name:'SEGMO',ville:'Rouen, Le Havre',villes:['Rouen','Le Havre'],
+    id:'segmo',note:4.1,name:'SEGMO',ville:'Rouen, Le Havre',villes:['Rouen','Le Havre'],
     taux:'~65%',anciennete:'25+ ans',etudiants:'5 300+ (historique)',
     format:'Hybride',filieres:['PASS','LAS','Terminale Santé'],
     tags:['PASS','LAS','Terminale Santé','Hybride','Rouen'],
@@ -1550,7 +1561,7 @@ let PREPAS = [
     avis:"SEGMO est une prépa de référence Rouen-Le Havre. Ancrage local, résultats solides et accompagnement sur mesure."
   },
   {
-    id:'prepa-vesale',name:'Prépa Vésale',ville:'Strasbourg',villes:['Strasbourg'],
+    id:'prepa-vesale',note:4.1,name:'Prépa Vésale',ville:'Strasbourg',villes:['Strasbourg'],
     taux:'~71.4%',anciennete:'—',etudiants:'—',
     format:'Hybride',filieres:['PASS','Terminale Santé'],
     tags:['PASS','Terminale Santé','Hybride','Strasbourg'],
@@ -1571,7 +1582,7 @@ let PREPAS = [
     avis:"Prépa Vésale est une très bonne option à Strasbourg avec un positionnement géographique idéal, une méthode complète et des résultats solides (~71.4%)."
   },
   {
-    id:'alpha-prepa',name:'Alpha Prépa',ville:'Amiens',villes:['Amiens'],
+    id:'alpha-prepa',note:4.5,name:'Alpha Prépa',ville:'Amiens',villes:['Amiens'],
     taux:'75%',anciennete:'—',etudiants:'—',
     format:'Hybride',filieres:['PASS','LAS','Terminale Santé'],
     tags:['PASS','LAS','Terminale Santé','Hybride','Amiens'],
@@ -1592,7 +1603,7 @@ let PREPAS = [
     avis:"Alpha Prépa est une très bonne option à Amiens avec une méthode complète, un accompagnement personnalisé et des résultats annoncés de 75%."
   },
   {
-    id:'prepa-sante-b',name:'Prépa Santé B',ville:'Clermont-Ferrand',villes:['Clermont-Ferrand'],
+    id:'prepa-sante-b',note:4.1,name:'Prépa Santé B',ville:'Clermont-Ferrand',villes:['Clermont-Ferrand'],
     taux:'66%',anciennete:'—',etudiants:'—',
     format:'Hybride',filieres:['PASS','LAS','Terminale Santé'],
     tags:['PASS','LAS','Terminale Santé','Hybride','Clermont-Ferrand'],
@@ -1613,7 +1624,7 @@ let PREPAS = [
     avis:"Prépa Santé B est un acteur crédible à Clermont-Ferrand avec des résultats solides : 66% global, 40% grands admis PASS et 86% LAS2."
   },
   {
-    id:'parcoursmed',name:'ParcoursMed',ville:'Montpellier, Grenoble',villes:['Montpellier','Grenoble'],
+    id:'parcoursmed',note:4.1,name:'ParcoursMed',ville:'Montpellier, Grenoble',villes:['Montpellier','Grenoble'],
     taux:'—',anciennete:'—',etudiants:'—',
     format:'Hybride',filieres:['PASS','LAS','Terminale Santé'],
     tags:['PASS','LAS','Terminale Santé','Hybride','Montpellier','Grenoble'],
@@ -1634,7 +1645,7 @@ let PREPAS = [
     avis:"ParcoursMed est une prépa de bon niveau à Montpellier et Grenoble. Supports de qualité, accompagnement individualisé et outils numériques."
   },
   {
-    id:'medisup-sciences',name:'Médisup Sciences',ville:'Île-de-France (6 centres)',villes:['Paris','Créteil','Saint-Quentin-en-Yvelines'],
+    id:'medisup-sciences',note:4.2,name:'Médisup Sciences',ville:'Île-de-France (6 centres)',villes:['Paris','Créteil','Saint-Quentin-en-Yvelines'],
     taux:'—',anciennete:'25+ ans',etudiants:'—',
     format:'Hybride',filieres:['PASS','LAS','LSPS','Terminale Santé'],
     tags:['PASS','LAS','LSPS','Terminale Santé','Hybride','Paris','Île-de-France'],
@@ -1655,6 +1666,17 @@ let PREPAS = [
     avis:"Médisup Sciences offre une couverture complète de l'Île-de-France avec 6 centres stratégiques. Solution particulièrement adaptée aux étudiants franciliens."
   }
 ];
+
+function renderStars(note) {
+  const n = parseFloat(note) || 4.0;
+  const full = Math.floor(n);
+  const half = (n - full) >= 0.3 ? 1 : 0;
+  const empty = 5 - full - half;
+  const stars = '<span class="s s-full">★</span>'.repeat(full)
+    + (half ? '<span class="s s-half">★</span>' : '')
+    + '<span class="s s-empty">★</span>'.repeat(empty);
+  return `<span class="stars-icons" aria-label="Note ${n.toFixed(1)} sur 5">${stars}</span><span class="star-val">${n.toFixed(1)}</span>`;
+}
 
 function logoImg(id, size) {
   const url = LOGOS[id];
@@ -1746,6 +1768,7 @@ function renderTopPrepas() {
         ${p.coupDeCoeur?'<div class="coup-de-coeur-badge">'+ic('heartPulse',12)+' Coup de coeur</div>':''}
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px"><div class="top-card-badge">#${i+1}</div><h3 style="margin:0">${p.name}</h3></div>
         <div class="location">${ic('mapPin',14)} ${p.ville}</div>
+        <div class="top-stars-row" style="margin-top:8px">${renderStars(p.note)}</div>
       </div>
       <div class="top-card-body">
         <div class="top-card-stats">
@@ -1790,6 +1813,7 @@ function renderPrepasGrid(filtered) {
           <div class="loc">${ic('mapPin',13)} ${p.ville}</div>
         </div>
       </div>
+      <div class="stars-row">${renderStars(p.note)}</div>
       <div class="prep-card-desc">${p.intro}</div>
       <div class="prep-card-stats">
         <div class="prep-mini-stat"><span class="dot dot-blue"></span>${p.taux} réussite</div>
