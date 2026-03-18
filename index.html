@@ -2113,6 +2113,9 @@ async function loadPrepasFromSupabase() {
     const _sb = window.supabase.createClient('https://jhopwqpbaiyjfoggvcaf.supabase.co','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impob3B3cXBiYWl5amZvZ2d2Y2FmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMwNTI2OTEsImV4cCI6MjA4ODYyODY5MX0.rz3TJZryPxEf3P5kQgpzQkwN9aF8_F4eo4F03CEYVPs');
     const {data} = await _sb.from('prepamedecine_prepas').select('*').eq('published',true).order('name');
     if (data && data.length > 0) {
+      // Save notes from static PREPAS before overwriting
+      const notesMap = {};
+      PREPAS.forEach(p => { notesMap[p.id] = p.note || 4.0; });
       // Map Supabase fields to the format used by render functions
       PREPAS.length = 0;
       data.forEach(p => PREPAS.push({
@@ -2122,7 +2125,8 @@ async function loadPrepasFromSupabase() {
         intro: p.intro || '', avis: p.avis || '',
         stats: p.stats || [], modele: p.modele || [], pedagogie: p.pedagogie || [],
         extraSections: p.extra_sections || [],
-        featured: p.featured || false, coupDeCoeur: p.coup_de_coeur || false
+        featured: p.featured || false, coupDeCoeur: p.coup_de_coeur || false,
+        note: notesMap[p.slug] || p.note || 4.0
       }));
       renderTopPrepas();
       renderPrepasGrid();
