@@ -179,7 +179,31 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
 
   body{overflow-x:hidden}
 </style>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"A partir de quand commencer une prépa médecine en Terminale ?","acceptedAnswer":{"@type":"Answer","text":"Le plus tot est le mieux, idealement en septembre de l'année de Terminale. Certaines prépas acceptent des inscriptions en janvier, mais tu perds 4 mois de préparation."}},{"@type":"Question","name":"La prépa Terminale empeche-t-elle de reussir le bac ?","acceptedAnswer":{"@type":"Answer","text":"Non, si elle est bien calibree (2 à 4 heures par semaine). Le bac reste la priorite absolue."}},{"@type":"Question","name":"Combien coute une prépa médecine en Terminale ?","acceptedAnswer":{"@type":"Answer","text":"De 1 000 euros (en ligne) à 3 500 euros (présentiel avec stage de pre-rentrée). Le paiement en plusieurs fois est généralement propose."}},{"@type":"Question","name":"La prépa Terminale est-elle vraiment utile ?","acceptedAnswer":{"@type":"Answer","text":"Oui. Les étudiants avec prépa anticipee ont un taux de réussite de 40 à 55 % en PASS, contre 20 à 30 % sans préparation."}},{"@type":"Question","name":"Peut-on commencer sans savoir si on choisira PASS ou LAS ?","acceptedAnswer":{"@type":"Answer","text":"Oui. Les matières fondamentales (anatomie, biochimie, biophysique) sont les memes en PASS et en LAS."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"A partir de quand commencer une prépa médecine en Terminale ?","acceptedAnswer":{"@type":"Answer","text":"Le plus tot est le mieux, idealement en septembre de l'année de Terminale. Certaines prépas acceptent des inscriptions en janvier, mais tu perds 4 mois de préparation."}},{"@type":"Question","name":"La prépa Terminale empeche-t-elle de reussir le bac ?","acceptedAnswer":{"@type":"Answer","text":"Non, si elle est bien calibree (2 à 4 heures par semaine). Le bac reste la priorite absolue."}},{"@type":"Question","name":"Combien coute une prépa médecine en Terminale ?","acceptedAnswer":{"@type":"Answer","text":"De 1 000 euros (en ligne) à 3 500 euros (présentiel avec stage de pre-rentrée). Le paiement en plusieurs fois est généralement propose."}},{"@type":"Question","name":"La prépa Terminale est-elle vraiment utile ?","acceptedAnswer":{"@type":"Answer","text":"Oui. Les étudiants avec prépa anticipee ont un taux de réussite de 40 à 55 % en PASS, contre 20 à 30 % sans préparation."}},{"@type":"Question","name":"Peut-on commencer sans savoir si on choisira PASS ou LAS ?","acceptedAnswer":{"@type":"Answer","text":"Oui. Les matières fondamentales (anatomie, biochimie, biophysique) sont les memes en PASS et en LAS."}}]}(function(){
+  var overlay = document.getElementById('navOverlay');
+  var drawer  = document.getElementById('navLinks');
+  var burger  = document.getElementById('burger');
+  var btnClose= document.getElementById('navClose');
+  if(overlay) document.body.appendChild(overlay);
+  if(drawer)  document.body.appendChild(drawer);
+  function open(){
+    if(drawer)  drawer.classList.add('open');
+    if(overlay) overlay.classList.add('open');
+    document.body.style.overflow='hidden';
+    if(burger)  burger.classList.add('open');
+  }
+  function close(){
+    if(drawer)  drawer.classList.remove('open');
+    if(overlay) overlay.classList.remove('open');
+    document.body.style.overflow='';
+    if(burger)  burger.classList.remove('open');
+  }
+  if(burger)   burger.onclick  = function(){ drawer && drawer.classList.contains('open') ? close() : open(); };
+  if(overlay)  overlay.onclick = close;
+  if(btnClose) btnClose.onclick= close;
+  if(drawer)   drawer.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', close); });
+})();
+</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Prépa Médecine des la Terminale 2026","description":"Anticiper pour reussir le PASS/LAS.","author":{"@type":"Organization","name":"prepamédecine.fr"},"publisher":{"@type":"Organization","name":"prepamédecine.fr"},"datePublished":"2025-09-01","dateModified":"2026-01-15"}</script>
 <style>
 /* ═══════ MOBILE DRAWER REDESIGN ═══════ */
@@ -434,8 +458,7 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
 </section>
 
 <footer class="footer"><div class="container"><div class="footer-grid"><div><div class="footer-brand"><svg width="28" height="28" viewBox="0 0 40 40" fill="none"><defs><linearGradient id="logoGradF" x1="0" y1="0" x2="40" y2="40"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#046bd2"/></linearGradient></defs><rect x="1" y="1" width="38" height="38" rx="12" fill="url(#logoGradF)"/><path d="M11 27c0-1.5 1-2.5 2.5-2.5H20v-9.5" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M29 27c0-1.5-1-2.5-2.5-2.5H20v-9.5" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M13.5 24.5V16.5c0-.8.4-1.2 1.2-1.2H20" stroke="#fff" stroke-width="1.6" stroke-linecap="round" fill="none" opacity=".5"/><path d="M26.5 24.5V16.5c0-.8-.4-1.2-1.2-1.2H20" stroke="#fff" stroke-width="1.6" stroke-linecap="round" fill="none" opacity=".5"/><circle cx="30" cy="11" r="4" fill="#046bd2" stroke="#fff" stroke-width="1.6"/><path d="M28.8 11h2.4M30 9.8v2.4" stroke="#fff" stroke-width="1.2" stroke-linecap="round"/></svg><span><em style="color:#046bd2;font-style:normal">prépa</em><span style="color:#fff">médecine</span><span style="color:#046bd2;font-weight:900">.</span><span style="color:#94a3b8;font-size:14px;font-weight:700">fr</span></span></div><p>La plateforme qui compare les meilleures prépas santé en France pour t'aider a choisir celle qui correspond à ton profil.</p></div><div><h4>Navigation</h4><a href="/">Accueil</a><a href="/#prepas">Prépas</a><div class="nav-dropdown" id="navDropdownVilles"><a>Prépas par ville</a><div class="nav-dropdown-menu"><div><div class="nav-dropdown-heading">Grandes villes</div><a href="/prepa-medecine-paris/">Paris</a><a href="/prepa-medecine-lyon/">Lyon</a><a href="/prepa-medecine-marseille/">Marseille</a><a href="/prepa-medecine-toulouse/">Toulouse</a><a href="/prepa-medecine-bordeaux/">Bordeaux</a><a href="/prepa-medecine-lille/">Lille</a><a href="/prepa-medecine-nice/">Nice</a><a href="/prepa-medecine-montpellier/">Montpellier</a></div><div><div class="nav-dropdown-heading">Nord &amp; Ouest</div><a href="/prepa-medecine-strasbourg/">Strasbourg</a><a href="/prepa-medecine-nantes/">Nantes</a><a href="/prepa-medecine-rennes/">Rennes</a><a href="/prepa-medecine-rouen/">Rouen</a><a href="/prepa-medecine-amiens/">Amiens</a><a href="/prepa-medecine-reims/">Reims</a><a href="/prepa-medecine-angers/">Angers</a><a href="/prepa-medecine-tours/">Tours</a></div><div><div class="nav-dropdown-heading">Sud &amp; Est</div><a href="/prepa-medecine-grenoble/">Grenoble</a><a href="/prepa-medecine-dijon/">Dijon</a><a href="/prepa-medecine-nancy/">Nancy</a><a href="/prepa-medecine-clermont-ferrand/">Clermont-Ferrand</a><a href="/prepa-medecine-besancon/">Besançon</a><a href="/prepa-medecine-poitiers/">Poitiers</a><a href="/prepa-medecine-saint-etienne/">Saint-Étienne</a><a href="/prepa-medecine-en-ligne/">En ligne</a></div></div></div><a href="/#blog">Blog</a><a href="/#faq">FAQ</a></div><div><h4>Ressources</h4><a href="/prepa-pass-prix/">Prix des prépas</a><a href="/pass-medecine/">PASS Médecine</a><a href="/las-medecine/">LAS Médecine</a><a href="/comment-devenir-medecin/">Devenir médecin</a></div><div><h4>Contact</h4><a href="mailto:contact@prepamedecine.fr">contact@prepamedecine.fr</a><a href="#">Mentions légales</a><a href="#">Politique de confidentialité</a></div></div><div class="footer-cta-section"><p>Besoin d'aide pour choisir ta prépa ?</p><a href="/#prepas" class="footer-cta-btn">Être rappelé gratuitement &rarr;</a></div><div class="footer-bottom">&copy; 2025 PrépaMédecine.fr - Tous droits réservés</div></div></footer>
-<script>document.getElementById('burger').addEventListener('click',function(){document.getElementById('navLinks').classList.toggle('open')});
-(function(){
+<script>(function(){
   var dd = document.getElementById('navDropdownVilles');
   if (!dd) return;
   dd.querySelector(':scope > a').addEventListener('click', function(e){

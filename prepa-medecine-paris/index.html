@@ -546,31 +546,31 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
 
 <script>
 (function(){
-  var burger = document.getElementById('burger');
-  var navLinks = document.getElementById('navLinks');
-  var navOverlay = document.getElementById('navOverlay');
-  var navClose = document.getElementById('navClose');
-  function openMenu(){
-    if(navOverlay){navOverlay.style.display='';navOverlay.classList.add('open');}
-    navLinks && navLinks.classList.add('open');
-    document.body.style.overflow = 'hidden';
-    burger && burger.classList.add('open');
+  // Move overlay + drawer to <body> to escape nav's containing block
+  var overlay = document.getElementById('navOverlay');
+  var drawer  = document.getElementById('navLinks');
+  var burger  = document.getElementById('burger');
+  var btnClose= document.getElementById('navClose');
+  if(overlay) document.body.appendChild(overlay);
+  if(drawer)  document.body.appendChild(drawer);
+
+  function open(){
+    if(drawer)  drawer.classList.add('open');
+    if(overlay) overlay.classList.add('open');
+    document.body.style.overflow='hidden';
+    if(burger)  burger.classList.add('open');
   }
-  function closeMenu(){
-    navLinks && navLinks.classList.remove('open');
-    if(navOverlay){navOverlay.classList.remove('open');navOverlay.style.display='none';}
-    document.body.style.overflow = '';
-    burger && burger.classList.remove('open');
+  function close(){
+    if(drawer)  drawer.classList.remove('open');
+    if(overlay) overlay.classList.remove('open');
+    document.body.style.overflow='';
+    if(burger)  burger.classList.remove('open');
   }
-  if(burger) burger.addEventListener('click', function(){
-    navLinks && navLinks.classList.contains('open') ? closeMenu() : openMenu();
-  });
-  if(navOverlay) navOverlay.addEventListener('click', closeMenu);
-  if(navClose) navClose.addEventListener('click', closeMenu);
-  // Close on nav link click
-  navLinks && navLinks.querySelectorAll('a').forEach(function(a){
-    a.addEventListener('click', closeMenu);
-  });
+
+  if(burger)   burger.onclick  = function(){ drawer && drawer.classList.contains('open') ? close() : open(); };
+  if(overlay)  overlay.onclick = close;
+  if(btnClose) btnClose.onclick= close;
+  if(drawer)   drawer.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', close); });
 })();
 /* Dropdown villes mobile toggle */
 (function(){
