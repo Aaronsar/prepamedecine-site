@@ -676,7 +676,18 @@ async function loadArticleData(id){
   var main=document.getElementById('admin-main');
   main.innerHTML='<div style="padding:60px;text-align:center;color:#787c82">Chargement...</div>';
   var r=await sb.from(TABLE).select('*').eq('id',id).maybeSingle();
-  state.articleData=r.data;renderArticleEditor();
+  var data=r.data||{};
+  // Convert old format {heading, html} to block format if needed
+  if(data.sections&&data.sections.length>0&&!data.sections[0].type){
+    var converted=[];
+    data.sections.forEach(function(s){
+      if(s.heading)converted.push({type:'heading',level:'h2',text:s.heading});
+      if(s.html)converted.push({type:'paragraph',html:s.html});
+    });
+    if(data.faq&&data.faq.length>0)converted.push({type:'faq',items:data.faq});
+    data.sections=converted;
+  }
+  state.articleData=data;renderArticleEditor();
 }
 
 function renderArticleEditor(){
@@ -1187,7 +1198,21 @@ async function loadPageData(slug){
   var main=document.getElementById('admin-main');
   main.innerHTML='<div style="padding:60px;text-align:center;color:#787c82">Chargement...</div>';
   var r=await sb.from(TABLE_PAGES).select('*').eq('page_slug',slug).maybeSingle();
-  state.pageData=r.data;renderPageEditor();
+  var data=r.data||{};
+  // Convert old format {heading, html} to block format if needed
+  if(data.sections&&data.sections.length>0&&!data.sections[0].type){
+    var converted=[];
+    data.sections.forEach(function(s){
+      if(s.heading)converted.push({type:'heading',level:'h2',text:s.heading});
+      if(s.html)converted.push({type:'paragraph',html:s.html});
+    });
+    // Also convert faq column to faq block
+    if(data.faq&&data.faq.length>0){
+      converted.push({type:'faq',items:data.faq});
+    }
+    data.sections=converted;
+  }
+  state.pageData=data;renderPageEditor();
 }
 
 function renderPageEditor(){
