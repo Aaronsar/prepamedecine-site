@@ -149,6 +149,31 @@ function escAttr(s){return String(s||'').replace(/&/g,'&amp;').replace(/"/g,'&qu
 function formatDate(iso){if(!iso)return'--';var d=new Date(iso);return d.toLocaleDateString('fr-FR',{day:'2-digit',month:'short',year:'numeric'})}
 function showToast(msg,type){var t=document.getElementById('admin-toast');t.textContent=msg;t.className='admin-toast'+(type?' '+type:'');setTimeout(function(){t.classList.add('show')},10);setTimeout(function(){t.classList.remove('show')},3000)}
 function slugify(s){return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'')}
+
+/* Map page_content slugs to real site URLs */
+function getPageLiveUrl(slug,type){
+  if(!slug)return null;
+  // Root pages: index → /, blog → /blog, etc.
+  if(type==='root'){
+    if(slug==='index')return'/';
+    return'/'+slug;
+  }
+  // Prepa city pages: prepas-medecine/bordeaux → /prepa-medecine-bordeaux
+  if(type==='prepa'||slug.startsWith('prepas-medecine/')){
+    var city=slug.replace('prepas-medecine/','');
+    return'/prepa-medecine-'+city;
+  }
+  // Faculte pages: facultes/bordeaux → /faculte-medecine-bordeaux (check if exists)
+  if(type==='faculte'||slug.startsWith('facultes/')){
+    return null; // no matching static page
+  }
+  // Article pages: articles/xxx → no static page (content in DB only)
+  if(slug.startsWith('articles/')){
+    return null;
+  }
+  // Fallback: try direct slug
+  return'/'+slug;
+}
 function getVal(n){var el=document.querySelector('[name="'+n+'"]');return el?el.value.trim():''}
 window.markUnsaved=function(){state.unsaved=true};
 function scoreBadge(val){var cls=val<50?'score-low':val<=75?'score-mid':'score-good';return'<span class="score-badge '+cls+'">'+val+'</span>'}
@@ -1193,7 +1218,10 @@ function renderPageList(){
     html+='<td>'+esc(p.page_type||'--')+'</td>';
     html+='<td>'+(p.published?'<span class="status-dot published"></span>Publie':'<span class="status-dot draft"></span>Brouillon')+'</td>';
     html+='<td>'+formatDate(p.updated_at)+'</td>';
-    html+='<td class="row-actions"><a href="javascript:void(0)" onclick="editPage(\''+escAttr(p.page_slug)+'\')">Modifier</a></td></tr>';
+    var pgUrl=getPageLiveUrl(p.page_slug,p.page_type);
+    html+='<td class="row-actions"><a href="javascript:void(0)" onclick="editPage(\''+escAttr(p.page_slug)+'\')">Modifier</a>';
+    if(pgUrl)html+=' <a href="'+escAttr(pgUrl)+'" target="_blank">Voir</a>';
+    html+='</td></tr>';
   });
   html+='</tbody></table></div></div>';main.innerHTML=html;
 }
@@ -1231,7 +1259,8 @@ function renderPageEditor(){
   html+='<div class="admin-editor-breadcrumb"><a href="javascript:void(0)" onclick="navigate(\'dashboard\')">Tableau de bord</a> &rsaquo; <a href="javascript:void(0)" onclick="navigate(\'pages\')">Pages</a> &rsaquo; '+esc(d.page_slug||'')+'</div>';
   html+='<div class="admin-editor-header"><h2>'+esc(d.title||d.page_slug||'Page')+'</h2>';
   html+='<button class="btn-back" onclick="navigate(\'pages\')">&larr; Retour</button>';
-  html+='<a href="/'+escAttr(d.page_slug||'')+'" target="_blank" class="btn-preview" style="text-decoration:none">&#128065; Voir la page</a>';
+  var liveUrl=getPageLiveUrl(d.page_slug,d.page_type);
+  if(liveUrl)html+='<a href="'+escAttr(liveUrl)+'" target="_blank" class="btn-preview" style="text-decoration:none">&#128065; Voir la page</a>';
   html+='</div>';
   html+='<div class="admin-editor-layout"><div class="admin-editor-content">';
 
