@@ -3,20 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Prépa médecine à Paris — 4 prépas comparées (2026)</title>
-<meta name="description" content="Compare les 4 prépas médecine à Paris : prix, avis, taux de réussite. Guide complet pour réussir ton PASS à Paris Cité.">
+<title>Prépa médecine à Paris — 8 prépas comparées (2026) | Guide complet</title>
+<meta name="description" content="Compare les 8 meilleures prépas médecine à Paris en 2026 : prix, taux de réussite, avis. Diploma Santé, CPCM, Cours Thalès… Guide complet pour réussir ton PASS/LAS.">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
 <link rel="apple-touch-icon" href="/favicon.png">
 <link rel="canonical" href="https://prepamedecine.fr/prepa-medecine-paris/">
-<meta property="og:title" content="Prépa médecine à Paris — Guide complet 2026">
-<meta property="og:description" content="Compare les 4 prépas médecine à Paris : prix, avis, taux de réussite. Guide complet pour réussir ton PASS à Paris Cité.">
+<meta property="og:title" content="Prépa médecine à Paris — 8 prépas comparées (2026)">
+<meta property="og:description" content="Compare les 8 meilleures prépas médecine à Paris : prix, taux de réussite, avis. Guide complet pour réussir ton PASS/LAS à Paris.">
 <meta property="og:type" content="article">
-  <meta property="og:image" content="https://prepamedecine.fr/og-image.svg">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="https://prepamedecine.fr/og-image.svg">
+<meta property="og:image" content="https://prepamedecine.fr/og-image.svg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://prepamedecine.fr/og-image.svg">
 <meta property="og:url" content="https://prepamedecine.fr/prepa-medecine-paris/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
@@ -43,6 +43,8 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
   --max-w:1200px;--nav-h:72px;
 }
 .container{max-width:var(--max-w);margin:0 auto;padding:0 24px}
+
+/* NAV */
 .nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);height:var(--nav-h)}
 .nav .container{display:flex;align-items:center;justify-content:space-between;height:100%}
 .nav-logo{font-family:'Nunito',sans-serif;font-weight:900;font-size:21px;letter-spacing:-0.4px;display:flex;align-items:center;gap:10px;text-decoration:none!important}
@@ -56,45 +58,30 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
 .nav-links a:hover{color:var(--blue)}
 .nav-links a.nav-cta{background:var(--blue);color:#fff;padding:10px 22px;border-radius:var(--radius-sm);font-size:14px;font-weight:600;transition:background .2s,transform .15s}
 .nav-links a.nav-cta:hover{background:var(--blue-dark);transform:translateY(-1px);color:#fff}
-/* ---- Dropdown Prépas par ville ---- */
-.nav-dropdown{position:relative}
-.nav-dropdown>a{display:flex;align-items:center;gap:4px;cursor:pointer}
-.nav-dropdown>a::after{content:'';border:4px solid transparent;border-top:5px solid currentColor;margin-top:2px;transition:transform .2s}
-.nav-dropdown:hover>a::after,.nav-dropdown.open>a::after{transform:rotate(180deg)}
-.nav-dropdown-menu{position:absolute;top:calc(100% + 12px);left:50%;transform:translateX(-50%);background:#fff;border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow-lg);padding:16px 0;display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;min-width:480px;opacity:0;visibility:hidden;transition:opacity .2s,visibility .2s;z-index:200}
-.nav-dropdown:hover .nav-dropdown-menu,.nav-dropdown.open .nav-dropdown-menu{opacity:1;visibility:visible}
-.nav-dropdown-menu::before{content:'';position:absolute;top:-8px;left:50%;transform:translateX(-50%);border:8px solid transparent;border-bottom:8px solid #fff;filter:drop-shadow(0 -2px 2px rgba(0,0,0,.04))}
-.nav-dropdown-menu a{display:block;padding:7px 20px;font-size:13.5px;font-weight:500;color:var(--text-body);white-space:nowrap;transition:background .15s,color .15s}
-.nav-dropdown-menu a:hover{background:var(--blue-light);color:var(--blue)}
-.nav-dropdown-heading{padding:4px 20px 8px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--text-light);pointer-events:none}
 .nav-burger{display:none;flex-direction:column;gap:5px;padding:8px}
 .nav-burger span{display:block;width:22px;height:2px;background:var(--text);border-radius:2px;transition:transform .2s}
 @media(max-width:768px){
   .nav-links{position:fixed;top:0;right:0;bottom:0;width:min(300px,85vw);background:#fff;overflow-y:auto;flex-direction:column;padding:calc(var(--nav-h) + 16px) 24px 24px;gap:16px;box-shadow:-4px 0 28px rgba(0,0,0,.15);transform:translateX(100%);visibility:hidden;transition:transform .3s,visibility .3s;z-index:999}
   .nav-links.open{transform:translateX(0);visibility:visible}
-  .nav{backdrop-filter:none!important}  .nav-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:998;cursor:pointer;backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px)}.nav-overlay.open{display:block}
-  .nav-links{border-left:1px solid var(--border,#e2e8f0)}
-  .nav-close{display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:var(--bg-alt,#f8fafc);border:1px solid var(--border,#e2e8f0)!important;cursor:pointer;align-self:flex-end;margin-bottom:16px;font-size:18px;color:var(--text,#1e293b);transition:background .2s}
-  .nav-close:hover{background:var(--border,#e2e8f0)}
-  .nav-links a{display:flex;align-items:center;padding:12px 8px;border-radius:10px;font-size:16px;font-weight:500;color:var(--text,#1e293b);transition:background .15s,color .15s;text-decoration:none!important}
-  .nav-links a:hover,.nav-links a.active{background:var(--blue-light,#eff6ff);color:var(--blue,#0284c7)}
-  .nav-links a.nav-cta{background:var(--blue,#0284c7)!important;color:#fff!important;justify-content:center;padding:14px;border-radius:12px;font-weight:700;margin-top:8px}
-  .nav-links a.nav-cta:hover{background:var(--blue-dark,#0369a1)!important}
-  .nav-burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
-  .nav-burger.open span:nth-child(2){opacity:0}
-  .nav-burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
-  .nav-links a{font-size:17px;padding:8px 0}
+  .nav{backdrop-filter:none!important}
+  .nav-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:998;cursor:pointer;backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px)}.nav-overlay.open{display:block}
+  .nav-links{border-left:1px solid var(--border)}
+  .nav-close{display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:var(--bg-alt);border:1px solid var(--border)!important;cursor:pointer;align-self:flex-end;margin-bottom:16px;font-size:18px;color:var(--text);transition:background .2s}
+  .nav-close:hover{background:var(--border)}
+  .nav-links a{display:flex;align-items:center;padding:12px 8px;border-radius:10px;font-size:16px;font-weight:500;color:var(--text);transition:background .15s,color .15s;text-decoration:none!important}
+  .nav-links a:hover,.nav-links a.active{background:var(--blue-light);color:var(--blue)}
+  .nav-links a.nav-cta{background:var(--blue)!important;color:#fff!important;justify-content:center;padding:14px;border-radius:12px;font-weight:700;margin-top:8px}
+  .nav-links a.nav-cta:hover{background:var(--blue-dark)!important}
   .nav-burger{display:flex}
-  .nav-dropdown-menu{position:static;transform:none;box-shadow:none;border:none;background:var(--bg-alt);border-radius:var(--radius-sm);grid-template-columns:1fr 1fr;min-width:0;padding:8px 0;margin-top:4px;opacity:1;visibility:visible;display:none}
-  .nav-dropdown.open .nav-dropdown-menu{display:grid}
-  .nav-dropdown-menu::before{display:none}
-  .nav-dropdown-menu a{font-size:15px;padding:8px 16px}
-  .nav-dropdown-heading{padding:4px 16px 6px}
 }
+
+/* BREADCRUMBS */
 .breadcrumbs{padding:16px 0;font-size:13px;color:var(--text-muted)}
 .breadcrumbs a{color:var(--blue);text-decoration:underline;text-underline-offset:2px}
 .breadcrumbs a:hover{color:var(--blue-dark)}
 .breadcrumbs span{margin:0 8px;color:var(--text-light)}
+
+/* HERO */
 .page-hero{padding:60px 0 50px;background:linear-gradient(180deg,var(--blue-50) 0%,#fff 100%);position:relative;overflow:hidden}
 .page-hero::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cpath d='M25 15h10v10h10v10H35v10H25V35H15V25h10z' fill='%23046bd2' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none}
 .page-hero .container{position:relative;z-index:1}
@@ -104,6 +91,18 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
 .page-hero .hero-badges{display:flex;gap:12px;flex-wrap:wrap}
 .hero-badge{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;padding:8px 16px;border-radius:20px;background:var(--blue-light);color:var(--blue)}
 .hero-badge.green{background:var(--green-light);color:#059669}
+
+/* TOC */
+.toc-section{padding:32px 0 0}
+.toc-box{background:var(--bg-alt);border:1px solid var(--border);border-radius:var(--radius-lg);padding:24px 28px}
+.toc-box h3{font-size:16px;font-weight:700;color:var(--text);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.toc-list{display:grid;grid-template-columns:1fr 1fr;gap:6px 24px}
+.toc-list a{font-size:14px;color:var(--blue);font-weight:500;padding:4px 0;display:flex;align-items:center;gap:6px;transition:color .2s}
+.toc-list a:hover{color:var(--blue-dark)}
+.toc-list a::before{content:'';width:5px;height:5px;background:var(--blue);border-radius:50%;flex-shrink:0}
+@media(max-width:600px){.toc-list{grid-template-columns:1fr}}
+
+/* CONTENT SECTIONS */
 .content-section{padding:60px 0}
 .content-section:nth-child(even){background:var(--bg-alt)}
 .content-section h2{font-size:clamp(22px,3vw,32px);font-weight:800;color:var(--text);letter-spacing:-0.5px;margin-bottom:20px;line-height:1.2}
@@ -113,20 +112,40 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
 .content-section ul.styled-list li{padding:8px 0 8px 28px;font-size:15px;color:var(--text-body);line-height:1.7;position:relative}
 .content-section ul.styled-list li::before{content:'';position:absolute;left:0;top:16px;width:8px;height:8px;background:var(--blue);border-radius:50%}
 .section-tag{display:inline-block;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--blue);margin-bottom:8px}
+
+/* KEY FIGURES */
+.key-figures{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;margin:32px 0}
+.key-figure{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:24px;text-align:center;position:relative;overflow:hidden}
+.key-figure::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--blue),#0891b2)}
+.key-figure .kf-num{font-size:32px;font-weight:800;color:var(--blue);line-height:1}
+.key-figure .kf-label{font-size:13px;color:var(--text-muted);margin-top:6px}
+
+/* HIGHLIGHT & BOXES */
 .highlight-box{background:var(--blue-50);border:1px solid rgba(4,107,210,0.15);border-radius:var(--radius-lg);padding:28px 32px;margin:28px 0}
 .highlight-box h4{font-size:17px;font-weight:700;color:var(--blue);margin-bottom:8px}
 .highlight-box p{font-size:15px;color:var(--text-body);line-height:1.7;margin-bottom:0}
-.cta-box{background:linear-gradient(135deg,var(--blue),#0284c7);border-radius:var(--radius-lg);padding:40px 36px;color:#fff;text-align:center;margin:48px 0}
-.cta-box h3{font-size:clamp(20px,2.5vw,26px);font-weight:800;margin-bottom:10px}
-.cta-box p{font-size:15px;opacity:0.9;margin-bottom:20px;max-width:500px;margin-left:auto;margin-right:auto;color:#fff}
-.cta-btn{display:inline-flex;align-items:center;gap:8px;background:#fff;color:var(--blue);padding:14px 28px;border-radius:var(--radius-sm);font-size:15px;font-weight:700;transition:transform .15s,box-shadow .2s;text-decoration:none}
-.cta-btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,0.15)}
-.comparateur-box{background:#fff;border:2px solid var(--blue);border-radius:var(--radius-lg);padding:32px;text-align:center;margin:48px 0;position:relative;overflow:hidden}
-.comparateur-box::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--blue),#0284c7,#0891b2)}
-.comparateur-box h3{font-size:20px;font-weight:800;color:var(--text);margin-bottom:8px}
-.comparateur-box p{font-size:15px;color:var(--text-muted);margin-bottom:20px}
-.price-table-wrapper{overflow-x:auto;margin:28px 0;border-radius:var(--radius);border:1px solid var(--border)}
-.price-table{width:100%;border-collapse:collapse;font-size:15px}
+
+/* COUP DE COEUR */
+.coup-de-coeur{background:linear-gradient(135deg,#f0f7ff 0%,#e8f2fc 50%,#fff 100%);border:2px solid var(--blue);border-radius:var(--radius-lg);padding:40px 36px;margin:40px 0;position:relative;overflow:hidden}
+.coup-de-coeur::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--blue),#0284c7,#0891b2)}
+.cdc-badge{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#fef3c7,#fde68a);color:#92400e;font-size:13px;font-weight:700;padding:8px 16px;border-radius:20px;margin-bottom:20px}
+.cdc-header{display:flex;align-items:flex-start;justify-content:space-between;gap:24px;margin-bottom:24px;flex-wrap:wrap}
+.cdc-header h3{font-size:clamp(22px,3vw,28px);font-weight:800;color:var(--text);margin:0}
+.cdc-header p{font-size:16px;color:var(--text-body);line-height:1.7;margin:8px 0 0;max-width:600px}
+.cdc-stats{display:flex;gap:24px;flex-wrap:wrap;margin-bottom:24px}
+.cdc-stat{text-align:center;padding:16px 24px;background:#fff;border-radius:var(--radius);border:1px solid var(--border)}
+.cdc-stat .stat-val{font-size:28px;font-weight:800;color:var(--blue);line-height:1}
+.cdc-stat .stat-lbl{font-size:12px;color:var(--text-muted);margin-top:4px;font-weight:600}
+.cdc-features{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px}
+.cdc-feat{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--text-body);line-height:1.6}
+.cdc-feat svg{flex-shrink:0;margin-top:2px;color:var(--green)}
+.cdc-cta{display:inline-flex;align-items:center;gap:8px;background:var(--blue);color:#fff;padding:14px 28px;border-radius:var(--radius-sm);font-size:15px;font-weight:700;transition:background .2s,transform .15s;text-decoration:none}
+.cdc-cta:hover{background:var(--blue-dark);transform:translateY(-2px);color:#fff}
+@media(max-width:600px){.cdc-features{grid-template-columns:1fr}.cdc-stats{gap:12px}.cdc-stat{flex:1;min-width:100px;padding:12px 16px}}
+
+/* PRICE TABLE */
+.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:28px 0;border-radius:var(--radius)}
+.price-table{width:100%;border-collapse:collapse;font-size:15px;min-width:600px}
 .price-table thead{background:var(--blue);color:#fff}
 .price-table th{padding:14px 20px;text-align:left;font-weight:600;font-size:14px;white-space:nowrap}
 .price-table td{padding:14px 20px;border-bottom:1px solid var(--border-light)}
@@ -135,10 +154,63 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
 .price-table .best-value{background:var(--green-light)}
 .price-table .best-value td:first-child{position:relative;padding-left:28px}
 .price-table .best-value td:first-child::before{content:'';position:absolute;left:12px;top:50%;transform:translateY(-50%);width:6px;height:6px;background:var(--green);border-radius:50%}
-@media(max-width:600px){
-  .price-table{font-size:13px}
-  .price-table th,.price-table td{padding:10px 12px}
-}
+@media(max-width:600px){.price-table{font-size:13px}.price-table th,.price-table td{padding:10px 12px}}
+
+/* CRITERIA GRID */
+.criteria-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:28px 0}
+.criteria-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:24px;transition:border-color .2s,box-shadow .2s}
+.criteria-card:hover{border-color:var(--blue);box-shadow:var(--shadow-md)}
+.criteria-num{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;background:var(--blue);color:#fff;border-radius:50%;font-size:13px;font-weight:700;margin-bottom:10px}
+.criteria-card h4{font-size:16px;font-weight:700;color:var(--text);margin-bottom:6px}
+.criteria-card p{font-size:14px;color:var(--text-muted);line-height:1.6;margin:0}
+@media(max-width:600px){.criteria-grid{grid-template-columns:1fr}}
+
+/* PREPA CARDS */
+.prepa-cards{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:32px 0}
+.prepa-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius-lg);padding:28px;transition:border-color .2s,box-shadow .2s,transform .2s}
+.prepa-card:hover{border-color:var(--blue);box-shadow:var(--shadow-md);transform:translateY(-3px)}
+.prepa-card.featured{border:2px solid var(--blue);position:relative}
+.prepa-card.featured::before{content:'Coup de coeur';position:absolute;top:-1px;right:20px;background:linear-gradient(135deg,#fef3c7,#fde68a);color:#92400e;font-size:11px;font-weight:700;padding:4px 12px;border-radius:0 0 8px 8px}
+.prepa-card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:8px}
+.prepa-card-header h4{font-size:18px;font-weight:700;color:var(--text);margin:0}
+.prepa-card-taux{font-size:14px;font-weight:700;color:var(--green);background:var(--green-light);padding:4px 12px;border-radius:20px}
+.prepa-card-meta{display:flex;gap:16px;margin-bottom:16px;flex-wrap:wrap}
+.prepa-card-meta span{font-size:13px;color:var(--text-muted);display:flex;align-items:center;gap:4px}
+.prepa-card-points{margin-bottom:16px}
+.prepa-card-points li{padding:4px 0 4px 20px;font-size:14px;color:var(--text-body);line-height:1.6;position:relative}
+.prepa-card-points li::before{content:'';position:absolute;left:0;top:12px;width:6px;height:6px;background:var(--blue);border-radius:50%}
+.prepa-card-link{font-size:14px;font-weight:600;color:var(--blue);transition:color .2s}
+.prepa-card-link:hover{color:var(--blue-dark)}
+@media(max-width:700px){.prepa-cards{grid-template-columns:1fr}}
+
+/* FAC GRID */
+.fac-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:24px 0}
+.fac-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px 20px;text-align:center}
+.fac-card h4{font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px}
+.fac-card p{font-size:12px;color:var(--text-muted);margin:0;line-height:1.5}
+@media(max-width:600px){.fac-grid{grid-template-columns:1fr 1fr}}
+
+/* CTA BOX */
+.cta-box{background:linear-gradient(135deg,var(--blue),#0284c7);border-radius:var(--radius-lg);padding:40px 36px;color:#fff;text-align:center;margin:48px 0}
+.cta-box h3{font-size:clamp(20px,2.5vw,26px);font-weight:800;margin-bottom:10px}
+.cta-box p{font-size:15px;opacity:0.9;margin-bottom:20px;max-width:500px;margin-left:auto;margin-right:auto;color:#fff}
+.cta-btn{display:inline-flex;align-items:center;gap:8px;background:#fff;color:var(--blue);padding:14px 28px;border-radius:var(--radius-sm);font-size:15px;font-weight:700;transition:transform .15s,box-shadow .2s;text-decoration:none}
+.cta-btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,0.15)}
+
+/* COMPARATEUR BOX */
+.comparateur-box{background:#fff;border:2px solid var(--blue);border-radius:var(--radius-lg);padding:32px;text-align:center;margin:48px 0;position:relative;overflow:hidden}
+.comparateur-box::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--blue),#0284c7,#0891b2)}
+.comparateur-box h3{font-size:20px;font-weight:800;color:var(--text);margin-bottom:8px}
+.comparateur-box p{font-size:15px;color:var(--text-muted);margin-bottom:20px}
+
+/* SUMMARY BOX */
+.summary-box{background:linear-gradient(135deg,var(--blue-50),#fff);border:1px solid rgba(4,107,210,0.15);border-radius:var(--radius-lg);padding:28px 32px;margin:32px 0}
+.summary-box h4{font-size:17px;font-weight:700;color:var(--text);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.summary-box ul{list-style:none;padding:0}
+.summary-box ul li{padding:6px 0 6px 20px;font-size:15px;color:var(--text-body);position:relative}
+.summary-box ul li::before{content:'';position:absolute;left:0;top:14px;width:6px;height:6px;background:var(--green);border-radius:50%}
+
+/* FAQ */
 .faq-section{padding:60px 0;background:var(--bg-alt)}
 .faq-list{max-width:800px;margin:0 auto}
 .faq-item{border-bottom:1px solid var(--border);background:#fff;margin-bottom:8px;border-radius:var(--radius-sm);border:1px solid var(--border);overflow:hidden}
@@ -148,6 +220,8 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
 .faq-q.open svg{transform:rotate(180deg)}
 .faq-a{max-height:0;overflow:hidden;transition:max-height .4s ease-out}
 .faq-a-inner{padding:0 24px 20px;font-size:15px;color:var(--text-body);line-height:1.7}
+
+/* INTERNAL LINKS */
 .internal-links{padding:48px 0}
 .internal-links h3{font-size:20px;font-weight:700;color:var(--text);margin-bottom:20px;text-align:center}
 .links-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;max-width:900px;margin:0 auto}
@@ -156,6 +230,8 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
 .link-card .link-icon{width:40px;height:40px;border-radius:10px;background:var(--blue-light);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--blue)}
 .link-card .link-text{font-size:14px;font-weight:600;color:var(--text)}
 .link-card .link-desc{font-size:12px;color:var(--text-muted);margin-top:2px}
+
+/* FOOTER */
 .footer{background:var(--text);color:#fff;padding:48px 0 24px}
 .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:40px}
 .footer-brand{font-family:'Nunito',sans-serif;font-weight:900;font-size:18px;display:flex;align-items:center;gap:8px;margin-bottom:12px}
@@ -168,28 +244,9 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
 .footer-cta-section p{font-size:18px;font-weight:700;margin-bottom:12px;color:#fff}
 .footer-cta-btn{display:inline-flex;align-items:center;gap:8px;background:var(--blue);color:#fff;padding:14px 28px;border-radius:var(--radius-sm);font-size:15px;font-weight:700;transition:background .2s;text-decoration:none}
 .footer-cta-btn:hover{background:var(--blue-dark)}
-@media(max-width:768px){.footer-grid{grid-template-columns:1fr 1fr;gap:24px}}
+@media(max-width:768px){.footer-grid{grid-template-columns:1fr 1fr;gap:24px}.page-hero{padding:40px 0 30px}.content-section{padding:40px 0}.cta-box{padding:28px 20px}.comparateur-box{padding:24px 16px}.highlight-box{padding:20px}.coup-de-coeur{padding:28px 20px}}
 @media(max-width:480px){.footer-grid{grid-template-columns:1fr}}
-.key-figures{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;margin:32px 0}
-.key-figure{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:24px;text-align:center;position:relative;overflow:hidden}
-.key-figure::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--blue),#0891b2)}
-.key-figure .kf-num{font-size:32px;font-weight:800;color:var(--blue);line-height:1}
-.key-figure .kf-label{font-size:13px;color:var(--text-muted);margin-top:6px}
-.summary-box{background:linear-gradient(135deg,var(--blue-50),#fff);border:1px solid rgba(4,107,210,0.15);border-radius:var(--radius-lg);padding:28px 32px;margin:32px 0}
-.summary-box h4{font-size:17px;font-weight:700;color:var(--text);margin-bottom:12px;display:flex;align-items:center;gap:8px}
-.summary-box ul{list-style:none;padding:0}
-.summary-box ul li{padding:6px 0 6px 20px;font-size:15px;color:var(--text-body);position:relative}
-.summary-box ul li::before{content:'';position:absolute;left:0;top:14px;width:6px;height:6px;background:var(--green);border-radius:50%}
-@media(max-width:768px){
-  .page-hero{padding:40px 0 30px}
-  .content-section{padding:40px 0}
-  .cta-box{padding:28px 20px}
-  .comparateur-box{padding:24px 16px}
-  .highlight-box{padding:20px}
-}
-  .table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:28px 0;border-radius:var(--radius,8px)}
-  .table-scroll table,.table-scroll .stats-table{margin:0;width:100%;min-width:500px}
-  body{overflow-x:hidden}
+body{overflow-x:hidden}
 </style>
 
 <script type="application/ld+json">
@@ -197,11 +254,14 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
   "@context": "https://schema.org",
   "@type": "FAQPage",
   "mainEntity": [
-    {"@type":"Question","name":"Combien coûte une prépa médecine à Paris ?","acceptedAnswer":{"@type":"Answer","text":"Les prix vont de 6 100€ (CPCM) à environ 9 500€ (Médisup Sciences). Diploma Santé est à 7 990–8 490€ selon la formule présentiel ou visio. Antémed Epsilon est à environ 9 200€."}},
-    {"@type":"Question","name":"Quelle est la meilleure prépa médecine à Paris ?","acceptedAnswer":{"@type":"Answer","text":"Diploma Santé se distingue avec 79% de réussite en médecine et couvre les 6 facs d'Île-de-France. CPCM est un bon choix pour un budget plus serré (dès 6 100€)."}},
-    {"@type":"Question","name":"PASS ou LAS à Paris, que choisir ?","acceptedAnswer":{"@type":"Answer","text":"Le PASS reste la voie principale (environ 70% des étudiants). La LAS est une bonne alternative si tu veux un plan B. Ta prépa doit couvrir les deux voies."}},
-    {"@type":"Question","name":"Quel budget prévoir pour un étudiant en médecine à Paris ?","acceptedAnswer":{"@type":"Answer","text":"Compte 1 200 à 1 600€/mois tout compris : loyer 700–1 100€, transport 86€ Navigo, alimentation 200–300€, divers 100–150€."}},
-    {"@type":"Question","name":"Existe-t-il des prépas médecine gratuites à Paris ?","acceptedAnswer":{"@type":"Answer","text":"Pas de prépa gratuite, mais le tutorat de ta fac est gratuit. Certaines prépas proposent des facilités de paiement (jusqu'à 10 fois sans frais chez Diploma Santé)."}}
+    {"@type":"Question","name":"Combien coûte une prépa médecine à Paris ?","acceptedAnswer":{"@type":"Answer","text":"Les prix varient de 3 500€ à 9 500€ par an selon les organismes. Diploma Santé propose des formules de 7 990 à 8 490€. CPCM est accessible dès 6 100€. Les prépas les plus chères (Antémed, Médisup Sciences) atteignent 9 200-9 500€."}},
+    {"@type":"Question","name":"Quelle est la meilleure prépa médecine à Paris ?","acceptedAnswer":{"@type":"Answer","text":"Diploma Santé se distingue avec 79% de réussite en médecine et 91% en pharmacie. Elle couvre les 6 facs d'Île-de-France et propose un coaching personnalisé avec Hermione Médecine. Cours Thalès (75%) et CPCM (74%) sont aussi d'excellentes options."}},
+    {"@type":"Question","name":"PASS ou LAS à Paris, que choisir ?","acceptedAnswer":{"@type":"Answer","text":"Le PASS reste la voie principale à Paris (environ 70% des étudiants). La LAS est une alternative pertinente si tu veux un plan B avec une licence classique. Les 6 facs parisiennes proposent les deux voies. Ta prépa doit impérativement couvrir les deux."}},
+    {"@type":"Question","name":"Quel budget prévoir pour un étudiant en médecine à Paris ?","acceptedAnswer":{"@type":"Answer","text":"Compte environ 1 200 à 1 600€ par mois tout compris : loyer 700-1 100€, transport 86€ (pass Navigo étudiant), alimentation 200-300€, divers 100-150€. Ajoute le coût de la prépa lissé sur 12 mois."}},
+    {"@type":"Question","name":"Existe-t-il des prépas médecine gratuites à Paris ?","acceptedAnswer":{"@type":"Answer","text":"Il n'existe pas de prépa gratuite à proprement parler. En revanche, le tutorat de ta fac est gratuit et constitue un premier accompagnement. Certaines prépas comme Diploma Santé proposent des facilités de paiement jusqu'à 10 fois sans frais."}},
+    {"@type":"Question","name":"Diploma Santé vaut-elle son prix ?","acceptedAnswer":{"@type":"Answer","text":"Avec 79% de réussite en médecine, un coaching individuel et la couverture des 6 facs d'Île-de-France, Diploma Santé offre un excellent rapport qualité-prix. Le fondateur, Benjamin Haddad, est ancien major de PACES."}},
+    {"@type":"Question","name":"Peut-on réussir médecine sans prépa à Paris ?","acceptedAnswer":{"@type":"Answer","text":"C'est possible mais statistiquement plus difficile. Les étudiants avec prépa ont 2 à 3 fois plus de chances de réussir. Le tutorat de ta fac est un bon complément gratuit. Si ton budget est limité, un stage de pré-rentrée peut déjà faire la différence."}},
+    {"@type":"Question","name":"Quand s'inscrire en prépa médecine à Paris ?","acceptedAnswer":{"@type":"Answer","text":"Idéalement dès le printemps de ta Terminale (mars-mai) pour bénéficier de la pré-rentrée en août. Les meilleures prépas remplissent vite, surtout à Paris. Certaines proposent aussi des inscriptions en Première (Terminale Santé)."}}
   ]
 }
 </script>
@@ -210,66 +270,30 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
 {
   "@context": "https://schema.org",
   "@type": "Article",
-  "headline": "Prépa médecine à Paris : le guide complet 2026",
-  "description": "Compare les 4 prépas médecine à Paris : prix, avis, taux de réussite. Guide complet pour réussir ton PASS à Paris Cité.",
+  "headline": "Prépa médecine à Paris : 8 prépas comparées (2026)",
+  "description": "Compare les 8 meilleures prépas médecine à Paris en 2026 : prix, taux de réussite, avis. Guide complet pour réussir ton PASS/LAS.",
   "author": {"@type": "Organization", "name": "prépamédecine.fr"},
   "publisher": {"@type": "Organization", "name": "prépamédecine.fr"},
   "datePublished": "2025-09-01",
-  "dateModified": "2026-03-15"
+  "dateModified": "2026-03-23"
 }
 </script>
-<style id="nav-mobile-css">
-@media(max-width:768px){
-  .nav{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
-  .nav-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:998}
-  .nav-overlay.open{display:block}
-  .nav-links{position:fixed;top:0;right:0;bottom:0;width:280px;background:#fff;padding:24px 20px;overflow-y:auto;transform:translateX(110%);transition:transform .28s ease;z-index:999;display:flex!important;flex-direction:column;gap:2px;box-shadow:-4px 0 20px rgba(0,0,0,.12)}
-  .nav-links.open{transform:translateX(0)}
-  .nav-close{align-self:flex-end;background:none;border:none;font-size:22px;cursor:pointer;padding:4px 8px;color:#64748b;line-height:1;margin-bottom:8px}
-  .nav-links>a{padding:11px 12px;border-radius:8px;font-size:15px;font-weight:500;color:#1e293b!important;text-decoration:none!important;display:block}
-  .nav-links>a:hover{background:#f1f5f9;color:#0284c7!important}
-  .nav-sep{border:none;border-top:1px solid #f1f5f9;margin:6px 0}
-  .nav-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#94a3b8;padding:6px 12px 2px;display:block}
-  .nav-cities{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-bottom:4px}
-  .nav-cities a{padding:9px 10px;border-radius:8px;font-size:13px;color:#475569!important;text-decoration:none!important;display:block}
-  .nav-cities a:hover{background:#f1f5f9;color:#0284c7!important}
-  .nav-cta-mobile{background:#0284c7!important;color:#fff!important;text-align:center;border-radius:10px;font-weight:700!important;margin-top:auto;padding:13px 12px!important;display:block}
-  .nav-cta-mobile:hover{background:#0369a1!important}
-  .nav-burger{display:flex}
-}
-</style>
 </head>
 <body>
 
 <!-- NAV -->
 <nav class="nav">
   <div class="container">
-    <a href="/" class="nav-logo"><svg width="34" height="34" viewBox="0 0 40 40" fill="none"><defs><linearGradient id="logoGrad" x1="0" y1="0" x2="40" y2="40"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#046bd2"/></linearGradient></defs><rect x="1" y="1" width="38" height="38" rx="12" fill="url(#logoGrad)"/><path d="M11 27c0-1.5 1-2.5 2.5-2.5H20v-9.5" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M29 27c0-1.5-1-2.5-2.5-2.5H20v-9.5" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M13.5 24.5V16.5c0-.8.4-1.2 1.2-1.2H20" stroke="#fff" stroke-width="1.6" stroke-linecap="round" fill="none" opacity=".5"/><path d="M26.5 24.5V16.5c0-.8-.4-1.2-1.2-1.2H20" stroke="#fff" stroke-width="1.6" stroke-linecap="round" fill="none" opacity=".5"/><circle cx="30" cy="11" r="4" fill="#046bd2" stroke="#fff" stroke-width="1.6"/><path d="M28.8 11h2.4M30 9.8v2.4" stroke="#fff" stroke-width="1.2" stroke-linecap="round"/></svg><div class="logo-text"><em>prépa</em><span>médecine</span><span class="logo-dot">.</span><span class="logo-tld">fr</span></div></a>
+    <a href="/" class="nav-logo"><svg width="34" height="34" viewBox="0 0 40 40" fill="none"><defs><linearGradient id="logoGrad" x1="0" y1="0" x2="40" y2="40"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#046bd2"/></linearGradient></defs><rect x="1" y="1" width="38" height="38" rx="12" fill="url(#logoGrad)"/><path d="M11 27c0-1.5 1-2.5 2.5-2.5H20v-9.5" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M29 27c0-1.5-1-2.5-2.5-2.5H20v-9.5" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M13.5 24.5V16.5c0-.8.4-1.2 1.2-1.2H20" stroke="#fff" stroke-width="1.6" stroke-linecap="round" fill="none" opacity=".5"/><path d="M26.5 24.5V16.5c0-.8-.4-1.2-1.2-1.2H20" stroke="#fff" stroke-width="1.6" stroke-linecap="round" fill="none" opacity=".5"/><circle cx="30" cy="11" r="4" fill="#046bd2" stroke="#fff" stroke-width="1.6"/><path d="M28.8 11h2.4M30 9.8v2.4" stroke="#fff" stroke-width="1.2" stroke-linecap="round"/></svg><div class="logo-text"><em>prepa</em><span>medecine</span><span class="logo-dot">.</span><span class="logo-tld">fr</span></div></a>
     <div class="nav-overlay" id="navOverlay"></div>
     <div class="nav-links" id="navLinks">
-  <button class="nav-close" id="navClose" aria-label="Fermer">✕</button>
-  <a href="/">Accueil</a>
-  <a href="/#prepas">Comparer les prépas</a>
-  <hr class="nav-sep">
-  <span class="nav-label">Prépas par ville</span>
-  <div class="nav-cities">
-    <a href="/prepa-medecine-paris/">Paris</a>
-    <a href="/prepa-medecine-lyon/">Lyon</a>
-    <a href="/prepa-medecine-marseille/">Marseille</a>
-    <a href="/prepa-medecine-toulouse/">Toulouse</a>
-    <a href="/prepa-medecine-bordeaux/">Bordeaux</a>
-    <a href="/prepa-medecine-lille/">Lille</a>
-    <a href="/prepa-medecine-nice/">Nice</a>
-    <a href="/prepa-medecine-montpellier/">Montpellier</a>
-    <a href="/prepa-medecine-nantes/">Nantes</a>
-    <a href="/prepa-medecine-rennes/">Rennes</a>
-    <a href="/prepa-medecine-en-ligne/">En ligne</a>
-  </div>
-  <hr class="nav-sep">
-  <a href="/#blog">Guides &amp; Blog</a>
-  <a href="/#faq">FAQ</a>
-  <a href="/#prepas" class="nav-cta-mobile">Trouver ma prépa</a>
-</div>
+      <button class="nav-close" id="navClose" aria-label="Fermer">&#10005;</button>
+      <a href="/">Accueil</a>
+      <a href="/#prepas">Comparer les prepas</a>
+      <a href="/blog">Blog</a>
+      <a href="/#faq">FAQ</a>
+      <a href="/#prepas" class="nav-cta">Trouver ma prepa</a>
+    </div>
     <button class="nav-burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
   </div>
 </nav>
@@ -277,7 +301,7 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
 <!-- BREADCRUMBS -->
 <div class="breadcrumbs">
   <div class="container">
-    <a href="/">Accueil</a><span>/</span><span>Prépa médecine à Paris</span>
+    <a href="/">Accueil</a><span>/</span><a href="/#prepas">Prepas par ville</a><span>/</span><span>Paris</span>
   </div>
 </div>
 
@@ -285,60 +309,163 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
 <section class="page-hero">
   <div class="container">
     <div class="section-tag">Guide Paris 2026</div>
-    <h1>Prépa médecine à Paris : <em>le guide complet</em></h1>
-    <p class="hero-sub">Compare les 4 prépas médecine disponibles à Paris avec les vrais prix, formats et avis.</p>
+    <h1>Prepa medecine a Paris : <em>le guide complet</em></h1>
+    <p class="hero-sub">Paris concentre les meilleures prepas medecine de France. Nous avons compare les 8 organismes disponibles en 2026 pour t'aider a choisir celui qui correspond a ton profil, ta fac et ton budget.</p>
     <div class="hero-badges">
-      <span class="hero-badge">4 prépas comparées</span>
-      <span class="hero-badge green">6 facs de médecine</span>
-      <span class="hero-badge">Mis à jour mars 2026</span>
+      <span class="hero-badge">8 prepas comparees</span>
+      <span class="hero-badge green">6 facs de medecine</span>
+      <span class="hero-badge">Mis a jour mars 2026</span>
     </div>
   </div>
 </section>
 
-<!-- SECTION 1 : Pourquoi cette ville -->
-<section class="content-section">
+<!-- SOMMAIRE -->
+<section class="toc-section">
   <div class="container">
-    <h2>Pourquoi faire médecine à Paris ?</h2>
-    <p>Capitale et plus grand pôle universitaire de France, Paris concentre 6 facultés de médecine en Île-de-France. L'offre de prépas y est sélective, avec 4 organismes de référence couvrant l'ensemble des facs parisiennes.</p>
+    <div class="toc-box">
+      <h3><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg> Sommaire</h3>
+      <div class="toc-list">
+        <a href="#pourquoi-paris">Pourquoi faire medecine a Paris</a>
+        <a href="#facs">Les 6 facs de medecine</a>
+        <a href="#coup-de-coeur">Notre coup de coeur : Diploma Sante</a>
+        <a href="#comparatif">Les 8 prepas comparees</a>
+        <a href="#criteres">Comment choisir sa prepa</a>
+        <a href="#fiches">Fiches detaillees</a>
+        <a href="#budget">Budget etudiant a Paris</a>
+        <a href="#faq">Questions frequentes</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 1 : Pourquoi Paris -->
+<section class="content-section" id="pourquoi-paris">
+  <div class="container">
+    <h2>Pourquoi faire medecine a Paris ?</h2>
+    <p>Paris est le plus grand pole universitaire de France pour les etudes de sante. Avec 6 facultes de medecine en Ile-de-France, la capitale offre un choix unique de parcours PASS et LAS. L'offre de prepas y est egalement la plus diversifiee, avec 8 organismes specialises qui couvrent l'ensemble des facs parisiennes.</p>
+    <p>La concurrence y est forte : chaque annee, des milliers d'etudiants se disputent les places en deuxieme annee. C'est pourquoi une prepa adaptee au programme specifique de ta fac peut faire toute la difference.</p>
 
     <div class="key-figures">
       <div class="key-figure">
-        <div class="kf-num">4</div>
-        <div class="kf-label">Prépas disponibles</div>
+        <div class="kf-num">8</div>
+        <div class="kf-label">Prepas disponibles</div>
       </div>
       <div class="key-figure">
         <div class="kf-num">6</div>
-        <div class="kf-label">Facs de médecine</div>
+        <div class="kf-label">Facs de medecine</div>
       </div>
       <div class="key-figure">
-        <div class="kf-num">700–1 100€</div>
-        <div class="kf-label">Loyer moyen étudiant</div>
+        <div class="kf-num">700-1 100&#8364;</div>
+        <div class="kf-label">Loyer moyen etudiant</div>
       </div>
       <div class="key-figure">
-        <div class="kf-num">86€/mois (Navigo)</div>
-        <div class="kf-label">Transport étudiant</div>
+        <div class="kf-num">86&#8364;/mois</div>
+        <div class="kf-label">Transport (Navigo)</div>
       </div>
-    </div>
-
-    <div class="highlight-box">
-      <h4>L'atout de Paris</h4>
-      <p>6 facultés couvertes. Diploma Santé, notre coup de coeur, affiche 79% de réussite en médecine sur le parcours complet.</p>
     </div>
   </div>
 </section>
 
 <!-- SECTION 2 : Les facs -->
-<section class="content-section">
+<section class="content-section" id="facs">
   <div class="container">
-    <h2>La fac de médecine à Paris</h2>
-    <p>À Paris, la médecine se fait à <strong>Paris Cité, Sorbonne Université, Paris-Saclay, UVSQ, UPEC, Sorbonne Paris Nord</strong>. Les 6 facs d'Île-de-France proposent le PASS et la LAS. Le PASS reste le choix majoritaire.</p>
+    <h2>Les 6 facultes de medecine a Paris</h2>
+    <p>L'Ile-de-France regroupe 6 facultes proposant le PASS et la LAS. Chaque fac a son propre programme, ses propres epreuves et ses propres numerus apertus. Il est essentiel de choisir une prepa qui couvre specifiquement le programme de ta fac.</p>
 
-    <h3>PASS et LAS à Paris</h3>
-    <p>Les 6 facs d'Île-de-France proposent le PASS et la LAS. Le PASS reste le choix majoritaire.</p>
+    <div class="fac-grid">
+      <div class="fac-card">
+        <h4>Paris Cite</h4>
+        <p>Ancienne Paris Descartes. PASS + LAS disponibles.</p>
+      </div>
+      <div class="fac-card">
+        <h4>Sorbonne Universite</h4>
+        <p>Ancienne Paris 6 (UPMC). Programme specifique.</p>
+      </div>
+      <div class="fac-card">
+        <h4>Paris-Saclay</h4>
+        <p>Situee a Orsay/Le Kremlin-Bicetre.</p>
+      </div>
+      <div class="fac-card">
+        <h4>UVSQ</h4>
+        <p>Versailles Saint-Quentin-en-Yvelines.</p>
+      </div>
+      <div class="fac-card">
+        <h4>UPEC</h4>
+        <p>Paris-Est Creteil. Fac en pleine croissance.</p>
+      </div>
+      <div class="fac-card">
+        <h4>Sorbonne Paris Nord</h4>
+        <p>Ancienne Paris 13 (Bobigny).</p>
+      </div>
+    </div>
 
     <div class="highlight-box">
-      <h4>Conseil local</h4>
-      <p>Le programme de Paris Cité n'a rien à voir avec celui de Sorbonne Université. Vérifie toujours que ta prépa couvre le programme spécifique de ta fac.</p>
+      <h4>Important : chaque fac a son propre programme</h4>
+      <p>Le programme de Paris Cite n'a rien a voir avec celui de Sorbonne Universite. Verifie toujours que ta prepa couvre le programme specifique de ta fac. Diploma Sante est la seule prepa a couvrir les 6 facultes d'Ile-de-France.</p>
+    </div>
+  </div>
+</section>
+
+<!-- COUP DE COEUR : Diploma Sante -->
+<section class="content-section" id="coup-de-coeur">
+  <div class="container">
+    <h2>Notre coup de coeur : Diploma Sante</h2>
+    <div class="coup-de-coeur">
+      <div class="cdc-badge">&#9733; Coup de coeur prepamedecine.fr</div>
+      <div class="cdc-header">
+        <div>
+          <h3>Diploma Sante</h3>
+          <p>Prepa d'excellence implantee a Paris, Diploma Sante accompagne les lyceens et etudiants en sante avec une methode exigeante et un encadrement humain de haut niveau. Fondee par Benjamin Haddad, ancien major de PACES.</p>
+        </div>
+      </div>
+
+      <div class="cdc-stats">
+        <div class="cdc-stat">
+          <div class="stat-val">79%</div>
+          <div class="stat-lbl">Admis medecine</div>
+        </div>
+        <div class="cdc-stat">
+          <div class="stat-val">91%</div>
+          <div class="stat-lbl">Admis pharmacie</div>
+        </div>
+        <div class="cdc-stat">
+          <div class="stat-val">1 200+</div>
+          <div class="stat-lbl">Etudiants / an</div>
+        </div>
+        <div class="cdc-stat">
+          <div class="stat-val">6 facs</div>
+          <div class="stat-lbl">Ile-de-France</div>
+        </div>
+      </div>
+
+      <div class="cdc-features">
+        <div class="cdc-feat">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
+          <span><strong>Fondateur major de PACES</strong> : Benjamin Haddad connait les concours de l'interieur et a calibre la methode en consequence.</span>
+        </div>
+        <div class="cdc-feat">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
+          <span><strong>Coaching Hermione Medecine</strong> : suivi individuel avec un tuteur certifie pour la planification, la motivation et la gestion du stress.</span>
+        </div>
+        <div class="cdc-feat">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
+          <span><strong>6 facs couvertes</strong> : la seule prepa a couvrir l'ensemble des programmes des 6 facultes d'Ile-de-France.</span>
+        </div>
+        <div class="cdc-feat">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
+          <span><strong>Concours blancs hebdomadaires</strong> : classements comparatifs, corrections personnalisees et analyse de performance en temps reel.</span>
+        </div>
+        <div class="cdc-feat">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
+          <span><strong>Plateforme numerique avancee</strong> : cours filmes HD, fiches actualisees, QCM classants, replays illimites.</span>
+        </div>
+        <div class="cdc-feat">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
+          <span><strong>Paiement en 10x sans frais</strong> : accessibilite financiere avec des facilites de paiement adaptees.</span>
+        </div>
+      </div>
+
+      <a href="/prepa/diploma-sante/" class="cdc-cta">Decouvrir Diploma Sante &rarr;</a>
     </div>
   </div>
 </section>
@@ -346,102 +473,373 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
 <!-- CTA COMPARATEUR -->
 <div class="container">
   <div class="comparateur-box">
-    <h3>Compare les prépas à Paris en 30 secondes</h3>
-    <p>Découvre les prépas disponibles à Paris, avec les prix, les avis et les taux de réussite.</p>
-    <a href="/#prepas" class="cta-btn">Accéder au comparateur gratuit &rarr;</a>
+    <h3>Compare les prepas a Paris en 30 secondes</h3>
+    <p>Decouvre les prepas disponibles a Paris, avec les prix, les avis et les taux de reussite.</p>
+    <a href="/#prepas" class="cta-btn">Acceder au comparateur gratuit &rarr;</a>
   </div>
 </div>
 
-<!-- SECTION 3 : Les prépas -->
-<section class="content-section">
+<!-- SECTION 3 : Comparatif -->
+<section class="content-section" id="comparatif">
   <div class="container">
-    <h2>Les 4 prépas médecine à Paris</h2>
-    <p>Voici les prépas disponibles à Paris pour préparer ton PASS. Compare les formats, les prix et les spécialités de chaque organisme.</p>
+    <h2>Les 8 prepas medecine a Paris : comparatif complet</h2>
+    <p>Voici un tableau comparatif des 8 prepas disponibles a Paris pour preparer ton PASS ou ta LAS. Compare les taux de reussite, les formats et l'anciennete de chaque organisme.</p>
 
-    <div class="price-table-wrapper">
-      <div class="table-scroll"><table class="price-table">
-        <thead><tr><th>Prépa</th><th>Voies couvertes</th><th>Format</th><th>Prix annuel</th></tr></thead>
+    <div class="table-scroll">
+      <table class="price-table">
+        <thead>
+          <tr><th>Prepa</th><th>Taux de reussite</th><th>Format</th><th>Anciennete</th><th>Etudiants</th></tr>
+        </thead>
         <tbody>
-<tr class="best-value"><td><strong>Diploma Santé</strong> <span style="display:inline-block;background:#fef3c7;color:#d97706;font-size:11px;font-weight:700;padding:2px 8px;border-radius:4px;margin-left:6px;vertical-align:middle">&#9733; Coup de coeur</span></td><td>PASS, LAS, LSPS</td><td>Présentiel / Visio</td><td class="price-highlight">7 990–8 490€</td></tr>
-<tr><td><strong>CPCM</strong></td><td>PASS, LAS</td><td>Présentiel</td><td class="price-highlight">6 100–7 200€</td></tr>
-<tr><td><strong>Antémed Epsilon</strong></td><td>PASS, LAS</td><td>Présentiel</td><td class="price-highlight">~9 200€</td></tr>
-<tr><td><strong>Médisup Sciences</strong></td><td>PASS, LAS</td><td>Présentiel</td><td class="price-highlight">~9 500€</td></tr>
+          <tr class="best-value">
+            <td><strong>Diploma Sante</strong> <span style="display:inline-block;background:#fef3c7;color:#d97706;font-size:11px;font-weight:700;padding:2px 8px;border-radius:4px;margin-left:6px;vertical-align:middle">&#9733; Coup de coeur</span></td>
+            <td class="price-highlight">79%</td>
+            <td>Presentiel / Visio</td>
+            <td>10+ ans</td>
+            <td>1 200+/an</td>
+          </tr>
+          <tr>
+            <td><strong>Cours Thales</strong></td>
+            <td class="price-highlight">75%</td>
+            <td>Hybride</td>
+            <td>17 ans</td>
+            <td>7 000+ suivis</td>
+          </tr>
+          <tr>
+            <td><strong>CPCM</strong></td>
+            <td class="price-highlight">74%</td>
+            <td>Hybride</td>
+            <td>38 ans</td>
+            <td>15 000+ (hist.)</td>
+          </tr>
+          <tr>
+            <td><strong>Medisup</strong></td>
+            <td class="price-highlight">66%</td>
+            <td>Hybride</td>
+            <td>30+ ans</td>
+            <td>3 000+</td>
+          </tr>
+          <tr>
+            <td><strong>Antemed Epsilon</strong></td>
+            <td class="price-highlight">62-65%</td>
+            <td>Hybride</td>
+            <td>40+ ans</td>
+            <td>~3 000</td>
+          </tr>
+          <tr>
+            <td><strong>Supexam</strong></td>
+            <td class="price-highlight">60-70%</td>
+            <td>Hybride</td>
+            <td>~45 ans</td>
+            <td>-</td>
+          </tr>
+          <tr>
+            <td><strong>Cap'Sante</strong></td>
+            <td class="price-highlight">6x moy. nat.</td>
+            <td>Hybride</td>
+            <td>40+ ans</td>
+            <td>-</td>
+          </tr>
+          <tr>
+            <td><strong>Medisup Sciences</strong></td>
+            <td class="price-highlight">-</td>
+            <td>Hybride</td>
+            <td>25+ ans</td>
+            <td>-</td>
+          </tr>
         </tbody>
-      </table></div>
+      </table>
     </div>
 
-    <p style="font-size:14px;color:var(--text-muted)">Les prix indiqués sont issus des données publiques des organismes (année 2025-2026). NC = tarif non communiqué. Contacte directement chaque prépa pour un devis personnalisé.</p>
+    <p style="font-size:14px;color:var(--text-muted)">Donnees issues des informations publiques des organismes (annee 2025-2026). Contacte directement chaque prepa pour un devis personnalise.</p>
+  </div>
+</section>
 
-    <div class="summary-box">
-      <h4>Comment choisir ta prépa à Paris ?</h4>
-      <ul>
-        <li>Vérifie que la prépa couvre le programme spécifique de Paris Cité, Sorbonne Université, Paris-Saclay, UVSQ, UPEC, Sorbonne Paris Nord</li>
-        <li>Compare les taux de réussite des étudiants de ta fac (pas les taux nationaux)</li>
-        <li>Regarde les avis d'étudiants récents (2024-2025 minimum)</li>
-        <li>Teste le format : certaines prépas proposent des cours d'essai gratuits</li>
-        <li>Vérifie les facilités de paiement (paiement en plusieurs fois, bourses)</li>
-      </ul>
+<!-- SECTION 4 : Criteres de choix -->
+<section class="content-section" id="criteres">
+  <div class="container">
+    <h2>Comment choisir sa prepa medecine a Paris ?</h2>
+    <p>Le choix d'une prepa est une decision importante. Voici les 6 criteres essentiels a evaluer avant de t'engager.</p>
+
+    <div class="criteria-grid">
+      <div class="criteria-card">
+        <div class="criteria-num">1</div>
+        <h4>Le programme couvert</h4>
+        <p>Verifie que la prepa couvre le programme specifique de ta fac (Paris Cite, Sorbonne, Saclay, UVSQ, UPEC ou Paris Nord). Un programme generique ne suffit pas.</p>
+      </div>
+      <div class="criteria-card">
+        <div class="criteria-num">2</div>
+        <h4>Le taux de reussite</h4>
+        <p>Compare les taux de reussite des etudiants de ta fac, pas les taux globaux. Demande des chiffres verifiables et recents (2024-2025).</p>
+      </div>
+      <div class="criteria-card">
+        <div class="criteria-num">3</div>
+        <h4>Le format d'enseignement</h4>
+        <p>Presentiel, visio, hybride ? Choisis en fonction de ton rythme de travail et de ta distance geographique. Teste si possible un cours d'essai.</p>
+      </div>
+      <div class="criteria-card">
+        <div class="criteria-num">4</div>
+        <h4>L'encadrement personnalise</h4>
+        <p>Coaching individuel, taille des groupes, disponibilite des tuteurs : un suivi personnalise fait souvent la difference en PASS.</p>
+      </div>
+      <div class="criteria-card">
+        <div class="criteria-num">5</div>
+        <h4>Le prix et les facilites de paiement</h4>
+        <p>Compare les tarifs mais aussi les possibilites de paiement en plusieurs fois, les bourses internes et le rapport qualite-prix global.</p>
+      </div>
+      <div class="criteria-card">
+        <div class="criteria-num">6</div>
+        <h4>Les avis etudiants recents</h4>
+        <p>Lis les avis d'etudiants de la promo 2024-2025 minimum. Les retours sur les anciens programmes ne sont plus pertinents.</p>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- SECTION 4 : Vie étudiante et budget -->
-<section class="content-section">
+<!-- SECTION 5 : Fiches detaillees -->
+<section class="content-section" id="fiches">
   <div class="container">
-    <h2>Vie étudiante et budget à Paris</h2>
-    <p>Paris est la ville la plus chère de France pour un étudiant. Vise les résidences CROUS ou la colocation. Les APL et bourses CROUS peuvent significativement alléger la facture.</p>
+    <h2>Fiches detaillees des 8 prepas a Paris</h2>
+    <p>Retrouve un resume de chaque prepa avec ses points forts et un lien vers sa fiche complete.</p>
 
-    <h3>Budget mensuel estimé à Paris</h3>
-    <div class="price-table-wrapper">
-      <div class="table-scroll"><table class="price-table">
-        <thead><tr><th>Poste de dépense</th><th>Budget mensuel</th></tr></thead>
-        <tbody>
-          <tr><td>Loyer (studio/coloc)</td><td class="price-highlight">700–1 100€</td></tr>
-          <tr><td>Transport</td><td>86€/mois (Navigo)</td></tr>
-          <tr><td>Alimentation</td><td>200–300€</td></tr>
-          <tr><td>Divers (téléphone, loisirs...)</td><td>100–150€</td></tr>
-        </tbody>
-      </table></div>
+    <div class="prepa-cards">
+
+      <!-- Diploma Sante -->
+      <div class="prepa-card featured">
+        <div class="prepa-card-header">
+          <h4>Diploma Sante</h4>
+          <span class="prepa-card-taux">79% reussite</span>
+        </div>
+        <div class="prepa-card-meta">
+          <span>&#128205; Paris</span>
+          <span>&#128218; Presentiel / Visio</span>
+          <span>&#128197; 10+ ans</span>
+        </div>
+        <ul class="prepa-card-points">
+          <li>Couvre les 6 facs d'Ile-de-France (seule prepa a le faire)</li>
+          <li>Fondee par un ancien major de PACES</li>
+          <li>Coaching individuel Hermione Medecine</li>
+          <li>Concours blancs hebdomadaires + plateforme numerique</li>
+        </ul>
+        <a href="/prepa/diploma-sante/" class="prepa-card-link">Voir la fiche complete &rarr;</a>
+      </div>
+
+      <!-- Cours Thales -->
+      <div class="prepa-card">
+        <div class="prepa-card-header">
+          <h4>Cours Thales</h4>
+          <span class="prepa-card-taux">75% reussite</span>
+        </div>
+        <div class="prepa-card-meta">
+          <span>&#128205; Paris + visio</span>
+          <span>&#128218; Hybride</span>
+          <span>&#128197; 17 ans</span>
+        </div>
+        <ul class="prepa-card-points">
+          <li>Organisme reconnu dans le soutien scolaire et les prepas</li>
+          <li>Formules flexibles : annuelle, stages intensifs, visio</li>
+          <li>Plus de 7 000 etudiants accompagnes</li>
+        </ul>
+        <a href="/prepa/cours-thales/" class="prepa-card-link">Voir la fiche complete &rarr;</a>
+      </div>
+
+      <!-- CPCM -->
+      <div class="prepa-card">
+        <div class="prepa-card-header">
+          <h4>CPCM</h4>
+          <span class="prepa-card-taux">74% reussite</span>
+        </div>
+        <div class="prepa-card-meta">
+          <span>&#128205; Paris</span>
+          <span>&#128218; Hybride</span>
+          <span>&#128197; 38 ans</span>
+        </div>
+        <ul class="prepa-card-points">
+          <li>Une des plus anciennes prepas de Paris (depuis 1986)</li>
+          <li>Plus de 15 000 etudiants accompagnes historiquement</li>
+          <li>Prix parmi les plus accessibles de Paris</li>
+        </ul>
+        <a href="/prepa/cpcm/" class="prepa-card-link">Voir la fiche complete &rarr;</a>
+      </div>
+
+      <!-- Medisup -->
+      <div class="prepa-card">
+        <div class="prepa-card-header">
+          <h4>Medisup</h4>
+          <span class="prepa-card-taux">66% reussite</span>
+        </div>
+        <div class="prepa-card-meta">
+          <span>&#128205; National (7 villes)</span>
+          <span>&#128218; Hybride</span>
+          <span>&#128197; 30+ ans</span>
+        </div>
+        <ul class="prepa-card-points">
+          <li>Reseau national present dans 7 grandes villes</li>
+          <li>Plus de 3 000 etudiants par an</li>
+          <li>Accompagnement PASS et LAS</li>
+        </ul>
+        <a href="/prepa/medisup/" class="prepa-card-link">Voir la fiche complete &rarr;</a>
+      </div>
+
+      <!-- Antemed Epsilon -->
+      <div class="prepa-card">
+        <div class="prepa-card-header">
+          <h4>Antemed Epsilon</h4>
+          <span class="prepa-card-taux">62-65% reussite</span>
+        </div>
+        <div class="prepa-card-meta">
+          <span>&#128205; Paris, Creteil</span>
+          <span>&#128218; Hybride</span>
+          <span>&#128197; 40+ ans</span>
+        </div>
+        <ul class="prepa-card-points">
+          <li>Plus de 40 ans d'experience dans la prepa medecine</li>
+          <li>Environ 3 000 etudiants par an</li>
+          <li>Present a Paris et Creteil</li>
+        </ul>
+        <a href="/prepa/antemed-epsilon/" class="prepa-card-link">Voir la fiche complete &rarr;</a>
+      </div>
+
+      <!-- Supexam -->
+      <div class="prepa-card">
+        <div class="prepa-card-header">
+          <h4>Supexam</h4>
+          <span class="prepa-card-taux">60-70% reussite</span>
+        </div>
+        <div class="prepa-card-meta">
+          <span>&#128205; National (10+ villes)</span>
+          <span>&#128218; Hybride</span>
+          <span>&#128197; ~45 ans</span>
+        </div>
+        <ul class="prepa-card-points">
+          <li>Le plus ancien reseau de prepas medecine de France</li>
+          <li>Present dans plus de 10 villes</li>
+          <li>Formules adaptees a chaque profil</li>
+        </ul>
+        <a href="/prepa/supexam/" class="prepa-card-link">Voir la fiche complete &rarr;</a>
+      </div>
+
+      <!-- Cap'Sante -->
+      <div class="prepa-card">
+        <div class="prepa-card-header">
+          <h4>Cap'Sante</h4>
+          <span class="prepa-card-taux">6x moy. nationale</span>
+        </div>
+        <div class="prepa-card-meta">
+          <span>&#128205; National (7 villes)</span>
+          <span>&#128218; Hybride</span>
+          <span>&#128197; 40+ ans (depuis 1982)</span>
+        </div>
+        <ul class="prepa-card-points">
+          <li>Taux de reussite 6 fois superieur a la moyenne nationale</li>
+          <li>Present dans 7 grandes villes de France</li>
+          <li>Methode eprouvee depuis plus de 40 ans</li>
+        </ul>
+        <a href="/prepa/cap-sante/" class="prepa-card-link">Voir la fiche complete &rarr;</a>
+      </div>
+
+      <!-- Medisup Sciences -->
+      <div class="prepa-card">
+        <div class="prepa-card-header">
+          <h4>Medisup Sciences</h4>
+          <span class="prepa-card-taux" style="background:var(--bg-alt);color:var(--text-muted)">NC</span>
+        </div>
+        <div class="prepa-card-meta">
+          <span>&#128205; Ile-de-France (6 centres)</span>
+          <span>&#128218; Hybride</span>
+          <span>&#128197; 25+ ans</span>
+        </div>
+        <ul class="prepa-card-points">
+          <li>Specialise sur l'Ile-de-France avec 6 centres</li>
+          <li>Couvre Paris, Creteil et Saint-Quentin-en-Yvelines</li>
+          <li>Plus de 25 ans d'experience</li>
+        </ul>
+        <a href="/prepa/medisup-sciences/" class="prepa-card-link">Voir la fiche complete &rarr;</a>
+      </div>
+
     </div>
-
-    <p>N'oublie pas d'ajouter le coût de la prépa (lissé sur 12 mois) à ton budget mensuel. Les bourses CROUS et les APL peuvent significativement réduire ta facture.</p>
   </div>
 </section>
 
 <!-- CTA BOX -->
 <div class="container">
   <div class="cta-box">
-    <h3>Besoin d'aide pour choisir ta prépa à Paris ?</h3>
-    <p>Un conseiller te rappelle gratuitement pour t'aider à trouver la prépa qui correspond à ton profil et à ton budget.</p>
-    <a href="/#prepas" class="cta-btn">Être rappelé gratuitement &rarr;</a>
+    <h3>Besoin d'aide pour choisir ta prepa a Paris ?</h3>
+    <p>Un conseiller te rappelle gratuitement pour t'aider a trouver la prepa qui correspond a ton profil et a ton budget.</p>
+    <a href="/#prepas" class="cta-btn">Etre rappele gratuitement &rarr;</a>
   </div>
 </div>
 
-<!-- FAQ -->
-<section class="faq-section">
+<!-- SECTION 6 : Budget -->
+<section class="content-section" id="budget">
   <div class="container">
-    <h2 style="text-align:center;margin-bottom:32px">Questions fréquentes sur les prépas médecine à Paris</h2>
+    <h2>Vie etudiante et budget a Paris</h2>
+    <p>Paris est la ville la plus chere de France pour un etudiant. Prevois ton budget en avance et explore les aides disponibles : APL, bourses CROUS, residences universitaires et colocation.</p>
+
+    <h3>Budget mensuel estime a Paris</h3>
+    <div class="table-scroll">
+      <table class="price-table">
+        <thead><tr><th>Poste de depense</th><th>Budget mensuel</th></tr></thead>
+        <tbody>
+          <tr><td>Loyer (studio/coloc)</td><td class="price-highlight">700-1 100&#8364;</td></tr>
+          <tr><td>Transport (Navigo etudiant)</td><td>86&#8364;/mois</td></tr>
+          <tr><td>Alimentation</td><td>200-300&#8364;</td></tr>
+          <tr><td>Divers (telephone, loisirs...)</td><td>100-150&#8364;</td></tr>
+          <tr style="font-weight:700;background:var(--blue-50)"><td><strong>Total estime</strong></td><td class="price-highlight">1 086-1 636&#8364;/mois</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="summary-box">
+      <h4>Astuces pour reduire ton budget</h4>
+      <ul>
+        <li>Vise les residences CROUS (loyer 300-500&#8364;/mois)</li>
+        <li>Demande les APL des ton emmenagement</li>
+        <li>Utilise le Restaurant Universitaire (repas a 3,30&#8364;)</li>
+        <li>Certaines prepas proposent un paiement en 10x sans frais</li>
+        <li>Renseigne-toi sur les bourses CROUS et les aides regionales</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section" id="faq">
+  <div class="container">
+    <h2 style="text-align:center;margin-bottom:32px">Questions frequentes sur les prepas medecine a Paris</h2>
     <div class="faq-list">
-    <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">Combien coûte une prépa médecine à Paris ?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
-      <div class="faq-a"><div class="faq-a-inner">Les prix vont de 6 100€ (CPCM) à environ 9 500€ (Médisup Sciences). Diploma Santé est à 7 990–8 490€ selon la formule présentiel ou visio. Antémed Epsilon est à environ 9 200€.</div></div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">Quelle est la meilleure prépa médecine à Paris ?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
-      <div class="faq-a"><div class="faq-a-inner">Diploma Santé se distingue avec 79% de réussite en médecine et couvre les 6 facs d'Île-de-France. CPCM est un bon choix pour un budget plus serré (dès 6 100€).</div></div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">PASS ou LAS à Paris, que choisir ?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
-      <div class="faq-a"><div class="faq-a-inner">Le PASS reste la voie principale (environ 70% des étudiants). La LAS est une bonne alternative si tu veux un plan B. Ta prépa doit couvrir les deux voies.</div></div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">Quel budget prévoir pour un étudiant en médecine à Paris ?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
-      <div class="faq-a"><div class="faq-a-inner">Compte 1 200 à 1 600€/mois tout compris : loyer 700–1 100€, transport 86€ Navigo, alimentation 200–300€, divers 100–150€.</div></div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">Existe-t-il des prépas médecine gratuites à Paris ?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
-      <div class="faq-a"><div class="faq-a-inner">Pas de prépa gratuite, mais le tutorat de ta fac est gratuit. Certaines prépas proposent des facilités de paiement (jusqu'à 10 fois sans frais chez Diploma Santé).</div></div>
-    </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Combien coute une prepa medecine a Paris ?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="faq-a"><div class="faq-a-inner">Les prix varient de 3 500&#8364; a 9 500&#8364; par an selon les organismes. Diploma Sante propose des formules de 7 990 a 8 490&#8364;. CPCM est accessible des 6 100&#8364;. Les prepas les plus cheres (Antemed, Medisup Sciences) atteignent 9 200-9 500&#8364;.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Quelle est la meilleure prepa medecine a Paris ?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="faq-a"><div class="faq-a-inner">Diploma Sante se distingue avec 79% de reussite en medecine et 91% en pharmacie. Elle couvre les 6 facs d'Ile-de-France et propose un coaching personnalise avec Hermione Medecine. Cours Thales (75%) et CPCM (74%) sont aussi d'excellentes options.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">PASS ou LAS a Paris, que choisir ?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="faq-a"><div class="faq-a-inner">Le PASS reste la voie principale a Paris (environ 70% des etudiants). La LAS est une alternative pertinente si tu veux un plan B avec une licence classique. Les 6 facs parisiennes proposent les deux voies. Ta prepa doit couvrir les deux.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Quel budget prevoir pour un etudiant en medecine a Paris ?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="faq-a"><div class="faq-a-inner">Compte environ 1 200 a 1 600&#8364; par mois tout compris : loyer 700-1 100&#8364;, transport 86&#8364; (pass Navigo etudiant), alimentation 200-300&#8364;, divers 100-150&#8364;. Ajoute le cout de la prepa lisse sur 12 mois.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Existe-t-il des prepas medecine gratuites a Paris ?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="faq-a"><div class="faq-a-inner">Il n'existe pas de prepa gratuite a proprement parler. En revanche, le tutorat de ta fac est gratuit et constitue un premier accompagnement. Certaines prepas comme Diploma Sante proposent des facilites de paiement jusqu'a 10 fois sans frais.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Diploma Sante vaut-elle son prix ?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="faq-a"><div class="faq-a-inner">Avec 79% de reussite en medecine, un coaching individuel et la couverture des 6 facs d'Ile-de-France, Diploma Sante offre un excellent rapport qualite-prix. Le fondateur, Benjamin Haddad, est ancien major de PACES, et la methode est fondee sur la rigueur et la confiance.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Peut-on reussir medecine sans prepa a Paris ?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="faq-a"><div class="faq-a-inner">C'est possible mais statistiquement plus difficile. Les etudiants avec prepa ont 2 a 3 fois plus de chances de reussir. Le tutorat de ta fac est un bon complement gratuit. Si ton budget est limite, un stage de pre-rentree peut deja faire la difference.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Quand s'inscrire en prepa medecine a Paris ?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="faq-a"><div class="faq-a-inner">Idealement des le printemps de ta Terminale (mars-mai) pour beneficier de la pre-rentree en aout. Les meilleures prepas remplissent vite, surtout a Paris. Certaines proposent aussi des inscriptions en Premiere (Terminale Sante).</div></div>
+      </div>
     </div>
   </div>
 </section>
@@ -449,29 +847,24 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
 <!-- INTERNAL LINKS -->
 <section class="internal-links">
   <div class="container">
-    <h3 style="margin-top:0">Prépas recommandées à Paris</h3>
+    <h3 style="margin-top:0">Prepas recommandees a Paris</h3>
     <div class="links-grid">
-      <a href="/prepa/diploma-sante/" class="link-card"><div class="link-icon"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div><div><div class="link-text">Diploma Santé</div><div class="link-desc">Fiche complète — Avis et tarifs</div></div></a>
-      <a href="/prepa/medibox/" class="link-card"><div class="link-icon"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div><div><div class="link-text">Medibox</div><div class="link-desc">Fiche complète — Avis et tarifs</div></div></a>
-      <a href="/prepa/antemed-epsilon/" class="link-card"><div class="link-icon"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div><div><div class="link-text">Antémed Epsilon</div><div class="link-desc">Fiche complète — Avis et tarifs</div></div></a>
-      <a href="/prepa/cpcm/" class="link-card"><div class="link-icon"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div><div><div class="link-text">CPCM</div><div class="link-desc">Fiche complète — Avis et tarifs</div></div></a>
-      <a href="/prepa/cours-thales/" class="link-card"><div class="link-icon"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div><div><div class="link-text">Cours Thalès</div><div class="link-desc">Fiche complète — Avis et tarifs</div></div></a>
-      <a href="/prepa/medisup-sciences/" class="link-card"><div class="link-icon"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div><div><div class="link-text">Médisup Sciences</div><div class="link-desc">Fiche complète — Avis et tarifs</div></div></a>
+      <a href="/prepa/diploma-sante/" class="link-card"><div class="link-icon"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div><div><div class="link-text">Diploma Sante</div><div class="link-desc">Fiche complete &#8212; Avis et tarifs</div></div></a>
+      <a href="/prepa/cours-thales/" class="link-card"><div class="link-icon"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div><div><div class="link-text">Cours Thales</div><div class="link-desc">Fiche complete &#8212; Avis et tarifs</div></div></a>
+      <a href="/prepa/cpcm/" class="link-card"><div class="link-icon"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div><div><div class="link-text">CPCM</div><div class="link-desc">Fiche complete &#8212; Avis et tarifs</div></div></a>
+      <a href="/prepa/antemed-epsilon/" class="link-card"><div class="link-icon"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div><div><div class="link-text">Antemed Epsilon</div><div class="link-desc">Fiche complete &#8212; Avis et tarifs</div></div></a>
+      <a href="/prepa/medisup/" class="link-card"><div class="link-icon"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div><div><div class="link-text">Medisup</div><div class="link-desc">Fiche complete &#8212; Avis et tarifs</div></div></a>
+      <a href="/prepa/supexam/" class="link-card"><div class="link-icon"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div><div><div class="link-text">Supexam</div><div class="link-desc">Fiche complete &#8212; Avis et tarifs</div></div></a>
     </div>
 
-    <div style="background:linear-gradient(135deg,#f0fdf4,#ecfdf5);border:1px solid #bbf7d0;border-radius:12px;padding:20px 24px;margin:24px 0">
-      <h4 style="font-size:16px;font-weight:700;color:#059669;margin-bottom:6px">Coaching Hermione Médecine</h4>
-      <p style="font-size:14px;color:#334155;line-height:1.6;margin:0">À Paris, la concurrence est rude en PASS. Un coach Hermione peut faire la différence pour t'organiser et tenir le rythme toute l'année. <a href="https://hermione.co/" target="_blank" rel="noopener" style="color:#059669;font-weight:600;text-decoration:underline">Découvrir Hermione Médecine &rarr;</a></p>
-    </div>
-
-    <h3>Découvre aussi</h3>
+    <h3>Decouvre aussi</h3>
     <div class="links-grid">
-      <a href="/prepa-medecine-lyon/" class="link-card"><div class="link-icon"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div><div><div class="link-text">Prépa médecine à Lyon</div><div class="link-desc">7 prépas disponibles</div></div></a>
-      <a href="/prepa-medecine-lille/" class="link-card"><div class="link-icon"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div><div><div class="link-text">Prépa médecine à Lille</div><div class="link-desc">3 prépas disponibles</div></div></a>
-      <a href="/prepa-medecine-bordeaux/" class="link-card"><div class="link-icon"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div><div><div class="link-text">Prépa médecine à Bordeaux</div><div class="link-desc">4 prépas disponibles</div></div></a>
-      <a href="/prepa-pass-prix/" class="link-card"><div class="link-icon"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div><div><div class="link-text">Prix des prépas PASS</div><div class="link-desc">Tarifs comparés 2025-2026</div></div></a>
-      <a href="/quelle-prepa-medecine-choisir/" class="link-card"><div class="link-icon"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div><div><div class="link-text">Quelle prépa choisir ?</div><div class="link-desc">Guide complet en 5 étapes</div></div></a>
-      <a href="/pass-medecine/" class="link-card"><div class="link-icon"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg></div><div><div class="link-text">PASS Médecine 2026</div><div class="link-desc">Guide complet du PASS</div></div></a>
+      <a href="/prepa-medecine-lyon/" class="link-card"><div class="link-icon"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div><div><div class="link-text">Prepa medecine a Lyon</div><div class="link-desc">Comparer les prepas</div></div></a>
+      <a href="/prepa-medecine-lille/" class="link-card"><div class="link-icon"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div><div><div class="link-text">Prepa medecine a Lille</div><div class="link-desc">Comparer les prepas</div></div></a>
+      <a href="/prepa-medecine-bordeaux/" class="link-card"><div class="link-icon"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div><div><div class="link-text">Prepa medecine a Bordeaux</div><div class="link-desc">Comparer les prepas</div></div></a>
+      <a href="/blog/pass-vs-las-quelle-voie-choisir" class="link-card"><div class="link-icon"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg></div><div><div class="link-text">PASS vs LAS : quelle voie ?</div><div class="link-desc">Article de blog</div></div></a>
+      <a href="/blog/combien-coute-prepa-medecine" class="link-card"><div class="link-icon"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div><div><div class="link-text">Combien coute une prepa ?</div><div class="link-desc">Article de blog</div></div></a>
+      <a href="/blog/comment-organiser-son-travail-en-pass" class="link-card"><div class="link-icon"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div><div><div class="link-text">Organiser son travail en PASS</div><div class="link-desc">Article de blog</div></div></a>
     </div>
   </div>
 </section>
@@ -481,41 +874,40 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
   <div class="container">
     <div class="footer-grid">
       <div>
-        <div class="footer-brand"><svg width="28" height="28" viewBox="0 0 40 40" fill="none"><defs><linearGradient id="logoGradF" x1="0" y1="0" x2="40" y2="40"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#046bd2"/></linearGradient></defs><rect x="1" y="1" width="38" height="38" rx="12" fill="url(#logoGradF)"/><path d="M11 27c0-1.5 1-2.5 2.5-2.5H20v-9.5" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M29 27c0-1.5-1-2.5-2.5-2.5H20v-9.5" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M13.5 24.5V16.5c0-.8.4-1.2 1.2-1.2H20" stroke="#fff" stroke-width="1.6" stroke-linecap="round" fill="none" opacity=".5"/><path d="M26.5 24.5V16.5c0-.8-.4-1.2-1.2-1.2H20" stroke="#fff" stroke-width="1.6" stroke-linecap="round" fill="none" opacity=".5"/><circle cx="30" cy="11" r="4" fill="#046bd2" stroke="#fff" stroke-width="1.6"/><path d="M28.8 11h2.4M30 9.8v2.4" stroke="#fff" stroke-width="1.2" stroke-linecap="round"/></svg><span><em style="color:#046bd2;font-style:normal">prépa</em><span style="color:#fff">médecine</span><span style="color:#046bd2;font-weight:900">.</span><span style="color:#94a3b8;font-size:14px;font-weight:700">fr</span></span></div>
-        <p>La plateforme qui compare les meilleures prépas médecine en France pour t'aider à choisir celle qui correspond à ton profil.</p>
+        <div class="footer-brand"><svg width="28" height="28" viewBox="0 0 40 40" fill="none"><defs><linearGradient id="logoGradF" x1="0" y1="0" x2="40" y2="40"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#046bd2"/></linearGradient></defs><rect x="1" y="1" width="38" height="38" rx="12" fill="url(#logoGradF)"/><path d="M11 27c0-1.5 1-2.5 2.5-2.5H20v-9.5" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M29 27c0-1.5-1-2.5-2.5-2.5H20v-9.5" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M13.5 24.5V16.5c0-.8.4-1.2 1.2-1.2H20" stroke="#fff" stroke-width="1.6" stroke-linecap="round" fill="none" opacity=".5"/><path d="M26.5 24.5V16.5c0-.8-.4-1.2-1.2-1.2H20" stroke="#fff" stroke-width="1.6" stroke-linecap="round" fill="none" opacity=".5"/><circle cx="30" cy="11" r="4" fill="#046bd2" stroke="#fff" stroke-width="1.6"/><path d="M28.8 11h2.4M30 9.8v2.4" stroke="#fff" stroke-width="1.2" stroke-linecap="round"/></svg><span><em style="color:#046bd2;font-style:normal">prepa</em><span style="color:#fff">medecine</span><span style="color:#046bd2;font-weight:900">.</span><span style="color:#94a3b8;font-size:14px;font-weight:700">fr</span></span></div>
+        <p>La plateforme qui compare les meilleures prepas medecine en France pour t'aider a choisir celle qui correspond a ton profil.</p>
       </div>
       <div>
         <h4>Navigation</h4>
         <a href="/">Accueil</a>
-        <a href="/#prepas">Prépas</a>
-        <a href="/#blog">Blog</a>
+        <a href="/#prepas">Prepas</a>
+        <a href="/blog">Blog</a>
         <a href="/#faq">FAQ</a>
       </div>
       <div>
         <h4>Ressources</h4>
-        <a href="/prepa-pass-prix/">Prix des prépas</a>
-        <a href="/prepa-medecine-avis/">Avis étudiants</a>
-        <a href="/pass-taux-reussite-2026/">Taux de réussite</a>
-        <a href="/parcoursup-medecine-guide/">Guide Parcoursup</a>
+        <a href="/prepa-pass-prix/">Prix des prepas</a>
+        <a href="/pass-medecine/">PASS Medecine</a>
+        <a href="/las-medecine/">LAS Medecine</a>
+        <a href="/comment-devenir-medecin/">Devenir medecin</a>
       </div>
       <div>
         <h4>Contact</h4>
         <a href="mailto:contact@prepamedecine.fr">contact@prepamedecine.fr</a>
-        <a href="#">Mentions légales</a>
-        <a href="#">Politique de confidentialité</a>
+        <a href="#">Mentions legales</a>
+        <a href="#">Politique de confidentialite</a>
       </div>
     </div>
     <div class="footer-cta-section">
-      <p>Besoin d'aide pour choisir ta prépa ?</p>
-      <a href="/#prepas" class="footer-cta-btn">Être rappelé gratuitement &rarr;</a>
+      <p>Besoin d'aide pour choisir ta prepa ?</p>
+      <a href="/#prepas" class="footer-cta-btn">Etre rappele gratuitement &rarr;</a>
     </div>
-    <div class="footer-bottom">&copy; 2025 PrépaMédecine.fr - Tous droits réservés</div>
+    <div class="footer-bottom">&copy; 2025 PrepaMedecine.fr - Tous droits reserves</div>
   </div>
 </footer>
 
 <script>
 (function(){
-  // Move overlay + drawer to <body> to escape nav's containing block
   var overlay = document.getElementById('navOverlay');
   var drawer  = document.getElementById('navLinks');
   var burger  = document.getElementById('burger');
@@ -541,25 +933,10 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
   if(btnClose) btnClose.onclick= close;
   if(drawer)   drawer.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', close); });
 })();
-/* Dropdown villes mobile toggle */
-(function(){
-  var dd = document.getElementById('navDropdownVilles');
-  if (!dd) return;
-  dd.querySelector(':scope > a').addEventListener('click', function(e){
-    e.preventDefault();
-    if (window.innerWidth <= 768) dd.classList.toggle('open');
-  });
-  dd.querySelectorAll('.nav-dropdown-menu a').forEach(function(a){
-    a.addEventListener('click', function(){
-      document.getElementById('navLinks').classList.remove('open');
-      document.getElementById('navOverlay')?.classList.remove('open');
-      dd.classList.remove('open');
-    });
-  });
-})();
+
 function toggleFaq(btn){
-  const wasOpen = btn.classList.contains('open');
-  document.querySelectorAll('.faq-q').forEach(q => {
+  var wasOpen = btn.classList.contains('open');
+  document.querySelectorAll('.faq-q').forEach(function(q){
     q.classList.remove('open');
     q.nextElementSibling.style.maxHeight = null;
   });
