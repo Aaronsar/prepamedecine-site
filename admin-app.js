@@ -917,18 +917,24 @@ window.regenerateArticle=async function(){
 window.improveArticle=async function(){
   if(!state.currentId)return;
   var d=collectArticleFormData();if(!d.title){showToast('Titre requis','error');return}
-  if(!confirm('Ameliorer avec l\'IA ?'))return;
-  showAIOverlay('Amelioration en cours...');
+  if(!confirm('Ameliorer avec l\'IA ? (30-40 sec)'))return;
+  showAIOverlay('Amelioration SEO/GEO en cours...<br><small>~30-40 secondes</small>');
   try{
     var seo=analyzeSEO({title:d.title,metaTitle:d.meta_title||d.title,metaDescription:d.meta_description,slug:d.slug,focusKeyword:d.focus_keyword,sections:d.sections});
     var geo=analyzeGEO({sections:d.sections});
-    var res=await fetch(SUPABASE_URL+'/functions/v1/improve-article',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({title:d.title,meta_description:d.meta_description,subtitle:d.excerpt,sections:d.sections,faq:[],scores:{seo:seo.score,geo:geo.score}})});
+    var res=await fetch(SUPABASE_URL+'/functions/v1/improve-prepa-article',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({title:d.title,meta_title:d.meta_title||d.title,meta_description:d.meta_description,slug:d.slug,focus_keyword:d.focus_keyword,sections:d.sections,scores:{seo:seo.score,geo:geo.score}})});
     var data=await res.json();
-    if(data.error){hideAIOverlay();showToast('Erreur IA','error');return}
-    var update={title:data.title||d.title,meta_description:data.meta_description||null,subtitle:data.subtitle||null,sections:data.sections||d.sections};
-    await sb.from(TABLE).update(update).eq('id',state.currentId);
-    hideAIOverlay();showToast('Article ameliore','success');await loadArticles();editArticle(state.currentId);
-  }catch(err){hideAIOverlay();showToast('Erreur','error')}
+    if(data.error){hideAIOverlay();showToast('Erreur IA: '+data.error,'error');return}
+    var update={};
+    if(data.meta_title)update.meta_title=data.meta_title;
+    if(data.meta_description)update.meta_description=data.meta_description;
+    if(data.focus_keyword)update.focus_keyword=data.focus_keyword;
+    if(data.sections&&data.sections.length>0)update.sections=data.sections;
+    update.updated_at=new Date().toISOString();
+    var r=await sb.from(TABLE).update(update).eq('id',state.currentId);
+    if(r.error)throw r.error;
+    hideAIOverlay();showToast('Article ameliore !','success');await loadArticles();editArticle(state.currentId);
+  }catch(err){console.error(err);hideAIOverlay();showToast('Erreur : '+(err.message||'Echec'),'error')}
 };
 
 /* ========== ARTICLE PREVIEW ========== */
@@ -1306,20 +1312,24 @@ function bindPageScoreUpdates(){
 window.improvePageAI=async function(){
   if(!state.currentId)return;
   var d=collectPageFormData();if(!d.title){showToast('Titre requis','error');return}
-  if(!confirm('Ameliorer cette page avec l\'IA ?'))return;
+  if(!confirm('Ameliorer cette page avec l\'IA ? (30-40 sec)'))return;
   var slug=(state.currentId||'').split('/').pop()||'';
   var seo=analyzeSEO({title:d.title,metaTitle:d.title,metaDescription:d.meta_description,slug:slug,focusKeyword:d.focus_keyword,sections:d.sections});
   var geo=analyzeGEO({sections:d.sections});
-  showAIOverlay('Amelioration en cours...<br><small>~30-40 secondes</small>');
+  showAIOverlay('Amelioration SEO/GEO en cours...<br><small>~30-40 secondes</small>');
   try{
-    var res=await fetch(SUPABASE_URL+'/functions/v1/improve-article',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({title:d.title,meta_description:d.meta_description,subtitle:d.subtitle,sections:d.sections,faq:[],scores:{seo:seo.score,geo:geo.score}})});
+    var res=await fetch(SUPABASE_URL+'/functions/v1/improve-prepa-article',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({title:d.title,meta_title:d.title,meta_description:d.meta_description,slug:slug,focus_keyword:d.focus_keyword,sections:d.sections,scores:{seo:seo.score,geo:geo.score}})});
     var data=await res.json();
     if(data.error){hideAIOverlay();showToast('Erreur IA: '+data.error,'error');return}
-    var update={title:data.title||d.title,meta_description:data.meta_description||d.meta_description,subtitle:data.subtitle||d.subtitle,sections:data.sections||d.sections,updated_at:new Date().toISOString()};
+    var update={};
+    if(data.meta_description)update.meta_description=data.meta_description;
+    if(data.focus_keyword)update.focus_keyword=data.focus_keyword;
+    if(data.sections&&data.sections.length>0)update.sections=data.sections;
+    update.updated_at=new Date().toISOString();
     var r=await sb.from(TABLE_PAGES).update(update).eq('page_slug',state.currentId);
     if(r.error)throw r.error;
-    hideAIOverlay();showToast('Page amelioree','success');await loadPages();editPage(state.currentId);
-  }catch(err){hideAIOverlay();showToast('Erreur','error')}
+    hideAIOverlay();showToast('Page amelioree !','success');await loadPages();editPage(state.currentId);
+  }catch(err){console.error(err);hideAIOverlay();showToast('Erreur : '+(err.message||'Echec'),'error')}
 };
 
 window.savePage=async function(){
