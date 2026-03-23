@@ -570,8 +570,8 @@ function escapeAttr(str) {
 
 /* ============ RENDER RELATED ARTICLES ============ */
 function renderRelatedCard(article) {
-  var slug = (article.page_slug || '').replace(/^articles\//, '');
-  var href = '/blog/' + slug;
+  var rSlug = article.slug || '';
+  var href = '/blog/' + rSlug;
   var title = article.title || 'Article';
   var desc = article.meta_description || '';
   if (desc.length > 100) desc = desc.substring(0, 100) + '...';
@@ -681,13 +681,11 @@ function initScrollSpy() {
     return;
   }
 
-  var pageSlug = 'articles/' + slug;
-
   try {
     var { data, error } = await sb
-      .from('page_content')
+      .from('prepamedecine_articles')
       .select('*')
-      .eq('page_slug', pageSlug)
+      .eq('slug', slug)
       .single();
 
     if (error || !data) {
@@ -696,7 +694,7 @@ function initScrollSpy() {
     }
 
     renderArticle(data, slug);
-    loadRelatedArticles(pageSlug);
+    loadRelatedArticles(slug);
 
   } catch(e) {
     console.error('Error loading article:', e);
@@ -791,10 +789,9 @@ function renderArticle(article, slug) {
 async function loadRelatedArticles(currentSlug) {
   try {
     var { data, error } = await sb
-      .from('page_content')
-      .select('title, page_slug, meta_description, created_at')
-      .like('page_slug', 'articles/%')
-      .neq('page_slug', currentSlug)
+      .from('prepamedecine_articles')
+      .select('title, slug, meta_description, created_at')
+      .neq('slug', currentSlug)
       .eq('status', 'published')
       .limit(20);
 

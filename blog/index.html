@@ -271,10 +271,9 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
   async function loadArticles(){
     try {
       var res = await sb
-        .from('page_content')
-        .select('id, page_slug, title, meta_description, category, updated_at, published')
-        .eq('page_type', 'article')
-        .eq('published', true)
+        .from('prepamedecine_articles')
+        .select('id, slug, title, meta_description, tag, tag_color, category, excerpt, status, updated_at')
+        .eq('status', 'published')
         .order('updated_at', { ascending: false });
 
       if(res.error) throw res.error;
@@ -334,12 +333,12 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
     }
 
     grid.innerHTML = filtered.map(function(article){
-      var tag = article.category || 'Guide';
-      var tagColor = TAG_COLORS[tag] || '#6b7280';
+      var tag = article.tag || 'Guide';
+      var tagColor = article.tag_color || TAG_COLORS[tag] || '#6b7280';
       var title = escHtml(article.title || 'Sans titre');
       var excerpt = escHtml(truncate(article.meta_description || '', 140));
       var date = formatDate(article.updated_at);
-      var slug = (article.page_slug || '').replace(/^articles\//, '');
+      var slug = article.slug || '';
       var href = '/blog/' + slug;
 
       return '<a href="' + href + '" class="blog-card">' +
