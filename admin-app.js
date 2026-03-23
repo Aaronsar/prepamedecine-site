@@ -1226,8 +1226,9 @@ function renderPageEditor(){
 
   html+=metaBoxOpen('Informations',false);
   html+=field('pg_title','Titre',d.title||'','text');
-  html+=field('pg_meta_desc','Meta description',d.meta_description||'','textarea');
+  html+=field('pg_meta_desc','Meta description',d.meta_description||'','textarea','120-160 caracteres recommandes.');
   html+=field('pg_subtitle','Sous-titre',d.subtitle||'','text');
+  html+=field('pg_focus_kw','Mot-cle focus',d.focus_keyword||'','text','Mot-cle principal pour l\'analyse SEO');
   html+=metaBoxClose();
 
   // Blocks
@@ -1248,14 +1249,88 @@ function renderPageEditor(){
   html+='<div class="admin-publish-box"><div class="admin-publish-box-header">Publication</div><div class="admin-publish-box-body">';
   html+='<div class="pub-info">Publiee : <label class="toggle-switch"><input type="checkbox" id="toggle-pg-pub" '+(d.published?'checked':'')+' onchange="markUnsaved()"><span class="toggle-slider"></span></label></div>';
   html+='</div><div class="admin-publish-box-footer"><button class="btn-primary" onclick="savePage()" id="btn-save-page">Sauvegarder</button></div></div>';
+
+  // Score panel
+  html+='<div class="admin-score-panel"><div class="score-panel-header" onclick="var b=this.nextElementSibling;b.style.display=b.style.display===\'none\'?\'\':\'none\'">Optimisation SEO/GEO <span class="toggle-icon">&#9660;</span></div>';
+  html+='<div class="score-panel-body" id="pg-score-panel-body">';
+  html+='<div class="score-summary" id="pg-score-summary"></div>';
+  html+='<button class="btn-improve" onclick="improvePageAI()">&#10024; Ameliorer avec l\'IA</button>';
+  html+='<div class="score-checks" id="pg-score-checks"></div>';
+  html+='</div></div>';
+
   html+='</div></div></div>';
   main.innerHTML=html;main.scrollTop=0;
+  updatePageScorePanel();bindPageScoreUpdates();
 }
+
+/* Page score panel */
+var _pgScoreTimer=null;
+
+function collectPageFormData(){
+  return{
+    title:getVal('pg_title'),meta_description:getVal('pg_meta_desc'),
+    subtitle:getVal('pg_subtitle'),focus_keyword:getVal('pg_focus_kw'),
+    sections:collectBlocks('pg')
+  };
+}
+
+function updatePageScorePanel(){
+  var d=collectPageFormData();
+  var slug=(state.currentId||'').split('/').pop()||'';
+  var seo=analyzeSEO({title:d.title,metaTitle:d.title,metaDescription:d.meta_description,slug:slug,focusKeyword:d.focus_keyword,sections:d.sections});
+  var geo=analyzeGEO({sections:d.sections});
+
+  var sumEl=document.getElementById('pg-score-summary');
+  if(sumEl)sumEl.innerHTML='<div class="score-row"><span>SEO</span>'+scoreBadge(seo.score)+'</div><div class="score-row"><span>GEO</span>'+scoreBadge(geo.score)+'</div>';
+
+  var c='<div class="score-check-label">SEO — Base</div>';
+  seo.checks.filter(function(ch){return ch.cat==='basic'}).forEach(function(ch){c+=chk(ch.passed,ch.label,ch.msg)});
+  c+='<div class="score-check-label">SEO — Contenu</div>';
+  seo.checks.filter(function(ch){return ch.cat==='content'}).forEach(function(ch){c+=chk(ch.passed,ch.label,ch.msg)});
+  c+='<div class="score-check-label">SEO — Liens & Media</div>';
+  seo.checks.filter(function(ch){return ch.cat==='links'}).forEach(function(ch){c+=chk(ch.passed,ch.label,ch.msg)});
+  c+='<div class="score-check-label">GEO</div>';
+  geo.checks.forEach(function(ch){c+=chk(ch.passed,ch.label,ch.msg)});
+
+  var chEl=document.getElementById('pg-score-checks');
+  if(chEl)chEl.innerHTML=c;
+}
+
+function bindPageScoreUpdates(){
+  var content=document.querySelector('.admin-editor-content');if(!content)return;
+  content.addEventListener('input',function(){clearTimeout(_pgScoreTimer);_pgScoreTimer=setTimeout(updatePageScorePanel,500)});
+  var list=document.getElementById('pg-list');
+  if(list)new MutationObserver(function(){clearTimeout(_pgScoreTimer);_pgScoreTimer=setTimeout(updatePageScorePanel,300)}).observe(list,{childList:true,subtree:true});
+}
+
+window.improvePageAI=async function(){
+  if(!state.currentId)return;
+  var d=collectPageFormData();if(!d.title){showToast('Titre requis','error');return}
+  if(!confirm('Ameliorer cette page avec l\'IA ?'))return;
+  var slug=(state.currentId||'').split('/').pop()||'';
+  var seo=analyzeSEO({title:d.title,metaTitle:d.title,metaDescription:d.meta_description,slug:slug,focusKeyword:d.focus_keyword,sections:d.sections});
+  var geo=analyzeGEO({sections:d.sections});
+  showAIOverlay('Amelioration en cours...<br><small>~30-40 secondes</small>');
+  try{
+    var res=await fetch(SUPABASE_URL+'/functions/v1/improve-article',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({title:d.title,meta_description:d.meta_description,subtitle:d.subtitle,sections:d.sections,faq:[],scores:{seo:seo.score,geo:geo.score}})});
+    var data=await res.json();
+    if(data.error){hideAIOverlay();showToast('Erreur IA: '+data.error,'error');return}
+    var update={title:data.title||d.title,meta_description:data.meta_description||d.meta_description,subtitle:data.subtitle||d.subtitle,sections:data.sections||d.sections,updated_at:new Date().toISOString()};
+    var r=await sb.from(TABLE_PAGES).update(update).eq('page_slug',state.currentId);
+    if(r.error)throw r.error;
+    hideAIOverlay();showToast('Page amelioree','success');await loadPages();editPage(state.currentId);
+  }catch(err){hideAIOverlay();showToast('Erreur','error')}
+};
 
 window.savePage=async function(){
   var btn=document.getElementById('btn-save-page');btn.disabled=true;btn.textContent='Sauvegarde...';
   try{
-    var data={title:getVal('pg_title'),meta_description:getVal('pg_meta_desc'),subtitle:getVal('pg_subtitle'),sections:collectBlocks('pg'),published:document.getElementById('toggle-pg-pub').checked,updated_at:new Date().toISOString()};
+    var pgSections=collectBlocks('pg');
+    var pgSlug=(state.currentId||'').split('/').pop()||'';
+    var pgKw=getVal('pg_focus_kw');
+    var pgSeo=analyzeSEO({title:getVal('pg_title'),metaTitle:getVal('pg_title'),metaDescription:getVal('pg_meta_desc'),slug:pgSlug,focusKeyword:pgKw,sections:pgSections});
+    var pgGeo=analyzeGEO({sections:pgSections});
+    var data={title:getVal('pg_title'),meta_description:getVal('pg_meta_desc'),subtitle:getVal('pg_subtitle'),focus_keyword:pgKw||null,sections:pgSections,seo_score:pgSeo.score,geo_score:pgGeo.score,published:document.getElementById('toggle-pg-pub').checked,updated_at:new Date().toISOString()};
     var r=await sb.from(TABLE_PAGES).update(data).eq('page_slug',state.currentId);
     if(r.error)throw r.error;state.unsaved=false;await loadPages();showToast('Page sauvegardee','success');
   }catch(err){showToast('Erreur : '+(err.message||'Echec'),'error')}
