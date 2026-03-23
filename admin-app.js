@@ -102,14 +102,11 @@ function renderSidebar(){
   var isArt=v==='articles'||v==='editor';
   var isPrep=v==='prepas'||v==='prepa-editor';
   var isPag=v==='pages'||v==='page-editor';
-  var isImp=v==='import';
   var html='';
   html+=navItem('dashboard','&#9776;','Tableau de bord',null,v==='dashboard');
   html+=navItem('prepas','&#127979;','Prepas',prepasCache.length,isPrep);
   html+=navItem('articles','&#128196;','Articles',articlesCache.length,isArt);
   html+=navItem('pages','&#128462;','Pages',pagesCache.length,isPag);
-  html+='<div class="admin-nav-sep"></div>';
-  html+=navItem('import','&#128230;','Import GEDS',null,isImp);
   document.getElementById('admin-sidebar').innerHTML=html;
 }
 
@@ -127,7 +124,6 @@ window.navigate=function(viewId){
   else if(viewId==='articles')renderArticleList();
   else if(viewId==='prepas')renderPrepaList();
   else if(viewId==='pages')renderPageList();
-  else if(viewId==='import')renderImportView();
   renderSidebar();
 };
 
@@ -305,7 +301,6 @@ function renderDashboardHome(){
   var drafts=articlesCache.filter(function(a){return a.status!=='published'}).length;
   var totalP=prepasCache.length;
   var coeur=prepasCache.filter(function(p){return p.coup_de_coeur}).length;
-  var imported=articlesCache.filter(function(a){return a.source==='import'}).length;
 
   var html='<div class="admin-dashboard-home">';
   html+='<div class="admin-welcome"><h2>Bienvenue sur le backoffice PrepaMedecine</h2>';
@@ -316,13 +311,12 @@ function renderDashboardHome(){
   html+=statCard(total,'Total articles','articles');
   html+=statCard(totalP,'Prepas','prepas');
   html+=statCard(coeur,'Coup de coeur',null);
-  html+=statCard(imported,'Importes',null);
+  html+=statCard(pagesCache.length,'Pages','pages');
   html+='</div>';
 
   // Quick actions
   html+='<div style="display:flex;gap:8px;margin-bottom:20px">';
   html+='<button class="btn-primary" onclick="showAddModal()">+ Nouvel article</button>';
-  html+='<button class="btn-secondary" onclick="navigate(\'import\')">&#128230; Import GEDS</button>';
   html+='<button class="btn-secondary" onclick="window.open(\'/\',\'_blank\')">&#128065; Voir le site</button>';
   html+='</div>';
 
@@ -1242,97 +1236,6 @@ window.savePage=async function(){
   }catch(err){showToast('Erreur : '+(err.message||'Echec'),'error')}
   btn.disabled=false;btn.textContent='Sauvegarder';
 };
-
-/* ========== IMPORT GEDS ========== */
-var gedsCache=null,gedsPage=1,gedsSearch='';
-
-function renderImportView(){
-  var main=document.getElementById('admin-main');
-  var html='<div class="admin-page-list"><div class="admin-page-list-header"><h2>Import GEDS</h2></div>';
-  html+='<div class="filter-bar"><input type="text" id="geds-search" placeholder="Rechercher sur GEDS..." value="'+escAttr(gedsSearch)+'">';
-  html+='<button class="btn-primary" onclick="searchGEDS()">Rechercher</button></div>';
-  html+='<div id="geds-results"><p style="color:var(--wp-text-lighter)">Cliquez sur Rechercher pour charger les articles GEDS.</p></div>';
-  html+='</div>';
-  main.innerHTML=html;
-  document.getElementById('geds-search').addEventListener('keydown',function(e){if(e.key==='Enter')window.searchGEDS()});
-}
-
-window.searchGEDS=async function(){
-  gedsSearch=(document.getElementById('geds-search').value||'').trim();
-  var container=document.getElementById('geds-results');
-  container.innerHTML='<p style="color:var(--wp-text-lighter)">Chargement...</p>';
-  try{
-    var url='https://www.geds.fr/wp-json/wp/v2/posts?per_page=20&page='+gedsPage;
-    if(gedsSearch)url+='&search='+encodeURIComponent(gedsSearch);
-    var res=await fetch(url);
-    if(!res.ok)throw new Error('HTTP '+res.status);
-    var posts=await res.json();
-    if(!posts.length){container.innerHTML='<p>Aucun resultat.</p>';return}
-    var html='<div class="import-list">';
-    posts.forEach(function(p){
-      var title=(p.title&&p.title.rendered)||'Sans titre';
-      var excerpt=(p.excerpt&&p.excerpt.rendered)||'';
-      var date=formatDate(p.date);
-      html+='<div class="import-item" onclick="importGEDSPost('+p.id+',\''+escAttr(title.replace(/'/g,"\\'"))+'\')">';
-      html+='<h4>'+title+'</h4>';
-      html+='<p>'+excerpt.substring(0,200)+'</p>';
-      html+='<span class="import-date">'+date+' &bull; Cliquer pour importer</span></div>';
-    });
-    html+='</div>';
-    container.innerHTML=html;
-  }catch(err){container.innerHTML='<p style="color:var(--wp-red)">Erreur : '+esc(err.message)+'</p>'}
-};
-
-window.importGEDSPost=async function(postId,title){
-  if(!confirm('Importer "'+title+'" en brouillon ?'))return;
-  showAIOverlay('Import en cours...');
-  try{
-    var res=await fetch('https://www.geds.fr/wp-json/wp/v2/posts/'+postId);
-    var post=await res.json();
-    var content=(post.content&&post.content.rendered)||'';
-    var blocks=parseWordPressToBlocks(content);
-    var slug=slugify((post.title&&post.title.rendered)||title);
-    var metaDesc=stripHtml((post.excerpt&&post.excerpt.rendered)||'').substring(0,160);
-
-    var r=await sb.from(TABLE).insert({
-      slug:slug,title:(post.title&&post.title.rendered)||title,
-      meta_title:(post.title&&post.title.rendered)||title,
-      meta_description:metaDesc,excerpt:metaDesc,
-      tag:'Guide',status:'draft',source:'import',source_url:post.link||'',
-      sections:blocks
-    }).select().single();
-    if(r.error)throw r.error;
-    hideAIOverlay();await loadArticles();showToast('Article importe','success');editArticle(r.data.id);
-  }catch(err){hideAIOverlay();showToast('Erreur import : '+(err.message||''),'error')}
-};
-
-function parseWordPressToBlocks(html){
-  var blocks=[];
-  var div=document.createElement('div');div.innerHTML=html;
-  Array.from(div.children).forEach(function(el){
-    var tag=el.tagName.toLowerCase();
-    if(tag==='h2')blocks.push({type:'heading',level:'h2',text:el.textContent.trim()});
-    else if(tag==='h3')blocks.push({type:'heading',level:'h3',text:el.textContent.trim()});
-    else if(tag==='p'&&el.innerHTML.trim())blocks.push({type:'paragraph',html:el.innerHTML.trim()});
-    else if(tag==='ul'||tag==='ol'){
-      var items=Array.from(el.querySelectorAll('li')).map(function(li){return li.innerHTML.trim()});
-      blocks.push({type:'list',style:tag==='ol'?'numbered':'bullet',items:items});
-    }
-    else if(tag==='blockquote')blocks.push({type:'callout',variant:'info',html:el.innerHTML.trim()});
-    else if(tag==='table'){
-      var headers=[],rows=[];
-      el.querySelectorAll('thead th').forEach(function(th){headers.push(th.textContent.trim())});
-      el.querySelectorAll('tbody tr').forEach(function(tr){var cells=[];tr.querySelectorAll('td').forEach(function(td){cells.push(td.textContent.trim())});rows.push(cells)});
-      blocks.push({type:'table',headers:headers,rows:rows});
-    }
-    else if(tag==='figure'||tag==='img'){
-      var img=tag==='img'?el:el.querySelector('img');
-      if(img)blocks.push({type:'image',src:img.src||'',alt:img.alt||'',caption:(el.querySelector('figcaption')||{}).textContent||''});
-    }
-    else if(el.innerHTML.trim())blocks.push({type:'paragraph',html:el.innerHTML.trim()});
-  });
-  return blocks;
-}
 
 /* ========== START ========== */
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
