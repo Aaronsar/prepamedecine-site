@@ -34,5 +34,8 @@
     { "source": "/index.php/prepas/:path*", "destination": "/#prepas", "permanent": true },
     { "source": "/index.php/pass-ou-las/:path*", "destination": "/pass-ou-las/", "permanent": true },
     { "source": "/index.php/:path*", "destination": "/", "permanent": true }
+  ],
+  "rewrites": [
+    { "source": "/blog/:slug", "destination": "/blog/article.html" }
   ]
 }

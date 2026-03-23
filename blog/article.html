@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="pageTitle">Chargement... | PrépaMédecine.fr</title>
+<meta name="description" id="metaDesc" content="">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+<link rel="apple-touch-icon" href="/favicon.png">
+<meta name="robots" content="index, follow">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://prepamedecine.fr/og-image.svg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://prepamedecine.fr/og-image.svg">
+<link id="canonical" rel="canonical" href="">
+<meta property="og:url" id="ogUrl" content="">
+<meta property="og:title" id="ogTitle" content="">
+<meta property="og:description" id="ogDesc" content="">
+<meta name="twitter:title" id="twTitle" content="">
+<meta name="twitter:description" id="twDesc" content="">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ============ RESET ============ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;color:#334155;background:#fff;line-height:1.6;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+ul{list-style:none}
+button{cursor:pointer;border:none;background:none;font-family:inherit}
+input,select{font-family:inherit}
+
+/* ============ VARIABLES ============ */
+:root{
+  --blue:#046bd2;--blue-dark:#0353a4;--blue-light:#e8f2fc;--blue-50:#f0f7ff;
+  --green:#10b981;--green-light:#ecfdf5;
+  --orange:#f59e0b;--red:#ef4444;
+  --bg:#ffffff;--bg-alt:#f8fafc;--bg-card:#ffffff;
+  --text:#0f172a;--text-body:#334155;--text-muted:#64748b;--text-light:#94a3b8;
+  --border:#e2e8f0;--border-light:#f1f5f9;
+  --radius:12px;--radius-lg:16px;--radius-sm:8px;
+  --shadow:0 1px 3px rgba(0,0,0,0.06),0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md:0 4px 12px rgba(0,0,0,0.07),0 2px 4px rgba(0,0,0,0.04);
+  --shadow-lg:0 10px 30px rgba(0,0,0,0.08),0 4px 8px rgba(0,0,0,0.04);
+  --max-w:1200px;
+  --nav-h:72px;
+}
+
+/* ============ UTILITY ============ */
+.container{max-width:var(--max-w);margin:0 auto;padding:0 24px}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+
+/* ============ NAV ============ */
+.nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);height:var(--nav-h)}
+.nav::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent 0%,var(--blue) 20%,#0891b2 40%,#059669 60%,transparent 100%);opacity:0.3}
+.nav .container{display:flex;align-items:center;justify-content:space-between;height:100%}
+.nav-logo{font-family:'Nunito',sans-serif;font-weight:900;font-size:21px;letter-spacing:-0.4px;display:flex;align-items:center;gap:10px;text-decoration:none!important}
+.nav-logo .logo-text{display:flex;align-items:baseline;gap:0}
+.nav-logo .logo-text em{font-style:normal;color:#1e293b}
+.nav-logo .logo-text span{font-weight:800;color:#1e293b}
+.nav-logo .logo-text .logo-dot{color:#2e6da4;font-weight:900}
+.nav-logo .logo-text .logo-tld{font-weight:700;font-size:15px;color:#94a3b8;margin-left:1px}
+.nav-links{display:flex;align-items:center;gap:32px}
+.nav-links a{font-size:15px;font-weight:500;color:var(--text-body);transition:color .2s}
+.nav-links a:hover{color:var(--blue)}
+.nav-links a.nav-cta{background:var(--blue);color:#fff;padding:10px 22px;border-radius:var(--radius-sm);font-size:14px;font-weight:600;transition:background .2s,transform .15s}
+.nav-links a.nav-cta:hover{background:var(--blue-dark);transform:translateY(-1px);color:#fff}
+.nav-close{display:none}
+.nav-burger{display:none;flex-direction:column;gap:5px;padding:8px}
+.nav-burger span{display:block;width:22px;height:2px;background:var(--text);border-radius:2px;transition:transform .2s}
+
+@media(max-width:768px){
+  .nav-links{position:fixed;top:0;right:0;bottom:0;width:min(300px,85vw);background:#fff;overflow-y:auto;flex-direction:column;padding:calc(var(--nav-h) + 16px) 24px 24px;gap:16px;box-shadow:-4px 0 28px rgba(0,0,0,.15);transform:translateX(100%);visibility:hidden;transition:transform .3s,visibility .3s;z-index:999}
+  .nav-links.open{transform:translateX(0);visibility:visible}
+  .nav{backdrop-filter:none!important}
+  .nav-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:998;cursor:pointer;backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px)}.nav-overlay.open{display:block}
+  .nav-links{border-left:1px solid var(--border,#e2e8f0)}
+  .nav-close{display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:var(--bg-alt,#f8fafc);border:1px solid var(--border,#e2e8f0)!important;cursor:pointer;align-self:flex-end;margin-bottom:16px;font-size:18px;color:var(--text,#1e293b);transition:background .2s}
+  .nav-close:hover{background:var(--border,#e2e8f0)}
+  .nav-links a{display:flex;align-items:center;padding:12px 8px;border-radius:10px;font-size:16px;font-weight:500;color:var(--text,#1e293b);transition:background .15s,color .15s;text-decoration:none!important}
+  .nav-links a:hover,.nav-links a.active{background:var(--blue-light,#eff6ff);color:var(--blue,#0284c7)}
+  .nav-links a.nav-cta{background:var(--blue,#0284c7)!important;color:#fff!important;justify-content:center;padding:14px;border-radius:12px;font-weight:700;margin-top:8px}
+  .nav-links a.nav-cta:hover{background:var(--blue-dark,#0369a1)!important}
+  .nav-burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .nav-burger.open span:nth-child(2){opacity:0}
+  .nav-burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+  .nav-links a{font-size:17px;padding:8px 0}
+  .nav-burger{display:flex}
+}
+
+/* ============ BREADCRUMBS ============ */
+.breadcrumbs{padding:16px 0;font-size:13px;color:var(--text-muted)}
+.breadcrumbs a{color:var(--blue);text-decoration:underline;text-underline-offset:2px}
+.breadcrumbs a:hover{color:var(--blue-dark)}
+.breadcrumbs span{margin:0 8px;color:var(--text-light)}
+
+/* ============ ARTICLE HERO ============ */
+.article-hero{padding:48px 0 40px;background:linear-gradient(180deg,var(--blue-50) 0%,#fff 100%);position:relative;overflow:hidden}
+.article-hero::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cpath d='M25 15h10v10h10v10H35v10H25V35H15V25h10z' fill='%23046bd2' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none}
+.article-hero .container{position:relative;z-index:1;max-width:760px}
+.article-hero h1{font-size:clamp(26px,4vw,40px);font-weight:800;color:var(--text);letter-spacing:-0.8px;line-height:1.2;margin-bottom:16px}
+.article-hero .article-meta{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-size:14px;color:var(--text-muted)}
+.article-hero .article-meta .meta-item{display:inline-flex;align-items:center;gap:6px}
+.article-hero .article-meta svg{width:16px;height:16px;color:var(--text-light)}
+.article-hero .article-excerpt{font-size:17px;color:var(--text-muted);line-height:1.7;margin-top:16px;max-width:680px}
+
+/* ============ ARTICLE LAYOUT ============ */
+.article-layout{display:flex;gap:40px;padding:48px 0 60px;max-width:var(--max-w);margin:0 auto;padding-left:24px;padding-right:24px}
+.article-main{flex:1;max-width:760px;margin:0 auto;min-width:0}
+.article-sidebar{width:240px;flex-shrink:0;position:sticky;top:calc(var(--nav-h) + 24px);align-self:flex-start;max-height:calc(100vh - var(--nav-h) - 48px);overflow-y:auto}
+@media(max-width:1024px){
+  .article-layout{flex-direction:column}
+  .article-sidebar{width:100%;position:static;max-height:none;order:-1}
+}
+
+/* ============ TABLE OF CONTENTS ============ */
+.toc{background:var(--bg-alt);border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px}
+.toc-title{font-size:14px;font-weight:700;color:var(--text);margin-bottom:12px;text-transform:uppercase;letter-spacing:0.5px}
+.toc-list{list-style:none;padding:0;margin:0}
+.toc-list li{margin-bottom:6px}
+.toc-list a{font-size:13px;font-weight:500;color:var(--text-muted);display:block;padding:4px 0 4px 12px;border-left:2px solid transparent;transition:color .2s,border-color .2s}
+.toc-list a:hover,.toc-list a.active{color:var(--blue);border-left-color:var(--blue)}
+
+/* ============ ARTICLE CONTENT ============ */
+.article-content{font-size:16px;color:var(--text-body);line-height:1.8}
+.article-content h2{font-size:clamp(22px,3vw,28px);font-weight:800;color:var(--text);letter-spacing:-0.4px;margin:40px 0 16px;line-height:1.25;padding-top:8px}
+.article-content h2:first-child{margin-top:0}
+.article-content h3{font-size:20px;font-weight:700;color:var(--text);margin:32px 0 12px;line-height:1.3}
+.article-content .article-p{font-size:16px;color:var(--text-body);line-height:1.8;margin-bottom:16px}
+.article-content .article-p a{color:var(--blue);text-decoration:underline;text-underline-offset:2px}
+.article-content .article-p a:hover{color:var(--blue-dark)}
+.article-content .article-p strong{font-weight:700;color:var(--text)}
+.article-content .article-p em{font-style:italic}
+
+/* Callout */
+.article-callout{padding:20px 24px;border-radius:var(--radius-sm);margin:24px 0;border-left:4px solid var(--blue);background:var(--blue-50)}
+.article-callout.callout-info{border-left-color:var(--blue);background:var(--blue-50)}
+.article-callout.callout-warning{border-left-color:var(--orange);background:#fffbeb}
+.article-callout.callout-success{border-left-color:var(--green);background:var(--green-light)}
+.article-callout.callout-error{border-left-color:var(--red);background:#fef2f2}
+.article-callout p{font-size:15px;line-height:1.7;color:var(--text-body);margin:0}
+.article-callout a{color:var(--blue);text-decoration:underline}
+
+/* Lists */
+.article-list{margin:16px 0 24px;padding:0}
+.article-list.bullet-list{list-style:none;padding:0}
+.article-list.bullet-list li{padding:6px 0 6px 24px;font-size:15px;color:var(--text-body);line-height:1.7;position:relative}
+.article-list.bullet-list li::before{content:'';position:absolute;left:0;top:14px;width:7px;height:7px;background:var(--blue);border-radius:50%}
+.article-list.numbered-list{list-style:decimal;padding-left:24px}
+.article-list.numbered-list li{padding:6px 0;font-size:15px;color:var(--text-body);line-height:1.7}
+.article-list.numbered-list li::marker{color:var(--blue);font-weight:700}
+
+/* Table */
+.article-table-wrapper{overflow-x:auto;margin:24px 0;border-radius:var(--radius);border:1px solid var(--border)}
+.article-table{width:100%;border-collapse:collapse;font-size:14px}
+.article-table thead{background:var(--blue);color:#fff}
+.article-table th{padding:12px 16px;text-align:left;font-weight:600;font-size:13px;white-space:nowrap}
+.article-table td{padding:12px 16px;border-bottom:1px solid var(--border-light)}
+.article-table tbody tr:hover{background:var(--blue-50)}
+@media(max-width:600px){
+  .article-table{font-size:13px}
+  .article-table th,.article-table td{padding:10px 12px}
+}
+
+/* FAQ Accordion */
+.article-faq{margin:24px 0}
+.article-faq details{border:1px solid var(--border);border-radius:var(--radius-sm);margin-bottom:8px;overflow:hidden;background:#fff}
+.article-faq summary{padding:16px 20px;font-size:15px;font-weight:600;color:var(--text);cursor:pointer;display:flex;justify-content:space-between;align-items:center;list-style:none;transition:color .2s}
+.article-faq summary::-webkit-details-marker{display:none}
+.article-faq summary::after{content:'';width:8px;height:8px;border-right:2px solid var(--text-muted);border-bottom:2px solid var(--text-muted);transform:rotate(45deg);transition:transform .3s;flex-shrink:0}
+.article-faq details[open] summary::after{transform:rotate(-135deg)}
+.article-faq summary:hover{color:var(--blue)}
+.article-faq .faq-answer{padding:0 20px 16px;font-size:15px;color:var(--text-body);line-height:1.7}
+
+/* Image / Figure */
+.article-figure{margin:28px 0;text-align:center}
+.article-figure img{border-radius:var(--radius);border:1px solid var(--border);margin:0 auto}
+.article-figure figcaption{font-size:13px;color:var(--text-muted);margin-top:8px;font-style:italic}
+
+/* Grid Cards */
+.article-grid{display:grid;gap:16px;margin:24px 0}
+.article-grid.cols-2{grid-template-columns:repeat(2,1fr)}
+.article-grid.cols-3{grid-template-columns:repeat(3,1fr)}
+@media(max-width:600px){
+  .article-grid.cols-2,.article-grid.cols-3{grid-template-columns:1fr}
+}
+.article-grid-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius-sm);padding:20px;transition:border-color .2s,box-shadow .2s}
+.article-grid-card:hover{border-color:var(--blue);box-shadow:var(--shadow)}
+.article-grid-card h4{font-size:15px;font-weight:700;color:var(--text);margin-bottom:6px}
+.article-grid-card p{font-size:14px;color:var(--text-muted);line-height:1.6;margin:0}
+
+/* Stats Grid */
+.article-stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:16px;margin:24px 0}
+.article-stat-box{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:20px;text-align:center;position:relative;overflow:hidden}
+.article-stat-box::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--blue),#0891b2)}
+.article-stat-box .stat-value{font-size:28px;font-weight:800;color:var(--blue);line-height:1}
+.article-stat-box .stat-label{font-size:13px;color:var(--text-muted);margin-top:6px}
+
+/* Link Card */
+.article-link-card{display:flex;align-items:center;gap:16px;padding:20px;background:#fff;border:1px solid var(--border);border-radius:var(--radius-sm);margin:16px 0;transition:border-color .2s,box-shadow .2s,transform .2s;text-decoration:none}
+.article-link-card:hover{border-color:var(--blue);box-shadow:var(--shadow-md);transform:translateY(-2px)}
+.article-link-card .lc-icon{width:44px;height:44px;border-radius:10px;background:var(--blue-light);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.article-link-card .lc-icon svg{width:20px;height:20px;color:var(--blue)}
+.article-link-card .lc-text h4{font-size:15px;font-weight:700;color:var(--text);margin-bottom:2px}
+.article-link-card .lc-text p{font-size:13px;color:var(--text-muted);margin:0}
+
+/* ============ RELATED ARTICLES ============ */
+.related-section{padding:60px 0;background:var(--bg-alt)}
+.related-section .section-title{font-size:clamp(22px,3vw,30px);font-weight:800;color:var(--text);text-align:center;margin-bottom:32px}
+.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:var(--max-w);margin:0 auto;padding:0 24px}
+.related-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;transition:box-shadow .25s,transform .25s;text-decoration:none;display:flex;flex-direction:column}
+.related-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-4px)}
+.related-card-img{height:160px;background:linear-gradient(135deg,var(--blue-light),var(--blue-50));display:flex;align-items:center;justify-content:center;position:relative}
+.related-card-img::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--blue),#0891b2,#059669)}
+.related-card-img svg{width:48px;height:48px;color:var(--blue);opacity:0.4}
+.related-card-body{padding:20px;flex:1;display:flex;flex-direction:column}
+.related-card-body h3{font-size:16px;font-weight:700;color:var(--text);line-height:1.3;margin-bottom:8px}
+.related-card-body p{font-size:13px;color:var(--text-muted);line-height:1.6;flex:1}
+.related-card-body .read-more{font-size:13px;font-weight:600;color:var(--blue);margin-top:12px;display:inline-flex;align-items:center;gap:4px}
+@media(max-width:768px){.related-grid{grid-template-columns:1fr;max-width:480px}}
+
+/* ============ LOADING & ERROR ============ */
+.loading-state{text-align:center;padding:120px 24px;min-height:60vh;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.loading-spinner{width:40px;height:40px;border:3px solid var(--border);border-top-color:var(--blue);border-radius:50%;animation:spin .8s linear infinite;margin-bottom:16px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-state p{font-size:16px;color:var(--text-muted)}
+.error-state{text-align:center;padding:120px 24px;min-height:60vh;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.error-state h2{font-size:28px;font-weight:800;color:var(--text);margin-bottom:12px}
+.error-state p{font-size:16px;color:var(--text-muted);margin-bottom:24px}
+.error-state a{display:inline-flex;align-items:center;gap:8px;background:var(--blue);color:#fff;padding:12px 24px;border-radius:var(--radius-sm);font-size:15px;font-weight:600;transition:background .2s}
+.error-state a:hover{background:var(--blue-dark)}
+
+/* ============ FOOTER ============ */
+.footer{background:var(--text);color:#fff;padding:48px 0 24px;position:relative;overflow:hidden}
+.footer::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cpath d='M32 18h16v14h14v16H48v14H32V48H18V32h14z' fill='%23fff' opacity='0.02'/%3E%3C/svg%3E");pointer-events:none}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:40px}
+.footer-brand{font-family:'Nunito',sans-serif;font-weight:900;font-size:18px;display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.footer p{font-size:14px;color:#94a3b8;line-height:1.6}
+.footer h4{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:16px;color:#e2e8f0}
+.footer a{font-size:14px;color:#94a3b8;display:block;margin-bottom:10px;transition:color .2s}
+.footer a:hover{color:#fff}
+.footer-cta-section{text-align:center;padding:32px 0;border-bottom:1px solid rgba(255,255,255,0.1);margin-bottom:24px}
+.footer-cta-section p{font-size:18px;font-weight:700;margin-bottom:12px;color:#fff}
+.footer-cta-btn{display:inline-flex;align-items:center;gap:8px;background:var(--blue);color:#fff;padding:14px 28px;border-radius:var(--radius-sm);font-size:15px;font-weight:700;transition:background .2s;text-decoration:none}
+.footer-cta-btn:hover{background:var(--blue-dark)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.1);padding-top:24px;text-align:center;font-size:13px;color:#64748b}
+@media(max-width:768px){.footer-grid{grid-template-columns:1fr 1fr;gap:24px}}
+@media(max-width:480px){.footer-grid{grid-template-columns:1fr}}
+
+/* ============ MISC ============ */
+body{overflow-x:hidden}
+</style>
+<script id="jsonLdScript" type="application/ld+json">{}</script>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<nav class="nav">
+  <div class="container">
+    <a href="/" class="nav-logo"><svg width="34" height="34" viewBox="0 0 40 40" fill="none"><defs><linearGradient id="logoGrad" x1="0" y1="0" x2="40" y2="40"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#046bd2"/></linearGradient></defs><rect x="1" y="1" width="38" height="38" rx="12" fill="url(#logoGrad)"/><path d="M11 27c0-1.5 1-2.5 2.5-2.5H20v-9.5" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M29 27c0-1.5-1-2.5-2.5-2.5H20v-9.5" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M13.5 24.5V16.5c0-.8.4-1.2 1.2-1.2H20" stroke="#fff" stroke-width="1.6" stroke-linecap="round" fill="none" opacity=".5"/><path d="M26.5 24.5V16.5c0-.8-.4-1.2-1.2-1.2H20" stroke="#fff" stroke-width="1.6" stroke-linecap="round" fill="none" opacity=".5"/><circle cx="30" cy="11" r="4" fill="#046bd2" stroke="#fff" stroke-width="1.6"/><path d="M28.8 11h2.4M30 9.8v2.4" stroke="#fff" stroke-width="1.2" stroke-linecap="round"/></svg><div class="logo-text"><em>prepa</em><span>medecine</span><span class="logo-dot">.</span><span class="logo-tld">fr</span></div></a>
+    <div class="nav-overlay" id="navOverlay"></div>
+    <div class="nav-links" id="navLinks">
+  <button class="nav-close" id="navClose" aria-label="Fermer">&cross;</button>
+  <a href="/">Accueil</a>
+  <a href="/#prepas">Comparer les prepas</a>
+  <a href="/blog" style="color:var(--blue);font-weight:600">Blog</a>
+  <a href="/#faq">FAQ</a>
+  <a href="/#prepas" class="nav-cta">Trouver ma prepa</a>
+</div>
+    <button class="nav-burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- ============ BREADCRUMBS ============ -->
+<div class="container" id="breadcrumbsContainer" style="display:none">
+  <div class="breadcrumbs" id="breadcrumbs">
+    <a href="/">Accueil</a><span>/</span><a href="/blog">Blog</a><span>/</span><span id="breadcrumbTitle">...</span>
+  </div>
+</div>
+
+<!-- ============ ARTICLE HERO ============ -->
+<section class="article-hero" id="articleHero" style="display:none">
+  <div class="container" style="max-width:760px">
+    <h1 id="articleTitle"></h1>
+    <div class="article-meta" id="articleMeta">
+      <span class="meta-item" id="metaDate">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        <span id="dateText"></span>
+      </span>
+      <span class="meta-item" id="metaReadTime">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
+        <span id="readTimeText"></span>
+      </span>
+    </div>
+    <p class="article-excerpt" id="articleExcerpt"></p>
+  </div>
+</section>
+
+<!-- ============ LOADING STATE ============ -->
+<div class="loading-state" id="loadingState">
+  <div class="loading-spinner"></div>
+  <p>Chargement de l'article...</p>
+</div>
+
+<!-- ============ ERROR STATE ============ -->
+<div class="error-state" id="errorState" style="display:none">
+  <h2>Article introuvable</h2>
+  <p>Cet article n'existe pas ou a ete deplace.</p>
+  <a href="/blog">&larr; Retour au blog</a>
+</div>
+
+<!-- ============ ARTICLE LAYOUT ============ -->
+<div class="article-layout" id="articleLayout" style="display:none">
+  <aside class="article-sidebar" id="articleSidebar">
+    <nav class="toc" id="tocNav">
+      <div class="toc-title">Sommaire</div>
+      <ul class="toc-list" id="tocList"></ul>
+    </nav>
+  </aside>
+  <main class="article-main">
+    <div class="article-content" id="articleContent"></div>
+  </main>
+</div>
+
+<!-- ============ RELATED ARTICLES ============ -->
+<section class="related-section" id="relatedSection" style="display:none">
+  <h2 class="section-title">Articles similaires</h2>
+  <div class="related-grid" id="relatedGrid"></div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand"><svg width="28" height="28" viewBox="0 0 40 40" fill="none"><defs><linearGradient id="logoGradF" x1="0" y1="0" x2="40" y2="40"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#046bd2"/></linearGradient></defs><rect x="1" y="1" width="38" height="38" rx="12" fill="url(#logoGradF)"/><path d="M11 27c0-1.5 1-2.5 2.5-2.5H20v-9.5" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M29 27c0-1.5-1-2.5-2.5-2.5H20v-9.5" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M13.5 24.5V16.5c0-.8.4-1.2 1.2-1.2H20" stroke="#fff" stroke-width="1.6" stroke-linecap="round" fill="none" opacity=".5"/><path d="M26.5 24.5V16.5c0-.8-.4-1.2-1.2-1.2H20" stroke="#fff" stroke-width="1.6" stroke-linecap="round" fill="none" opacity=".5"/><circle cx="30" cy="11" r="4" fill="#046bd2" stroke="#fff" stroke-width="1.6"/><path d="M28.8 11h2.4M30 9.8v2.4" stroke="#fff" stroke-width="1.2" stroke-linecap="round"/></svg><span><em style="color:#046bd2;font-style:normal">prepa</em><span style="color:#fff">medecine</span><span style="color:#046bd2;font-weight:900">.</span><span style="color:#94a3b8;font-size:14px;font-weight:700">fr</span></span></div>
+        <p>La plateforme qui compare les meilleures prepas sante en France pour t'aider a choisir celle qui correspond a ton profil.</p>
+      </div>
+      <div>
+        <h4>Navigation</h4>
+        <a href="/">Accueil</a>
+        <a href="/#prepas">Prepas</a>
+        <a href="/blog">Blog</a>
+        <a href="/#faq">FAQ</a>
+      </div>
+      <div>
+        <h4>Ressources</h4>
+        <a href="/prepa-pass-prix/">Prix des prepas</a>
+        <a href="/pass-medecine/">PASS Medecine</a>
+        <a href="/las-medecine/">LAS Medecine</a>
+        <a href="/comment-devenir-medecin/">Devenir medecin</a>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <a href="mailto:contact@prepamedecine.fr">contact@prepamedecine.fr</a>
+        <a href="#">Mentions legales</a>
+        <a href="#">Politique de confidentialite</a>
+      </div>
+    </div>
+    <div class="footer-cta-section">
+      <p>Besoin d'aide pour choisir ta prepa ?</p>
+      <a href="/#prepas" class="footer-cta-btn">Etre rappele gratuitement &rarr;</a>
+    </div>
+    <div class="footer-bottom">&copy; 2025 PrepaMedecine.fr - Tous droits reserves</div>
+  </div>
+</footer>
+
+<script>
+/* ============ MOBILE NAV ============ */
+(function(){
+  var overlay = document.getElementById('navOverlay');
+  var drawer  = document.getElementById('navLinks');
+  var burger  = document.getElementById('burger');
+  var btnClose= document.getElementById('navClose');
+  if(overlay) document.body.appendChild(overlay);
+  if(drawer)  document.body.appendChild(drawer);
+
+  function open(){
+    if(drawer)  drawer.classList.add('open');
+    if(overlay) overlay.classList.add('open');
+    document.body.style.overflow='hidden';
+    if(burger)  burger.classList.add('open');
+  }
+  function close(){
+    if(drawer)  drawer.classList.remove('open');
+    if(overlay) overlay.classList.remove('open');
+    document.body.style.overflow='';
+    if(burger)  burger.classList.remove('open');
+  }
+
+  if(burger)   burger.onclick  = function(){ drawer && drawer.classList.contains('open') ? close() : open(); };
+  if(overlay)  overlay.onclick = close;
+  if(btnClose) btnClose.onclick= close;
+  if(drawer)   drawer.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', close); });
+})();
+
+/* ============ SUPABASE CONFIG ============ */
+var SUPABASE_URL = 'https://jhopwqpbaiyjfoggvcaf.supabase.co';
+var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impob3B3cXBiYWl5amZvZ2d2Y2FmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMwNTI2OTEsImV4cCI6MjA4ODYyODY5MX0.rz3TJZryPxEf3P5kQgpzQkwN9aF8_F4eo4F03CEYVPs';
+var sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+/* ============ SLUG EXTRACTION ============ */
+function getSlug() {
+  var path = window.location.pathname.replace(/\/+$/, '');
+  var parts = path.split('/');
+  // /blog/my-slug → parts = ["", "blog", "my-slug"]
+  if (parts.length >= 3 && parts[1] === 'blog') {
+    return parts.slice(2).join('/');
+  }
+  return null;
+}
+
+/* ============ DATE FORMATTING ============ */
+function formatDate(dateStr) {
+  if (!dateStr) return '';
+  try {
+    var d = new Date(dateStr);
+    return d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+  } catch(e) {
+    return dateStr;
+  }
+}
+
+/* ============ READ TIME ESTIMATE ============ */
+function estimateReadTime(sections) {
+  var text = '';
+  if (!sections || !Array.isArray(sections)) return '5 min';
+  sections.forEach(function(block) {
+    if (block.text) text += block.text + ' ';
+    if (block.html) text += block.html + ' ';
+    if (block.heading) text += block.heading + ' ';
+    if (block.items && Array.isArray(block.items)) {
+      block.items.forEach(function(item) {
+        if (typeof item === 'string') text += item + ' ';
+        if (item && item.question) text += item.question + ' ' + item.answer + ' ';
+        if (item && item.title) text += item.title + ' ' + (item.description || '') + ' ';
+      });
+    }
+    if (block.rows && Array.isArray(block.rows)) {
+      block.rows.forEach(function(row) {
+        if (Array.isArray(row)) text += row.join(' ') + ' ';
+      });
+    }
+  });
+  var stripped = text.replace(/<[^>]*>/g, '');
+  var words = stripped.split(/\s+/).filter(Boolean).length;
+  var mins = Math.max(1, Math.round(words / 200));
+  return mins + ' min de lecture';
+}
+
+/* ============ NORMALIZE SECTIONS ============ */
+function normalizeSections(sections) {
+  if (!sections || !Array.isArray(sections)) return [];
+  var normalized = [];
+  sections.forEach(function(block) {
+    // Old format: {heading:"...", html:"..."} without type
+    if (!block.type && block.heading) {
+      normalized.push({ type: 'heading', level: 'h2', text: block.heading });
+      if (block.html) {
+        normalized.push({ type: 'paragraph', html: block.html });
+      }
+      return;
+    }
+    normalized.push(block);
+  });
+  return normalized;
+}
+
+/* ============ GENERATE TOC ============ */
+function generateToc(sections) {
+  var toc = [];
+  var idCounter = 0;
+  sections.forEach(function(block) {
+    if (block.type === 'heading' && block.level === 'h2' && block.text) {
+      idCounter++;
+      var id = 'section-' + idCounter;
+      block._tocId = id;
+      toc.push({ id: id, text: block.text });
+    }
+  });
+  return toc;
+}
+
+/* ============ RENDER BLOCKS ============ */
+function renderBlock(block) {
+  switch(block.type) {
+    case 'heading':
+      var tag = block.level === 'h3' ? 'h3' : 'h2';
+      var idAttr = block._tocId ? ' id="' + block._tocId + '"' : '';
+      return '<' + tag + idAttr + '>' + escapeHtml(block.text || '') + '</' + tag + '>';
+
+    case 'paragraph':
+      return '<div class="article-p">' + (block.html || '') + '</div>';
+
+    case 'callout':
+      var variant = block.variant || 'info';
+      return '<div class="article-callout callout-' + variant + '">' + (block.html || '') + '</div>';
+
+    case 'list':
+      if (block.style === 'numbered') {
+        var items = (block.items || []).map(function(item) {
+          return '<li>' + item + '</li>';
+        }).join('');
+        return '<ol class="article-list numbered-list">' + items + '</ol>';
+      } else {
+        var items = (block.items || []).map(function(item) {
+          return '<li>' + item + '</li>';
+        }).join('');
+        return '<ul class="article-list bullet-list">' + items + '</ul>';
+      }
+
+    case 'table':
+      var thRow = (block.headers || []).map(function(h) {
+        return '<th>' + escapeHtml(h) + '</th>';
+      }).join('');
+      var tbRows = (block.rows || []).map(function(row) {
+        var cells = (Array.isArray(row) ? row : []).map(function(cell) {
+          return '<td>' + escapeHtml(String(cell)) + '</td>';
+        }).join('');
+        return '<tr>' + cells + '</tr>';
+      }).join('');
+      return '<div class="article-table-wrapper"><table class="article-table"><thead><tr>' + thRow + '</tr></thead><tbody>' + tbRows + '</tbody></table></div>';
+
+    case 'faq':
+      var faqItems = (block.items || []).map(function(item) {
+        return '<details><summary>' + escapeHtml(item.question || '') + '</summary><div class="faq-answer">' + (item.answer || '') + '</div></details>';
+      }).join('');
+      return '<div class="article-faq">' + faqItems + '</div>';
+
+    case 'image':
+      var caption = block.caption ? '<figcaption>' + escapeHtml(block.caption) + '</figcaption>' : '';
+      return '<figure class="article-figure"><img src="' + escapeAttr(block.src || '') + '" alt="' + escapeAttr(block.alt || '') + '" loading="lazy">' + caption + '</figure>';
+
+    case 'grid':
+      var cols = block.columns === 3 ? 'cols-3' : 'cols-2';
+      var gridItems = (block.items || []).map(function(item) {
+        return '<div class="article-grid-card"><h4>' + escapeHtml(item.title || '') + '</h4><p>' + escapeHtml(item.description || '') + '</p></div>';
+      }).join('');
+      return '<div class="article-grid ' + cols + '">' + gridItems + '</div>';
+
+    case 'stats-grid':
+      var statItems = (block.items || []).map(function(item) {
+        return '<div class="article-stat-box"><div class="stat-value">' + escapeHtml(item.value || '') + '</div><div class="stat-label">' + escapeHtml(item.label || '') + '</div></div>';
+      }).join('');
+      return '<div class="article-stats-grid">' + statItems + '</div>';
+
+    case 'link-card':
+      return '<a href="' + escapeAttr(block.href || '#') + '" class="article-link-card"><div class="lc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></div><div class="lc-text"><h4>' + escapeHtml(block.title || '') + '</h4><p>' + escapeHtml(block.description || '') + '</p></div></a>';
+
+    default:
+      // Unknown block type; try to render html if available
+      if (block.html) return '<div class="article-p">' + block.html + '</div>';
+      return '';
+  }
+}
+
+function escapeHtml(str) {
+  var div = document.createElement('div');
+  div.appendChild(document.createTextNode(str));
+  return div.innerHTML;
+}
+
+function escapeAttr(str) {
+  return String(str).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/'/g,'&#39;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+/* ============ RENDER RELATED ARTICLES ============ */
+function renderRelatedCard(article) {
+  var slug = (article.page_slug || '').replace(/^articles\//, '');
+  var href = '/blog/' + slug;
+  var title = article.title || 'Article';
+  var desc = article.meta_description || '';
+  if (desc.length > 100) desc = desc.substring(0, 100) + '...';
+
+  return '<a href="' + escapeAttr(href) + '" class="related-card">' +
+    '<div class="related-card-img"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>' +
+    '<div class="related-card-body"><h3>' + escapeHtml(title) + '</h3><p>' + escapeHtml(desc) + '</p><span class="read-more">Lire l\'article &rarr;</span></div></a>';
+}
+
+/* ============ SET JSON-LD ============ */
+function setJsonLd(article, slug) {
+  var sections = article.sections;
+  if (typeof sections === 'string') {
+    try { sections = JSON.parse(sections); } catch(e) { sections = []; }
+  }
+  var normalized = normalizeSections(sections || []);
+
+  // Build article body text for wordCount
+  var bodyText = '';
+  normalized.forEach(function(b) {
+    if (b.text) bodyText += b.text + ' ';
+    if (b.html) bodyText += b.html.replace(/<[^>]*>/g, '') + ' ';
+  });
+  var wordCount = bodyText.split(/\s+/).filter(Boolean).length;
+
+  var jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": article.title || '',
+    "description": article.meta_description || '',
+    "url": "https://prepamedecine.fr/blog/" + slug,
+    "datePublished": article.created_at || '',
+    "dateModified": article.updated_at || article.created_at || '',
+    "wordCount": wordCount,
+    "publisher": {
+      "@type": "Organization",
+      "name": "PrepaMedecine.fr",
+      "url": "https://prepamedecine.fr",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://prepamedecine.fr/favicon.png"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://prepamedecine.fr/blog/" + slug
+    },
+    "image": "https://prepamedecine.fr/og-image.svg"
+  };
+
+  // Add FAQ schema if there are FAQ blocks
+  var faqBlocks = normalized.filter(function(b) { return b.type === 'faq'; });
+  if (faqBlocks.length > 0) {
+    var faqEntities = [];
+    faqBlocks.forEach(function(faqBlock) {
+      (faqBlock.items || []).forEach(function(item) {
+        faqEntities.push({
+          "@type": "Question",
+          "name": item.question || '',
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": (item.answer || '').replace(/<[^>]*>/g, '')
+          }
+        });
+      });
+    });
+    if (faqEntities.length > 0) {
+      jsonLd["@type"] = ["Article", "FAQPage"];
+      jsonLd["mainEntity"] = faqEntities;
+    }
+  }
+
+  document.getElementById('jsonLdScript').textContent = JSON.stringify(jsonLd);
+}
+
+/* ============ TOC SCROLL SPY ============ */
+function initScrollSpy() {
+  var tocLinks = document.querySelectorAll('.toc-list a');
+  if (tocLinks.length === 0) return;
+
+  var headings = [];
+  tocLinks.forEach(function(link) {
+    var targetId = link.getAttribute('href').replace('#', '');
+    var el = document.getElementById(targetId);
+    if (el) headings.push({ el: el, link: link });
+  });
+
+  function onScroll() {
+    var scrollY = window.scrollY + 100;
+    var current = null;
+    headings.forEach(function(h) {
+      if (h.el.offsetTop <= scrollY) current = h;
+    });
+    tocLinks.forEach(function(l) { l.classList.remove('active'); });
+    if (current) current.link.classList.add('active');
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+}
+
+/* ============ MAIN INIT ============ */
+(async function() {
+  var slug = getSlug();
+  if (!slug) {
+    showError();
+    return;
+  }
+
+  var pageSlug = 'articles/' + slug;
+
+  try {
+    var { data, error } = await sb
+      .from('page_content')
+      .select('*')
+      .eq('page_slug', pageSlug)
+      .single();
+
+    if (error || !data) {
+      showError();
+      return;
+    }
+
+    renderArticle(data, slug);
+    loadRelatedArticles(pageSlug);
+
+  } catch(e) {
+    console.error('Error loading article:', e);
+    showError();
+  }
+})();
+
+function showError() {
+  document.getElementById('loadingState').style.display = 'none';
+  document.getElementById('errorState').style.display = 'flex';
+  document.title = 'Article introuvable | PrepaMedecine.fr';
+}
+
+function renderArticle(article, slug) {
+  // Parse sections
+  var sections = article.sections;
+  if (typeof sections === 'string') {
+    try { sections = JSON.parse(sections); } catch(e) { sections = []; }
+  }
+  var normalized = normalizeSections(sections || []);
+
+  // Set page title and meta
+  var title = article.title || 'Article';
+  document.title = title + ' | PrepaMedecine.fr';
+  document.getElementById('pageTitle').textContent = title + ' | PrepaMedecine.fr';
+  document.getElementById('metaDesc').content = article.meta_description || '';
+  document.getElementById('canonical').href = 'https://prepamedecine.fr/blog/' + slug;
+  document.getElementById('ogUrl').content = 'https://prepamedecine.fr/blog/' + slug;
+  document.getElementById('ogTitle').content = title;
+  document.getElementById('ogDesc').content = article.meta_description || '';
+  document.getElementById('twTitle').content = title;
+  document.getElementById('twDesc').content = article.meta_description || '';
+
+  // Breadcrumb
+  document.getElementById('breadcrumbTitle').textContent = title;
+  document.getElementById('breadcrumbsContainer').style.display = 'block';
+
+  // Hero
+  document.getElementById('articleTitle').textContent = title;
+  document.getElementById('dateText').textContent = formatDate(article.created_at);
+  document.getElementById('readTimeText').textContent = estimateReadTime(normalized);
+  var excerpt = article.meta_description || '';
+  if (excerpt) {
+    document.getElementById('articleExcerpt').textContent = excerpt;
+  } else {
+    document.getElementById('articleExcerpt').style.display = 'none';
+  }
+  document.getElementById('articleHero').style.display = 'block';
+
+  // Generate TOC
+  var toc = generateToc(normalized);
+  var tocList = document.getElementById('tocList');
+  if (toc.length > 0) {
+    toc.forEach(function(item) {
+      var li = document.createElement('li');
+      var a = document.createElement('a');
+      a.href = '#' + item.id;
+      a.textContent = item.text;
+      a.addEventListener('click', function(e) {
+        e.preventDefault();
+        var target = document.getElementById(item.id);
+        if (target) {
+          var offset = target.getBoundingClientRect().top + window.scrollY - 90;
+          window.scrollTo({ top: offset, behavior: 'smooth' });
+        }
+      });
+      li.appendChild(a);
+      tocList.appendChild(li);
+    });
+  } else {
+    document.getElementById('tocNav').style.display = 'none';
+  }
+
+  // Render content blocks
+  var contentHtml = '';
+  normalized.forEach(function(block) {
+    contentHtml += renderBlock(block);
+  });
+  document.getElementById('articleContent').innerHTML = contentHtml;
+
+  // JSON-LD
+  setJsonLd(article, slug);
+
+  // Show content, hide loading
+  document.getElementById('loadingState').style.display = 'none';
+  document.getElementById('articleLayout').style.display = 'flex';
+
+  // Init scroll spy
+  initScrollSpy();
+}
+
+async function loadRelatedArticles(currentSlug) {
+  try {
+    var { data, error } = await sb
+      .from('page_content')
+      .select('title, page_slug, meta_description, created_at')
+      .like('page_slug', 'articles/%')
+      .neq('page_slug', currentSlug)
+      .eq('status', 'published')
+      .limit(20);
+
+    if (error || !data || data.length === 0) return;
+
+    // Shuffle and pick 3
+    var shuffled = data.sort(function() { return 0.5 - Math.random(); });
+    var related = shuffled.slice(0, 3);
+
+    var grid = document.getElementById('relatedGrid');
+    var html = '';
+    related.forEach(function(article) {
+      html += renderRelatedCard(article);
+    });
+    grid.innerHTML = html;
+    document.getElementById('relatedSection').style.display = 'block';
+
+  } catch(e) {
+    console.error('Error loading related articles:', e);
+  }
+}
+</script>
+</body>
+</html>

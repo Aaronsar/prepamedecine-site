@@ -167,9 +167,9 @@ function getPageLiveUrl(slug,type){
   if(type==='faculte'||slug.startsWith('facultes/')){
     return null; // no matching static page
   }
-  // Article pages: articles/xxx → no static page (content in DB only)
+  // Article pages: articles/xxx → /blog/xxx
   if(slug.startsWith('articles/')){
-    return null;
+    return'/blog/'+slug.replace('articles/','');
   }
   // Fallback: try direct slug
   return'/'+slug;

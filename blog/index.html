@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog PrepaMedecine.fr - Guides et Conseils Etudes de Sante</title>
+<meta name="description" content="Retrouve tous nos articles, guides et conseils pour reussir tes etudes de sante : PASS, LAS, prepas medecine, orientation et bien plus.">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+<link rel="apple-touch-icon" href="/favicon.png">
+<link rel="canonical" href="https://prepamedecine.fr/blog/">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="Blog PrepaMedecine.fr - Guides et Conseils Etudes de Sante">
+<meta property="og:description" content="Retrouve tous nos articles, guides et conseils pour reussir tes etudes de sante.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://prepamedecine.fr/og-image.svg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://prepamedecine.fr/og-image.svg">
+<meta property="og:url" content="https://prepamedecine.fr/blog/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;color:#334155;background:#fff;line-height:1.7;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+ul{list-style:none}
+button{cursor:pointer;border:none;background:none;font-family:inherit}
+
+:root{
+  --blue:#046bd2;--blue-dark:#0353a4;--blue-light:#e8f2fc;--blue-50:#f0f7ff;
+  --green:#10b981;--green-light:#ecfdf5;
+  --orange:#f59e0b;--red:#ef4444;
+  --bg:#ffffff;--bg-alt:#f8fafc;--bg-card:#ffffff;
+  --text:#0f172a;--text-body:#334155;--text-muted:#64748b;--text-light:#94a3b8;
+  --border:#e2e8f0;--border-light:#f1f5f9;
+  --radius:12px;--radius-lg:16px;--radius-sm:8px;
+  --shadow:0 1px 3px rgba(0,0,0,0.06),0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md:0 4px 12px rgba(0,0,0,0.07),0 2px 4px rgba(0,0,0,0.04);
+  --shadow-lg:0 10px 30px rgba(0,0,0,0.08),0 4px 8px rgba(0,0,0,0.04);
+  --max-w:1200px;
+  --nav-h:72px;
+}
+
+.container{max-width:var(--max-w);margin:0 auto;padding:0 24px}
+
+/* NAV */
+.nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);height:var(--nav-h)}
+.nav .container{display:flex;align-items:center;justify-content:space-between;height:100%}
+.nav-logo{font-family:'Nunito',sans-serif;font-weight:900;font-size:21px;letter-spacing:-0.4px;display:flex;align-items:center;gap:10px;text-decoration:none!important}
+.nav-logo .logo-text{display:flex;align-items:baseline;gap:0}
+.nav-logo .logo-text em{font-style:normal;color:#046bd2}
+.nav-logo .logo-text span{font-weight:800;color:#1e293b}
+.nav-logo .logo-text .logo-dot{color:#046bd2;font-weight:900}
+.nav-logo .logo-text .logo-tld{font-weight:700;font-size:15px;color:#94a3b8;margin-left:1px}
+.nav-links{display:flex;align-items:center;gap:32px}
+.nav-links a{font-size:15px;font-weight:500;color:var(--text-body);transition:color .2s}
+.nav-links a:hover{color:var(--blue)}
+.nav-links a.nav-cta{background:var(--blue);color:#fff;padding:10px 22px;border-radius:var(--radius-sm);font-size:14px;font-weight:600;transition:background .2s,transform .15s}
+.nav-links a.nav-cta:hover{background:var(--blue-dark);transform:translateY(-1px);color:#fff}
+.nav-burger{display:none;flex-direction:column;gap:5px;padding:8px}
+.nav-burger span{display:block;width:22px;height:2px;background:var(--text);border-radius:2px;transition:transform .2s}
+@media(max-width:768px){
+  .nav-links{position:fixed;top:0;right:0;bottom:0;width:min(300px,85vw);background:#fff;overflow-y:auto;flex-direction:column;padding:calc(var(--nav-h) + 16px) 24px 24px;gap:16px;box-shadow:-4px 0 28px rgba(0,0,0,.15);transform:translateX(100%);visibility:hidden;transition:transform .3s,visibility .3s;z-index:999}
+  .nav-links.open{transform:translateX(0);visibility:visible}
+  .nav{backdrop-filter:none!important}
+  .nav-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:998;cursor:pointer;backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px)}.nav-overlay.open{display:block}
+  .nav-links{border-left:1px solid var(--border,#e2e8f0)}
+  .nav-close{display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:var(--bg-alt,#f8fafc);border:1px solid var(--border,#e2e8f0)!important;cursor:pointer;align-self:flex-end;margin-bottom:16px;font-size:18px;color:var(--text,#1e293b);transition:background .2s}
+  .nav-close:hover{background:var(--border,#e2e8f0)}
+  .nav-links a{display:flex;align-items:center;padding:12px 8px;border-radius:10px;font-size:16px;font-weight:500;color:var(--text,#1e293b);transition:background .15s,color .15s;text-decoration:none!important}
+  .nav-links a:hover,.nav-links a.active{background:var(--blue-light,#eff6ff);color:var(--blue,#0284c7)}
+  .nav-links a.nav-cta{background:var(--blue,#0284c7)!important;color:#fff!important;justify-content:center;padding:14px;border-radius:12px;font-weight:700;margin-top:8px}
+  .nav-links a.nav-cta:hover{background:var(--blue-dark,#0369a1)!important}
+  .nav-burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .nav-burger.open span:nth-child(2){opacity:0}
+  .nav-burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+  .nav-links a{font-size:17px;padding:8px 0}
+  .nav-burger{display:flex}
+}
+
+/* BREADCRUMBS */
+.breadcrumbs{padding:16px 0;font-size:13px;color:var(--text-muted)}
+.breadcrumbs a{color:var(--blue);text-decoration:underline;text-underline-offset:2px}
+.breadcrumbs a:hover{color:var(--blue-dark)}
+.breadcrumbs span{margin:0 8px;color:var(--text-light)}
+
+/* HERO */
+.page-hero{padding:60px 0 50px;background:linear-gradient(180deg,var(--blue-50) 0%,#fff 100%);position:relative;overflow:hidden}
+.page-hero::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cpath d='M25 15h10v10h10v10H35v10H25V35H15V25h10z' fill='%23046bd2' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none}
+.page-hero .container{position:relative;z-index:1}
+.page-hero h1{font-size:clamp(28px,4.5vw,46px);font-weight:800;color:var(--text);letter-spacing:-1px;line-height:1.15;margin-bottom:16px}
+.page-hero h1 em{font-style:normal;color:var(--blue)}
+.page-hero .hero-sub{font-size:clamp(16px,2vw,19px);color:var(--text-muted);max-width:680px;line-height:1.7;margin-bottom:0}
+
+/* CATEGORY FILTERS */
+.filter-bar{padding:32px 0 8px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.filter-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 18px;border-radius:20px;font-size:14px;font-weight:600;background:var(--bg-card);color:var(--text-muted);border:1px solid var(--border);cursor:pointer;transition:all .2s;white-space:nowrap}
+.filter-btn:hover{border-color:var(--blue);color:var(--blue)}
+.filter-btn.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+
+/* ARTICLE GRID */
+.blog-section{padding:24px 0 80px}
+.blog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+@media(max-width:960px){.blog-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.blog-grid{grid-template-columns:1fr}}
+
+/* ARTICLE CARD */
+.blog-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;display:flex;flex-direction:column;transition:border-color .2s,box-shadow .2s,transform .2s}
+.blog-card:hover{border-color:var(--blue);box-shadow:var(--shadow-md);transform:translateY(-3px)}
+.blog-card-body{padding:24px 24px 16px;flex:1;display:flex;flex-direction:column}
+.blog-card-tag{display:inline-block;font-size:12px;font-weight:700;padding:4px 12px;border-radius:20px;color:#fff;margin-bottom:12px;width:fit-content}
+.blog-card-title{font-size:17px;font-weight:700;color:var(--text);line-height:1.4;margin-bottom:10px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.blog-card-excerpt{font-size:14px;color:var(--text-muted);line-height:1.65;margin-bottom:16px;flex:1;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.blog-card-footer{padding:16px 24px;border-top:1px solid var(--border-light);display:flex;align-items:center;justify-content:space-between}
+.blog-card-date{font-size:13px;color:var(--text-light);font-weight:500}
+.blog-card-link{font-size:14px;font-weight:600;color:var(--blue);transition:color .2s}
+.blog-card-link:hover{color:var(--blue-dark)}
+
+/* LOADING & EMPTY */
+.blog-loading{grid-column:1/-1;text-align:center;padding:80px 20px;color:var(--text-muted)}
+.blog-loading .spinner{width:40px;height:40px;border:3px solid var(--border);border-top-color:var(--blue);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 16px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.blog-empty{grid-column:1/-1;text-align:center;padding:80px 20px}
+.blog-empty svg{margin:0 auto 16px;color:var(--text-light)}
+.blog-empty h3{font-size:18px;font-weight:700;color:var(--text);margin-bottom:8px}
+.blog-empty p{font-size:15px;color:var(--text-muted)}
+
+/* FOOTER */
+.footer{background:var(--text);color:#fff;padding:48px 0 24px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:40px}
+.footer-brand{font-family:'Nunito',sans-serif;font-weight:900;font-size:18px;display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.footer p{font-size:14px;color:#94a3b8;line-height:1.6}
+.footer h4{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:16px;color:#e2e8f0}
+.footer a{font-size:14px;color:#94a3b8;display:block;margin-bottom:10px;transition:color .2s}
+.footer a:hover{color:#fff}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.1);padding-top:24px;text-align:center;font-size:13px;color:#64748b}
+.footer-cta-section{text-align:center;padding:32px 0;border-bottom:1px solid rgba(255,255,255,0.1);margin-bottom:24px}
+.footer-cta-section p{font-size:18px;font-weight:700;margin-bottom:12px;color:#fff}
+.footer-cta-btn{display:inline-flex;align-items:center;gap:8px;background:var(--blue);color:#fff;padding:14px 28px;border-radius:var(--radius-sm);font-size:15px;font-weight:700;transition:background .2s;text-decoration:none}
+.footer-cta-btn:hover{background:var(--blue-dark)}
+@media(max-width:768px){.footer-grid{grid-template-columns:1fr 1fr;gap:24px}}
+@media(max-width:480px){.footer-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="container">
+    <a href="/" class="nav-logo"><svg width="34" height="34" viewBox="0 0 40 40" fill="none"><defs><linearGradient id="logoGrad" x1="0" y1="0" x2="40" y2="40"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#046bd2"/></linearGradient></defs><rect x="1" y="1" width="38" height="38" rx="12" fill="url(#logoGrad)"/><path d="M11 27c0-1.5 1-2.5 2.5-2.5H20v-9.5" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M29 27c0-1.5-1-2.5-2.5-2.5H20v-9.5" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M13.5 24.5V16.5c0-.8.4-1.2 1.2-1.2H20" stroke="#fff" stroke-width="1.6" stroke-linecap="round" fill="none" opacity=".5"/><path d="M26.5 24.5V16.5c0-.8-.4-1.2-1.2-1.2H20" stroke="#fff" stroke-width="1.6" stroke-linecap="round" fill="none" opacity=".5"/><circle cx="30" cy="11" r="4" fill="#046bd2" stroke="#fff" stroke-width="1.6"/><path d="M28.8 11h2.4M30 9.8v2.4" stroke="#fff" stroke-width="1.2" stroke-linecap="round"/></svg><div class="logo-text"><em>prepa</em><span>medecine</span><span class="logo-dot">.</span><span class="logo-tld">fr</span></div></a>
+    <div class="nav-overlay" id="navOverlay"></div>
+    <div class="nav-links" id="navLinks">
+  <button class="nav-close" id="navClose" aria-label="Fermer">&#10005;</button>
+  <a href="/">Accueil</a>
+  <a href="/#prepas">Comparer les prepas</a>
+  <a href="/blog">Blog</a>
+  <a href="/#faq">FAQ</a>
+  <a href="/#prepas" class="nav-cta">Trouver ma prepa</a>
+</div>
+    <button class="nav-burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<section class="page-hero">
+  <div class="container">
+    <nav class="breadcrumbs"><a href="/">Accueil</a><span>&rsaquo;</span>Blog</nav>
+    <h1>Blog <em>PrepaMedecine</em></h1>
+    <p class="hero-sub">Guides, conseils et astuces pour reussir tes etudes de sante.</p>
+  </div>
+</section>
+
+<section class="blog-section">
+  <div class="container">
+    <div class="filter-bar" id="filterBar">
+      <button class="filter-btn active" data-cat="all">Tous</button>
+    </div>
+    <div class="blog-grid" id="blogGrid">
+      <div class="blog-loading"><div class="spinner"></div><p>Chargement des articles...</p></div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand"><svg width="28" height="28" viewBox="0 0 40 40" fill="none"><defs><linearGradient id="logoGradF" x1="0" y1="0" x2="40" y2="40"><stop offset="0%" stop-color="#0284c7"/><stop offset="100%" stop-color="#046bd2"/></linearGradient></defs><rect x="1" y="1" width="38" height="38" rx="12" fill="url(#logoGradF)"/><path d="M11 27c0-1.5 1-2.5 2.5-2.5H20v-9.5" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M29 27c0-1.5-1-2.5-2.5-2.5H20v-9.5" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M13.5 24.5V16.5c0-.8.4-1.2 1.2-1.2H20" stroke="#fff" stroke-width="1.6" stroke-linecap="round" fill="none" opacity=".5"/><path d="M26.5 24.5V16.5c0-.8-.4-1.2-1.2-1.2H20" stroke="#fff" stroke-width="1.6" stroke-linecap="round" fill="none" opacity=".5"/><circle cx="30" cy="11" r="4" fill="#046bd2" stroke="#fff" stroke-width="1.6"/><path d="M28.8 11h2.4M30 9.8v2.4" stroke="#fff" stroke-width="1.2" stroke-linecap="round"/></svg><span><em style="color:#046bd2;font-style:normal">prepa</em><span style="color:#fff">medecine</span><span style="color:#046bd2;font-weight:900">.</span><span style="color:#94a3b8;font-size:14px;font-weight:700">fr</span></span></div>
+        <p>La plateforme qui compare les meilleures prepas sante en France pour t'aider a choisir celle qui correspond a ton profil.</p>
+      </div>
+      <div>
+        <h4>Navigation</h4>
+        <a href="/">Accueil</a>
+        <a href="/#prepas">Prepas</a>
+        <a href="/blog">Blog</a>
+        <a href="/#faq">FAQ</a>
+      </div>
+      <div>
+        <h4>Ressources</h4>
+        <a href="/prepa-pass-prix/">Prix des prepas</a>
+        <a href="/pass-medecine/">PASS Medecine</a>
+        <a href="/las-medecine/">LAS Medecine</a>
+        <a href="/comment-devenir-medecin/">Devenir medecin</a>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <a href="mailto:contact@prepamedecine.fr">contact@prepamedecine.fr</a>
+        <a href="#">Mentions legales</a>
+        <a href="#">Politique de confidentialite</a>
+      </div>
+    </div>
+    <div class="footer-cta-section">
+      <p>Besoin d'aide pour choisir ta prepa ?</p>
+      <a href="/#prepas" class="footer-cta-btn">Etre rappele gratuitement &rarr;</a>
+    </div>
+    <div class="footer-bottom">&copy; 2025 PrepaMedecine.fr - Tous droits reserves</div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+(function(){
+  /* ---- Mobile nav ---- */
+  var overlay = document.getElementById('navOverlay');
+  var drawer  = document.getElementById('navLinks');
+  var burger  = document.getElementById('burger');
+  var btnClose= document.getElementById('navClose');
+  if(overlay) document.body.appendChild(overlay);
+  if(drawer)  document.body.appendChild(drawer);
+
+  function openNav(){
+    if(drawer)  drawer.classList.add('open');
+    if(overlay) overlay.classList.add('open');
+    document.body.style.overflow='hidden';
+    if(burger)  burger.classList.add('open');
+  }
+  function closeNav(){
+    if(drawer)  drawer.classList.remove('open');
+    if(overlay) overlay.classList.remove('open');
+    document.body.style.overflow='';
+    if(burger)  burger.classList.remove('open');
+  }
+
+  if(burger)   burger.onclick  = function(){ drawer && drawer.classList.contains('open') ? closeNav() : openNav(); };
+  if(overlay)  overlay.onclick = closeNav;
+  if(btnClose) btnClose.onclick= closeNav;
+  if(drawer)   drawer.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', closeNav); });
+
+  /* ---- Tag colors ---- */
+  var TAG_COLORS = {
+    'Guide':'#046bd2',
+    'PASS':'#059669',
+    'LAS':'#7c3aed',
+    'Prepas':'#ec4899',
+    'Villes':'#f59e0b',
+    'Actualites':'#ef4444'
+  };
+
+  /* ---- Supabase init ---- */
+  var sb = window.supabase.createClient(
+    'https://jhopwqpbaiyjfoggvcaf.supabase.co',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impob3B3cXBiYWl5amZvZ2d2Y2FmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMwNTI2OTEsImV4cCI6MjA4ODYyODY5MX0.rz3TJZryPxEf3P5kQgpzQkwN9aF8_F4eo4F03CEYVPs'
+  );
+
+  var allArticles = [];
+  var activeFilter = 'all';
+
+  /* ---- Load articles ---- */
+  async function loadArticles(){
+    try {
+      var res = await sb
+        .from('page_content')
+        .select('id, page_slug, title, meta_description, category, updated_at, published')
+        .eq('page_type', 'article')
+        .eq('published', true)
+        .order('updated_at', { ascending: false });
+
+      if(res.error) throw res.error;
+      allArticles = res.data || [];
+      buildFilters();
+      renderGrid();
+    } catch(err){
+      console.error('Erreur chargement articles:', err);
+      document.getElementById('blogGrid').innerHTML =
+        '<div class="blog-empty"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>' +
+        '<h3>Erreur de chargement</h3><p>Impossible de charger les articles. Veuillez reessayer plus tard.</p></div>';
+    }
+  }
+
+  /* ---- Build category filter buttons ---- */
+  function buildFilters(){
+    var cats = {};
+    allArticles.forEach(function(a){
+      var t = a.category || 'Autre';
+      cats[t] = (cats[t]||0) + 1;
+    });
+
+    var bar = document.getElementById('filterBar');
+    bar.innerHTML = '<button class="filter-btn active" data-cat="all">Tous (' + allArticles.length + ')</button>';
+
+    var sortedCats = Object.keys(cats).sort(function(a,b){ return cats[b] - cats[a]; });
+    sortedCats.forEach(function(cat){
+      var btn = document.createElement('button');
+      btn.className = 'filter-btn';
+      btn.setAttribute('data-cat', cat);
+      btn.textContent = cat + ' (' + cats[cat] + ')';
+      bar.appendChild(btn);
+    });
+
+    bar.addEventListener('click', function(e){
+      var btn = e.target.closest('.filter-btn');
+      if(!btn) return;
+      bar.querySelectorAll('.filter-btn').forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      activeFilter = btn.getAttribute('data-cat');
+      renderGrid();
+    });
+  }
+
+  /* ---- Render article cards ---- */
+  function renderGrid(){
+    var grid = document.getElementById('blogGrid');
+    var filtered = activeFilter === 'all'
+      ? allArticles
+      : allArticles.filter(function(a){ return (a.category||'Autre') === activeFilter; });
+
+    if(filtered.length === 0){
+      grid.innerHTML =
+        '<div class="blog-empty"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 12h6M12 9v6"/><circle cx="12" cy="12" r="10"/></svg>' +
+        '<h3>Aucun article trouve</h3><p>Aucun article ne correspond a ce filtre pour le moment.</p></div>';
+      return;
+    }
+
+    grid.innerHTML = filtered.map(function(article){
+      var tag = article.category || 'Guide';
+      var tagColor = TAG_COLORS[tag] || '#6b7280';
+      var title = escHtml(article.title || 'Sans titre');
+      var excerpt = escHtml(truncate(article.meta_description || '', 140));
+      var date = formatDate(article.updated_at);
+      var slug = (article.page_slug || '').replace(/^articles\//, '');
+      var href = '/blog/' + slug;
+
+      return '<a href="' + href + '" class="blog-card">' +
+        '<div class="blog-card-body">' +
+          '<span class="blog-card-tag" style="background:' + tagColor + '">' + escHtml(tag) + '</span>' +
+          '<h2 class="blog-card-title">' + title + '</h2>' +
+          '<p class="blog-card-excerpt">' + excerpt + '</p>' +
+        '</div>' +
+        '<div class="blog-card-footer">' +
+          '<span class="blog-card-date">' + date + '</span>' +
+          '<span class="blog-card-link">Lire l\'article &rarr;</span>' +
+        '</div>' +
+      '</a>';
+    }).join('');
+  }
+
+  /* ---- Helpers ---- */
+  function truncate(str, max){
+    if(!str) return '';
+    if(str.length <= max) return str;
+    return str.substring(0, max).replace(/\s+\S*$/, '') + '...';
+  }
+
+  function formatDate(dateStr){
+    if(!dateStr) return '';
+    try {
+      var d = new Date(dateStr);
+      return d.toLocaleDateString('fr-FR', { day:'numeric', month:'long', year:'numeric' });
+    } catch(e){ return ''; }
+  }
+
+  function escHtml(str){
+    if(!str) return '';
+    var div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  /* ---- Init ---- */
+  loadArticles();
+})();
+</script>
+</body>
+</html>
