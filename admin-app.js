@@ -699,6 +699,7 @@ function renderArticleEditor(){
   html+='<div class="admin-editor-header"><h2>'+esc(d.title||'Nouvel article')+'</h2>';
   html+='<button class="btn-back" onclick="navigate(\'articles\')">&larr; Retour</button>';
   html+='<button class="btn-preview" onclick="showArticlePreview()">&#128065; Preview</button>';
+  if(d.slug)html+='<a href="/blog/'+escAttr(d.slug)+'" target="_blank" class="btn-secondary" style="text-decoration:none">&#128279; Voir sur le site</a>';
   html+='<button class="btn-ai-regen" onclick="regenerateArticle()">&#129302; Regenerer IA</button>';
   html+='</div>';
 
@@ -1030,7 +1031,9 @@ function renderPrepaEditor(){
   var html='<div class="admin-editor">';
   html+='<div class="admin-editor-breadcrumb"><a href="javascript:void(0)" onclick="navigate(\'dashboard\')">Tableau de bord</a> &rsaquo; <a href="javascript:void(0)" onclick="navigate(\'prepas\')">Prepas</a> &rsaquo; '+esc(d.name||'Nouvelle prepa')+'</div>';
   html+='<div class="admin-editor-header"><h2>'+esc(d.name||'Nouvelle prepa')+'</h2>';
-  html+='<button class="btn-back" onclick="navigate(\'prepas\')">&larr; Retour</button></div>';
+  html+='<button class="btn-back" onclick="navigate(\'prepas\')">&larr; Retour</button>';
+  if(d.slug)html+='<a href="/prepa/'+escAttr(d.slug)+'" target="_blank" class="btn-preview" style="text-decoration:none">&#128065; Voir la fiche</a>';
+  html+='</div>';
   html+='<div class="admin-editor-layout"><div class="admin-editor-content">';
 
   // General
@@ -1227,7 +1230,9 @@ function renderPageEditor(){
   var html='<div class="admin-editor">';
   html+='<div class="admin-editor-breadcrumb"><a href="javascript:void(0)" onclick="navigate(\'dashboard\')">Tableau de bord</a> &rsaquo; <a href="javascript:void(0)" onclick="navigate(\'pages\')">Pages</a> &rsaquo; '+esc(d.page_slug||'')+'</div>';
   html+='<div class="admin-editor-header"><h2>'+esc(d.title||d.page_slug||'Page')+'</h2>';
-  html+='<button class="btn-back" onclick="navigate(\'pages\')">&larr; Retour</button></div>';
+  html+='<button class="btn-back" onclick="navigate(\'pages\')">&larr; Retour</button>';
+  html+='<a href="/'+escAttr(d.page_slug||'')+'" target="_blank" class="btn-preview" style="text-decoration:none">&#128065; Voir la page</a>';
+  html+='</div>';
   html+='<div class="admin-editor-layout"><div class="admin-editor-content">';
 
   html+=metaBoxOpen('Informations',false);
