@@ -8,9 +8,9 @@
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--wp-sidebar:#1d2327;--wp-sidebar-hover:#2c3338;--wp-sidebar-active:#046bd2;--wp-topbar:#1d2327;--wp-accent:#046bd2;--wp-accent-hover:#0353a4;--wp-green:#00a32a;--wp-green-hover:#008a20;--wp-red:#d63638;--wp-orange:#dba617;--wp-bg:#f0f0f1;--wp-card:#fff;--wp-border:#c3c4c7;--wp-border-light:#e0e0e0;--wp-text:#1d2327;--wp-text-light:#50575e;--wp-text-lighter:#787c82;--wp-sidebar-w:260px;--wp-topbar-h:46px}
+:root{--wp-sidebar:#1d2327;--wp-sidebar-hover:#2c3338;--wp-sidebar-active:#046bd2;--wp-topbar:#1d2327;--wp-accent:#046bd2;--wp-accent-hover:#0353a4;--wp-green:#00a32a;--wp-green-hover:#008a20;--wp-red:#d63638;--wp-orange:#dba617;--wp-purple:#7c3aed;--wp-bg:#f0f0f1;--wp-card:#fff;--wp-border:#c3c4c7;--wp-border-light:#e0e0e0;--wp-text:#1d2327;--wp-text-light:#50575e;--wp-text-lighter:#787c82;--wp-sidebar-w:260px;--wp-topbar-h:46px}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--wp-bg);color:var(--wp-text);min-height:100vh;font-size:13px}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--wp-bg);color:var(--wp-text);min-height:100vh;font-size:13px;overflow-x:hidden}
 a{color:var(--wp-accent);text-decoration:none}a:hover{color:var(--wp-accent-hover);text-decoration:underline}
 
 /* Login */
@@ -27,8 +27,6 @@ a{color:var(--wp-accent);text-decoration:none}a:hover{color:var(--wp-accent-hove
 
 /* Layout */
 .admin-layout{display:flex;min-height:100vh}
-
-/* Top bar */
 .admin-topbar{position:fixed;top:0;left:0;right:0;height:var(--wp-topbar-h);background:var(--wp-topbar);display:flex;align-items:center;padding:0 16px;z-index:200}
 .admin-topbar-left{display:flex;align-items:center;gap:12px;flex:1}
 .admin-topbar-left span{color:rgba(255,255,255,.7);font-size:13px}
@@ -48,13 +46,7 @@ a{color:var(--wp-accent);text-decoration:none}a:hover{color:var(--wp-accent-hove
 .admin-nav-item.active{background:var(--wp-sidebar-active);color:#fff;border-left-color:#fff}
 .admin-nav-item .nav-icon{width:20px;text-align:center;font-size:16px;opacity:.8}
 .admin-nav-item .nav-count{margin-left:auto;background:rgba(255,255,255,.12);color:rgba(255,255,255,.7);font-size:11px;padding:1px 7px;border-radius:10px}
-.admin-nav-item .nav-chevron{margin-left:6px;font-size:10px;color:rgba(255,255,255,.4);transition:transform .2s;display:inline-block}
-.admin-nav-item .nav-chevron.open{transform:rotate(180deg)}
-.admin-subnav{display:none;background:rgba(0,0,0,.15)}.admin-subnav.open{display:block}
-.admin-subnav-item{display:block;width:100%;padding:7px 16px 7px 46px;border:none;background:none;color:rgba(255,255,255,.55);font-size:13px;cursor:pointer;text-align:left;transition:all .1s;font-family:inherit}
-.admin-subnav-item:hover{color:#fff}.admin-subnav-item.active{color:#fff;font-weight:600}
-
-/* Main */
+.admin-nav-sep{height:1px;background:rgba(255,255,255,.08);margin:6px 16px}
 .admin-main{margin-left:var(--wp-sidebar-w);margin-top:var(--wp-topbar-h);padding:20px;flex:1;min-height:calc(100vh - var(--wp-topbar-h))}
 
 /* Dashboard */
@@ -66,42 +58,45 @@ a{color:var(--wp-accent);text-decoration:none}a:hover{color:var(--wp-accent-hove
 .admin-stat-card:hover{border-color:var(--wp-accent)}
 .admin-stat-card .stat-number{font-size:36px;font-weight:600;color:var(--wp-accent)}.admin-stat-card .stat-label{font-size:13px;color:var(--wp-text-light);margin-top:4px}
 .admin-recent{background:var(--wp-card);border:1px solid var(--wp-border-light);padding:0}
-.admin-recent-header{padding:12px 16px;border-bottom:1px solid var(--wp-border-light);font-size:14px;font-weight:600}
+.admin-recent-header{padding:12px 16px;border-bottom:1px solid var(--wp-border-light);font-size:14px;font-weight:600;display:flex;align-items:center;justify-content:space-between}
 .admin-recent-item{display:flex;align-items:center;padding:10px 16px;border-bottom:1px solid #f0f0f1;font-size:13px;cursor:pointer;transition:background .1s}
 .admin-recent-item:hover{background:#f6f7f7}.admin-recent-item:last-child{border-bottom:none}
 .admin-recent-item .ri-title{flex:1;font-weight:500}.admin-recent-item .ri-cat{font-size:11px;color:var(--wp-text-lighter);background:#f0f0f1;padding:2px 8px;border-radius:3px;margin-left:8px}
 .admin-recent-item .ri-date{color:var(--wp-text-lighter);font-size:12px;margin-left:12px}
+.admin-recent-item .ri-status{margin-left:8px}
 
 /* Page list */
 .admin-page-list{max-width:1100px}
-.admin-page-list-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.admin-page-list-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:8px}
 .admin-page-list-header h2{font-size:22px;font-weight:400}
 .admin-page-list-actions{display:flex;align-items:center;gap:12px}
 .list-count{color:var(--wp-text-lighter);font-size:13px}
-.admin-table{width:100%;background:var(--wp-card);border:1px solid var(--wp-border-light);border-spacing:0}
+.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:4px}
+.admin-table{width:100%;background:var(--wp-card);border:1px solid var(--wp-border-light);border-spacing:0;min-width:600px}
 .admin-table th{background:#f6f7f7;padding:10px 12px;text-align:left;font-size:13px;font-weight:600;border-bottom:1px solid var(--wp-border-light)}
 .admin-table td{padding:10px 12px;font-size:13px;border-bottom:1px solid #f0f0f1;vertical-align:middle}
 .admin-table tr:hover td{background:#f6f7f7}
-.admin-table .page-title-cell{font-weight:600;color:var(--wp-accent);cursor:pointer}
+.admin-table .page-title-cell{font-weight:600;color:var(--wp-accent);cursor:pointer;max-width:300px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .admin-table .page-title-cell:hover{color:var(--wp-accent-hover)}
 .admin-table .status-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px}
-.admin-table .status-dot.published{background:var(--wp-green)}.admin-table .status-dot.draft{background:var(--wp-orange)}
-.admin-table .row-actions{color:var(--wp-text-lighter);font-size:12px}.admin-table .row-actions a{margin-right:8px;font-size:12px}
+.admin-table .status-dot.published{background:var(--wp-green)}.admin-table .status-dot.draft{background:var(--wp-orange)}.admin-table .status-dot.archived{background:var(--wp-text-lighter)}
+.admin-table .row-actions{color:var(--wp-text-lighter);font-size:12px;white-space:nowrap}.admin-table .row-actions a{margin-right:8px;font-size:12px}
 .admin-table .action-delete{color:var(--wp-red)}.admin-table .action-delete:hover{color:#a02022;text-decoration:underline}
 
 /* Score badges */
 .score-badge{display:inline-block;min-width:32px;padding:3px 8px;border-radius:12px;font-size:12px;font-weight:700;text-align:center;line-height:1.4}
 .score-good{background:#dcfce7;color:#166534}.score-mid{background:#fef3c7;color:#92400e}.score-low{background:#fee2e2;color:#991b1b}.score-na{background:#f3f4f6;color:#9ca3af}
+.tag-badge{display:inline-block;padding:2px 8px;border-radius:3px;font-size:11px;font-weight:600;color:#fff}
 
 /* Editor */
-.admin-editor{max-width:860px;animation:adminFade .15s ease}
+.admin-editor{max-width:900px;animation:adminFade .15s ease}
 @keyframes adminFade{from{opacity:0}to{opacity:1}}
 .admin-editor-breadcrumb{font-size:12px;color:var(--wp-text-lighter);margin-bottom:16px}.admin-editor-breadcrumb a{color:var(--wp-accent)}
 .admin-editor-header{display:flex;align-items:center;gap:12px;margin-bottom:20px;flex-wrap:wrap}
-.admin-editor-header h2{font-size:22px;font-weight:400;flex:1}
+.admin-editor-header h2{font-size:22px;font-weight:400;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .btn-back{background:none;border:1px solid var(--wp-border);padding:6px 14px;border-radius:4px;font-size:12px;cursor:pointer;color:var(--wp-text-light);font-family:inherit}
 .btn-back:hover{border-color:var(--wp-text);color:var(--wp-text)}
-.admin-editor-layout{display:grid;grid-template-columns:1fr 280px;gap:20px;align-items:start}
+.admin-editor-layout{display:grid;grid-template-columns:1fr 300px;gap:20px;align-items:start}
 .admin-editor-content{min-width:0}
 .admin-editor-sidebar{position:sticky;top:calc(var(--wp-topbar-h) + 20px)}
 
@@ -127,14 +122,53 @@ a{color:var(--wp-accent);text-decoration:none}a:hover{color:var(--wp-accent-hove
 .admin-field input:focus,.admin-field textarea:focus,.admin-field select:focus{border-color:var(--wp-accent);box-shadow:0 0 0 1px var(--wp-accent)}
 .admin-field textarea{min-height:80px;resize:vertical}
 .admin-field-hint{font-size:11px;color:var(--wp-text-lighter);margin-top:3px}
+.admin-field-row{display:flex;gap:8px}.admin-field-row .admin-field{flex:1}
 
-/* Content section */
-.admin-content-section{background:#fff;border:1px solid var(--wp-border-light);padding:14px;margin-bottom:8px;position:relative}
-.btn-rm-section{position:absolute;top:10px;right:10px;background:none;border:none;color:var(--wp-red);cursor:pointer;font-size:16px}
+/* Block system */
+.block-item{background:#fff;border:1px solid var(--wp-border-light);margin-bottom:8px;position:relative;border-radius:4px}
+.block-header{display:flex;align-items:center;gap:8px;padding:6px 10px;background:#f9fafb;border-bottom:1px solid var(--wp-border-light);border-radius:4px 4px 0 0;font-size:11px}
+.block-type-badge{font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:2px 6px;border-radius:3px;font-size:10px;color:#fff}
+.block-type-badge.heading{background:#3b82f6}.block-type-badge.paragraph{background:#6b7280}.block-type-badge.callout{background:#f59e0b}
+.block-type-badge.list{background:#10b981}.block-type-badge.table{background:#8b5cf6}.block-type-badge.image{background:#ec4899}
+.block-type-badge.grid{background:#06b6d4}.block-type-badge.stats-grid{background:#f97316}.block-type-badge.faq{background:#14b8a6}
+.block-type-badge.link-card{background:#6366f1}
+.block-actions{margin-left:auto;display:flex;gap:2px}
+.block-actions button{background:none;border:none;cursor:pointer;padding:2px 4px;font-size:14px;color:var(--wp-text-lighter);border-radius:3px}
+.block-actions button:hover{background:#e5e7eb;color:var(--wp-text)}
+.block-actions .block-delete:hover{color:var(--wp-red);background:#fee2e2}
+.block-body{padding:10px 12px}
+.block-body .admin-field{margin-bottom:10px}
+.block-body .admin-field:last-child{margin-bottom:0}
 
-/* FAQ */
-.admin-faq-item{background:#fff;border:1px solid var(--wp-border-light);padding:14px;margin-bottom:8px;position:relative}
-.admin-faq-remove{position:absolute;top:10px;right:10px;background:none;border:none;color:var(--wp-red);cursor:pointer;font-size:16px}
+/* Rich text toolbar */
+.rich-toolbar{display:flex;gap:2px;margin-bottom:4px;padding:4px;background:#f9fafb;border:1px solid var(--wp-border-light);border-radius:3px}
+.rich-toolbar button{background:none;border:1px solid transparent;cursor:pointer;padding:3px 8px;font-size:12px;font-weight:700;border-radius:3px;font-family:inherit;color:var(--wp-text-light)}
+.rich-toolbar button:hover{background:#e5e7eb;border-color:var(--wp-border-light)}
+
+/* Add block menu */
+.add-block-menu{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+.add-block-btn{display:inline-flex;align-items:center;gap:4px;padding:5px 10px;border:1px solid var(--wp-border-light);border-radius:4px;background:#fff;color:var(--wp-text-light);font-size:11px;cursor:pointer;font-family:inherit;transition:all .1s}
+.add-block-btn:hover{border-color:var(--wp-accent);color:var(--wp-accent);background:#f0f7ff}
+
+/* Dynamic list items */
+.dyn-item{display:flex;gap:6px;align-items:start;margin-bottom:4px}
+.dyn-item input,.dyn-item textarea{flex:1}
+.dyn-item-rm{background:none;border:none;color:var(--wp-red);cursor:pointer;font-size:14px;padding:4px;flex-shrink:0;margin-top:4px}
+
+/* FAQ items inside blocks */
+.faq-block-item{border:1px solid #e5e7eb;border-radius:4px;padding:8px;margin-bottom:6px;position:relative}
+.faq-block-item .admin-faq-remove{position:absolute;top:6px;right:6px;background:none;border:none;color:var(--wp-red);cursor:pointer;font-size:14px}
+
+/* Score panel */
+.admin-score-panel{background:var(--wp-card);border:1px solid var(--wp-border-light);border-radius:4px;margin-bottom:16px}
+.score-panel-header{padding:10px 14px;background:#f6f7f7;border-bottom:1px solid var(--wp-border-light);font-weight:600;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;user-select:none}
+.score-panel-body{padding:12px}
+.score-summary{display:flex;gap:8px;margin-bottom:12px}
+.score-row{flex:1;display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:#f9fafb;border-radius:6px;font-weight:600;font-size:13px}
+.score-checks{margin-top:10px;border-top:1px solid #f0f0f1;padding-top:8px}
+.score-check{font-size:12px;padding:3px 0;display:flex;gap:6px;align-items:baseline}
+.score-check.pass{color:#166534}.score-check.fail{color:#991b1b}
+.score-check-label{font-size:10px;color:#787c82;text-transform:uppercase;letter-spacing:.5px;margin-top:8px;margin-bottom:2px;font-weight:700}
 
 /* Buttons */
 .btn-add{display:inline-flex;align-items:center;gap:4px;padding:5px 12px;border:1px solid var(--wp-border);border-radius:3px;background:#f6f7f7;color:var(--wp-text-light);font-size:12px;cursor:pointer;margin-top:6px;font-family:inherit}
@@ -143,36 +177,65 @@ a{color:var(--wp-accent);text-decoration:none}a:hover{color:var(--wp-accent-hove
 .btn-primary:hover{background:var(--wp-accent-hover)}.btn-primary:disabled{opacity:.6;cursor:wait}
 .btn-secondary{display:inline-flex;align-items:center;padding:6px 16px;background:none;color:var(--wp-text-light);border:1px solid var(--wp-border);border-radius:4px;font-size:13px;cursor:pointer;font-family:inherit}
 .btn-secondary:hover{border-color:var(--wp-text);color:var(--wp-text)}
-
-/* Score panel */
-.admin-score-panel{background:var(--wp-card);border:1px solid var(--wp-border-light);border-radius:4px;margin-top:12px}
-.score-panel-body{padding:12px}
-.score-summary{display:flex;gap:12px;margin-bottom:12px}
-.score-row{flex:1;display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:#f9fafb;border-radius:6px;font-weight:600;font-size:13px}
-.btn-improve{width:100%;padding:10px;border:none;border-radius:6px;cursor:pointer;background:linear-gradient(135deg,#059669,#10b981);color:#fff;font-size:13px;font-weight:600;font-family:inherit}
+.btn-improve{width:100%;padding:10px;border:none;border-radius:6px;cursor:pointer;background:linear-gradient(135deg,#059669,#10b981);color:#fff;font-size:13px;font-weight:600;font-family:inherit;margin-bottom:6px}
 .btn-improve:hover{opacity:.9}
-.score-checks{margin-top:12px;border-top:1px solid #f0f0f1;padding-top:8px}
-.score-check{font-size:12px;padding:3px 0;display:flex;gap:6px;align-items:baseline}
-.score-check.pass{color:#166534}.score-check.fail{color:#991b1b}
-.score-check-label{font-size:10px;color:#787c82;text-transform:uppercase;letter-spacing:.5px;margin-top:8px;margin-bottom:2px;font-weight:700}
+.btn-ai-regen{display:inline-flex;align-items:center;gap:6px;padding:6px 16px;background:linear-gradient(135deg,#7c3aed,#6d28d9);color:#fff;border:none;border-radius:4px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
+.btn-ai-regen:hover{background:linear-gradient(135deg,#6d28d9,#5b21b6);box-shadow:0 2px 8px rgba(124,58,237,.3)}
+.btn-preview{display:inline-flex;align-items:center;gap:6px;padding:6px 16px;background:#f0f7ff;color:var(--wp-accent);border:1px solid var(--wp-accent);border-radius:4px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
+.btn-preview:hover{background:#dbeafe}
 
 /* Modal */
 .admin-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;z-index:10000;animation:adminFade .15s}
 .admin-modal{background:var(--wp-card);border-radius:4px;padding:24px;width:440px;max-width:90vw;box-shadow:0 4px 20px rgba(0,0,0,.2)}
-.admin-modal-wide{width:560px}
+.admin-modal-wide{width:600px}
 .admin-modal h3{font-size:18px;font-weight:600;margin-bottom:20px}
 .admin-modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:20px;padding-top:16px;border-top:1px solid var(--wp-border-light)}
+
+/* Preview modal */
+.preview-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:10001;display:flex;align-items:center;justify-content:center;animation:adminFade .15s}
+.preview-container{background:#fff;width:95vw;max-width:800px;max-height:90vh;overflow-y:auto;border-radius:8px;box-shadow:0 8px 40px rgba(0,0,0,.3);position:relative}
+.preview-close{position:sticky;top:0;right:0;z-index:2;text-align:right;padding:12px 16px;background:#fff;border-bottom:1px solid #e5e7eb}
+.preview-close button{background:none;border:1px solid #e5e7eb;padding:6px 14px;border-radius:4px;cursor:pointer;font-size:13px;font-family:inherit}
+.preview-close button:hover{background:#f3f4f6}
+.preview-body{padding:30px 40px 40px}
+.preview-body h1{font-size:28px;font-weight:700;margin-bottom:8px;line-height:1.3}
+.preview-body .preview-excerpt{font-size:16px;color:#6b7280;margin-bottom:20px;line-height:1.5}
+.preview-body .preview-tag{display:inline-block;padding:3px 10px;border-radius:4px;font-size:12px;font-weight:600;color:#fff;margin-bottom:16px}
+.preview-body .preview-pills{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px}
+.preview-body .preview-pill{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;background:#f0f7ff;border-radius:20px;font-size:12px;color:var(--wp-accent);font-weight:500}
+.preview-body .preview-toc{background:#f9fafb;border:1px solid #e5e7eb;border-radius:6px;padding:16px;margin-bottom:24px}
+.preview-body .preview-toc h3{font-size:14px;font-weight:600;margin-bottom:8px}
+.preview-body .preview-toc a{display:block;padding:3px 0;font-size:13px;color:var(--wp-accent)}
+.preview-body h2{font-size:22px;font-weight:600;margin:28px 0 12px;color:var(--wp-text)}
+.preview-body h3{font-size:18px;font-weight:600;margin:20px 0 10px;color:var(--wp-text)}
+.preview-body p{font-size:15px;line-height:1.7;margin-bottom:14px;color:#374151}
+.preview-body ul,.preview-body ol{margin:12px 0;padding-left:24px}
+.preview-body li{font-size:15px;line-height:1.6;margin-bottom:6px}
+.preview-body .preview-callout{border-left:4px solid var(--wp-accent);background:#f0f7ff;padding:14px 18px;margin:16px 0;border-radius:0 6px 6px 0;font-size:14px;line-height:1.6}
+.preview-body .preview-callout.warning{border-left-color:var(--wp-orange);background:#fefce8}
+.preview-body table{width:100%;border-collapse:collapse;margin:16px 0;font-size:14px}
+.preview-body table th{background:#f6f7f7;padding:10px 12px;text-align:left;font-weight:600;border:1px solid #e5e7eb}
+.preview-body table td{padding:10px 12px;border:1px solid #e5e7eb}
+.preview-body .preview-grid{display:grid;gap:12px;margin:16px 0}
+.preview-body .preview-grid-item{background:#f9fafb;border:1px solid #e5e7eb;border-radius:6px;padding:14px}
+.preview-body .preview-grid-item h4{font-size:14px;font-weight:600;margin-bottom:4px}
+.preview-body .preview-grid-item p{font-size:13px;margin:0;color:#6b7280}
+.preview-body .preview-faq{margin:20px 0}
+.preview-body .preview-faq details{border:1px solid #e5e7eb;border-radius:6px;margin-bottom:6px}
+.preview-body .preview-faq summary{padding:12px 14px;font-weight:600;font-size:14px;cursor:pointer}
+.preview-body .preview-faq .faq-answer{padding:0 14px 12px;font-size:14px;line-height:1.6;color:#4b5563}
+.preview-body .preview-link-card{display:block;border:1px solid #e5e7eb;border-radius:6px;padding:14px;margin:12px 0;text-decoration:none;transition:border-color .15s}
+.preview-body .preview-link-card:hover{border-color:var(--wp-accent)}
+.preview-body .preview-link-card h4{font-size:14px;font-weight:600;color:var(--wp-accent);margin-bottom:4px}
+.preview-body .preview-link-card p{font-size:13px;margin:0;color:#6b7280}
 
 /* AI source */
 .ai-source-section{margin-top:16px;padding:16px;background:linear-gradient(135deg,#f3f0ff,#eef2ff);border:1px solid #d4c8f5;border-radius:6px}
 .ai-source-header{font-size:14px;font-weight:700;color:#5b21b6;margin-bottom:12px;display:flex;align-items:center;gap:6px}
-.ai-source-section .admin-field{margin-bottom:10px}.ai-source-section .admin-field:last-child{margin-bottom:0}
+.ai-source-section .admin-field{margin-bottom:10px}
 .ai-source-section select{width:100%;padding:7px 10px;border:1px solid #c4b5fd;border-radius:4px;font-size:13px;background:#fff;cursor:pointer;font-family:inherit}
-.ai-source-section select:focus{border-color:#7c3aed;box-shadow:0 0 0 2px rgba(124,58,237,.15);outline:none}
-.ai-source-section input[type="url"]{border-color:#c4b5fd}.ai-source-section input[type="url"]:focus{border-color:#7c3aed;box-shadow:0 0 0 2px rgba(124,58,237,.15)}
+.ai-source-section input[type="url"]{border-color:#c4b5fd}
 .btn-ai-generate{background:linear-gradient(135deg,#7c3aed,#6d28d9)!important}.btn-ai-generate:hover{background:linear-gradient(135deg,#6d28d9,#5b21b6)!important}
-.btn-ai-regen{display:inline-flex;align-items:center;gap:6px;padding:6px 16px;background:linear-gradient(135deg,#7c3aed,#6d28d9);color:#fff;border:none;border-radius:4px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;margin-left:auto}
-.btn-ai-regen:hover{background:linear-gradient(135deg,#6d28d9,#5b21b6);box-shadow:0 2px 8px rgba(124,58,237,.3)}
 
 /* AI Overlay */
 .ai-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;z-index:10001;animation:adminFade .15s}
@@ -183,11 +246,11 @@ a{color:var(--wp-accent);text-decoration:none}a:hover{color:var(--wp-accent-hove
 @keyframes aiSpin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
 
 /* Toast */
-.admin-toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--wp-sidebar);color:#fff;padding:10px 20px;border-radius:4px;font-size:13px;z-index:10000;opacity:0;transition:all .3s;box-shadow:0 2px 8px rgba(0,0,0,.2)}
+.admin-toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--wp-sidebar);color:#fff;padding:10px 20px;border-radius:4px;font-size:13px;z-index:10002;opacity:0;transition:all .3s;box-shadow:0 2px 8px rgba(0,0,0,.2)}
 .admin-toast.show{transform:translateX(-50%) translateY(0);opacity:1}
 .admin-toast.error{background:var(--wp-red)}.admin-toast.success{background:var(--wp-green)}
 
-/* Published toggle */
+/* Toggle switch */
 .toggle-switch{position:relative;display:inline-block;width:42px;height:22px;margin-left:8px;vertical-align:middle}
 .toggle-switch input{opacity:0;width:0;height:0}
 .toggle-slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:#ccc;border-radius:22px;transition:.2s}
@@ -195,32 +258,22 @@ a{color:var(--wp-accent);text-decoration:none}a:hover{color:var(--wp-accent-hove
 .toggle-switch input:checked+.toggle-slider{background:var(--wp-green)}
 .toggle-switch input:checked+.toggle-slider:before{transform:translateX(20px)}
 
+/* Import */
+.import-list{max-height:500px;overflow-y:auto;border:1px solid var(--wp-border-light);border-radius:4px}
+.import-item{padding:12px 16px;border-bottom:1px solid #f0f0f1;cursor:pointer;transition:background .1s}
+.import-item:hover{background:#f6f7f7}
+.import-item h4{font-size:14px;font-weight:600;margin-bottom:4px}
+.import-item p{font-size:12px;color:var(--wp-text-lighter);line-height:1.4}
+.import-item .import-date{font-size:11px;color:var(--wp-text-lighter)}
+
+/* Filter bar */
+.filter-bar{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.filter-bar select,.filter-bar input{padding:6px 10px;border:1px solid var(--wp-border);border-radius:4px;font-size:13px;font-family:inherit;background:#fff}
+.filter-bar input{min-width:200px}
+
 /* Responsive */
 @media(max-width:960px){.admin-editor-layout{grid-template-columns:1fr}.admin-editor-sidebar{position:static}.admin-stats-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:768px){.admin-sidebar{display:none}.admin-main{margin-left:0}}
-  .table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:28px 0;border-radius:var(--radius,8px)}
-  .table-scroll table,.table-scroll .stats-table{margin:0;width:100%;min-width:500px}
-  body{overflow-x:hidden}
-</style>
-<style id="nav-mobile-css">
-@media(max-width:768px){
-  .nav{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
-  .nav-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:998}
-  .nav-overlay.open{display:block}
-  .nav-links{position:fixed;top:0;right:0;bottom:0;width:280px;background:#fff;padding:24px 20px;overflow-y:auto;transform:translateX(110%);transition:transform .28s ease;z-index:999;display:flex!important;flex-direction:column;gap:2px;box-shadow:-4px 0 20px rgba(0,0,0,.12)}
-  .nav-links.open{transform:translateX(0)}
-  .nav-close{align-self:flex-end;background:none;border:none;font-size:22px;cursor:pointer;padding:4px 8px;color:#64748b;line-height:1;margin-bottom:8px}
-  .nav-links>a{padding:11px 12px;border-radius:8px;font-size:15px;font-weight:500;color:#1e293b!important;text-decoration:none!important;display:block}
-  .nav-links>a:hover{background:#f1f5f9;color:#0284c7!important}
-  .nav-sep{border:none;border-top:1px solid #f1f5f9;margin:6px 0}
-  .nav-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#94a3b8;padding:6px 12px 2px;display:block}
-  .nav-cities{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-bottom:4px}
-  .nav-cities a{padding:9px 10px;border-radius:8px;font-size:13px;color:#475569!important;text-decoration:none!important;display:block}
-  .nav-cities a:hover{background:#f1f5f9;color:#0284c7!important}
-  .nav-cta-mobile{background:#0284c7!important;color:#fff!important;text-align:center;border-radius:10px;font-weight:700!important;margin-top:auto;padding:13px 12px!important;display:block}
-  .nav-cta-mobile:hover{background:#0369a1!important}
-  .nav-burger{display:flex}
-}
 </style>
 </head>
 <body>
@@ -262,961 +315,6 @@ a{color:var(--wp-accent);text-decoration:none}a:hover{color:var(--wp-accent-hove
 <div id="admin-toast" class="admin-toast"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-<script>
-(function(){
-'use strict';
-
-var SUPABASE_URL='https://jhopwqpbaiyjfoggvcaf.supabase.co';
-var SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impob3B3cXBiYWl5amZvZ2d2Y2FmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMwNTI2OTEsImV4cCI6MjA4ODYyODY5MX0.rz3TJZryPxEf3P5kQgpzQkwN9aF8_F4eo4F03CEYVPs';
-var TABLE='prepamedecine_articles';
-var TABLE_PREPAS='prepamedecine_prepas';
-
-/* Security: admin email whitelist */
-var ADMIN_EMAILS=['aaron@diploma-sante.fr'];
-
-/* Security: rate limiting */
-var MAX_LOGIN_ATTEMPTS=5;
-var LOCKOUT_DURATION_MS=15*60*1000; /* 15 minutes */
-var loginAttempts=0;
-var lockoutUntil=0;
-
-/* Security: inactivity auto-logout */
-var INACTIVITY_TIMEOUT_MS=30*60*1000; /* 30 minutes */
-var inactivityTimer=null;
-
-var sb;
-var state={view:'dashboard',currentId:null,articleData:null,prepaData:null,unsaved:false};
-var articlesCache=[];
-var prepasCache=[];
-var competitorCache=null;
-
-/* SEO/GEO Scoring */
-function countWords(html){if(!html)return 0;var t=document.createElement('div');t.innerHTML=html;return(t.textContent||'').split(/\s+/).filter(Boolean).length}
-
-function calculateSEO(d){
-  if(!d)return 0;var score=0;var t=d.title||'';var md=d.meta_description||'';var secs=d.sections||[];var faq=d.faq||[];
-  if(t.length>0)score+=5;if(t.length>=50&&t.length<=65)score+=15;else if(t.length>0)score+=Math.max(0,15-Math.abs(t.length-57)*.5);
-  if(md.length>0)score+=5;if(md.length>=140&&md.length<=160)score+=15;else if(md.length>0)score+=Math.max(0,15-Math.abs(md.length-150)*.3);
-  if(d.subtitle)score+=5;
-  var filled=secs.filter(function(s){return s.html&&s.html.length>30});score+=Math.min(15,filled.length*5);
-  var headed=secs.filter(function(s){return s.heading&&s.heading.length>0});score+=Math.min(10,headed.length*(10/Math.max(secs.length,1)));
-  var tw=0;secs.forEach(function(s){tw+=countWords(s.html)});score+=Math.min(15,Math.round((tw/800)*15));
-  if(faq.length>0)score+=10;if(faq.length>=3)score+=5;
-  return Math.min(100,Math.round(score));
-}
-
-function calculateGEO(d){
-  if(!d)return 0;var score=0;var secs=d.sections||[];var faq=d.faq||[];
-  score+=Math.min(25,faq.length*5);
-  var tw=0;var allH='';secs.forEach(function(s){tw+=countWords(s.html);allH+=(s.html||'')});
-  score+=Math.min(20,Math.round((tw/1500)*20));
-  var headed=secs.filter(function(s){return s.heading&&s.heading.length>0});score+=Math.min(15,headed.length*3);
-  if(/<(ul|ol)\b/i.test(allH))score+=15;
-  score+=Math.min(10,secs.length*2);
-  var detailed=faq.filter(function(f){return(f.answer||'').length>50});score+=Math.min(15,detailed.length*3);
-  return Math.min(100,Math.round(score));
-}
-
-function scoreBadge(val){var cls=val<50?'score-low':val<=75?'score-mid':'score-good';return'<span class="score-badge '+cls+'">'+val+'</span>'}
-
-/* Init */
-function init(){
-  sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
-  loadLockoutState();
-  checkSession();
-}
-
-async function checkSession(){
-  var r=await sb.auth.getSession();
-  if(r.data.session){
-    var email=r.data.session.user.email;
-    if(!isAdminEmail(email)){
-      await sb.auth.signOut();
-      showLogin('Acces non autorise pour ce compte.');
-      return;
-    }
-    document.getElementById('admin-user-email').textContent=email;
-    startInactivityTimer();
-    showDashboard();
-  }else{showLogin()}
-}
-
-/* Security: check admin email */
-function isAdminEmail(email){
-  return ADMIN_EMAILS.indexOf(email.toLowerCase())!==-1;
-}
-
-/* Security: rate limiting persistence */
-function loadLockoutState(){
-  try{
-    var stored=localStorage.getItem('admin_lockout');
-    if(stored){
-      var data=JSON.parse(stored);
-      loginAttempts=data.attempts||0;
-      lockoutUntil=data.until||0;
-      if(Date.now()>lockoutUntil){loginAttempts=0;lockoutUntil=0;localStorage.removeItem('admin_lockout');}
-    }
-  }catch(e){}
-}
-function saveLockoutState(){
-  try{localStorage.setItem('admin_lockout',JSON.stringify({attempts:loginAttempts,until:lockoutUntil}));}catch(e){}
-}
-function clearLockoutState(){
-  loginAttempts=0;lockoutUntil=0;
-  try{localStorage.removeItem('admin_lockout');}catch(e){}
-}
-
-/* Security: inactivity auto-logout */
-function startInactivityTimer(){
-  clearInactivityTimer();
-  var events=['mousedown','keydown','scroll','touchstart'];
-  function resetTimer(){
-    clearTimeout(inactivityTimer);
-    inactivityTimer=setTimeout(autoLogout,INACTIVITY_TIMEOUT_MS);
-  }
-  events.forEach(function(ev){document.addEventListener(ev,resetTimer,{passive:true});});
-  resetTimer();
-}
-function clearInactivityTimer(){
-  if(inactivityTimer){clearTimeout(inactivityTimer);inactivityTimer=null;}
-}
-async function autoLogout(){
-  clearInactivityTimer();
-  await sb.auth.signOut();
-  alert('Session expiree par inactivite. Veuillez vous reconnecter.');
-  location.reload();
-}
-
-/* Login */
-function showLogin(msg){
-  document.getElementById('admin-login').style.display='flex';
-  document.getElementById('admin-dashboard').style.display='none';
-  var err=document.getElementById('login-error');
-  if(msg){err.textContent=msg;err.style.display='block';}
-  document.getElementById('login-form').onsubmit=async function(e){
-    e.preventDefault();
-    var email=document.getElementById('login-email').value.trim().toLowerCase();
-    var pass=document.getElementById('login-password').value;
-    var btn=this.querySelector('.btn-login');
-    err.style.display='none';
-
-    /* Check lockout */
-    if(lockoutUntil>Date.now()){
-      var mins=Math.ceil((lockoutUntil-Date.now())/60000);
-      err.textContent='Trop de tentatives. Reessayez dans '+mins+' min.';
-      err.style.display='block';
-      return;
-    }
-
-    /* Check admin whitelist before even attempting auth */
-    if(!isAdminEmail(email)){
-      loginAttempts++;
-      if(loginAttempts>=MAX_LOGIN_ATTEMPTS){
-        lockoutUntil=Date.now()+LOCKOUT_DURATION_MS;
-        saveLockoutState();
-        err.textContent='Compte bloque pour 15 minutes.';
-      }else{
-        saveLockoutState();
-        err.textContent='Acces refuse.';
-      }
-      err.style.display='block';
-      return;
-    }
-
-    btn.disabled=true;
-    var result=await sb.auth.signInWithPassword({email:email,password:pass});
-    if(result.error){
-      loginAttempts++;
-      if(loginAttempts>=MAX_LOGIN_ATTEMPTS){
-        lockoutUntil=Date.now()+LOCKOUT_DURATION_MS;
-        saveLockoutState();
-        err.textContent='Trop de tentatives. Compte bloque 15 minutes.';
-      }else{
-        saveLockoutState();
-        var remaining=MAX_LOGIN_ATTEMPTS-loginAttempts;
-        err.textContent='Identifiants incorrects. '+remaining+' tentative'+(remaining>1?'s':'')+' restante'+(remaining>1?'s':'')+'.';
-      }
-      err.style.display='block';btn.disabled=false;return;
-    }
-
-    clearLockoutState();
-    document.getElementById('admin-user-email').textContent=email;
-    startInactivityTimer();
-    showDashboard();
-  };
-}
-
-window.adminLogout=async function(){
-  clearInactivityTimer();
-  await sb.auth.signOut();
-  location.reload();
-};
-
-/* Dashboard */
-async function showDashboard(){
-  document.getElementById('admin-login').style.display='none';
-  document.getElementById('admin-dashboard').style.display='flex';
-  await Promise.all([loadArticles(),loadPrepas()]);
-  renderSidebar();
-  navigate('dashboard');
-}
-
-async function loadArticles(){
-  var r=await sb.from(TABLE).select('*').order('created_at',{ascending:false});
-  articlesCache=r.data||[];
-}
-
-async function loadPrepas(){
-  var r=await sb.from(TABLE_PREPAS).select('*').order('name',{ascending:true});
-  prepasCache=r.data||[];
-}
-
-/* Sidebar */
-function renderSidebar(){
-  var isArticles=state.view==='articles'||state.view==='editor';
-  var isPrepas=state.view==='prepas'||state.view==='prepa-editor';
-  var html='';
-  html+='<button class="admin-nav-item'+(state.view==='dashboard'?' active':'')+'" onclick="navigate(\'dashboard\')"><span class="nav-icon">&#9776;</span>Tableau de bord</button>';
-  html+='<button class="admin-nav-item'+(isPrepas?' active':'')+'" onclick="navigate(\'prepas\')"><span class="nav-icon">&#127979;</span>Prepas<span class="nav-count">'+prepasCache.length+'</span></button>';
-  html+='<button class="admin-nav-item'+(isArticles?' active':'')+'" onclick="navigate(\'articles\')"><span class="nav-icon">&#128196;</span>Articles<span class="nav-count">'+articlesCache.length+'</span></button>';
-  document.getElementById('admin-sidebar').innerHTML=html;
-}
-
-/* Navigation */
-window.navigate=function(viewId){
-  if(state.unsaved&&!confirm('Modifications non sauvegardees. Continuer ?'))return;
-  state.unsaved=false;state.view=viewId;state.currentId=null;
-  if(viewId==='dashboard')renderDashboardHome();
-  else if(viewId==='articles')renderArticleList();
-  else if(viewId==='prepas')renderPrepaList();
-  renderSidebar();
-};
-
-window.editArticle=function(id){
-  if(state.unsaved&&!confirm('Modifications non sauvegardees. Continuer ?'))return;
-  state.unsaved=false;state.currentId=id;state.view='editor';
-  loadArticleData(id);
-  renderSidebar();
-};
-
-window.editPrepa=function(id){
-  if(state.unsaved&&!confirm('Modifications non sauvegardees. Continuer ?'))return;
-  state.unsaved=false;state.currentId=id;state.view='prepa-editor';
-  loadPrepaData(id);
-  renderSidebar();
-};
-
-/* Dashboard Home */
-function renderDashboardHome(){
-  var main=document.getElementById('admin-main');
-  var total=articlesCache.length;
-  var published=articlesCache.filter(function(a){return a.published}).length;
-  var drafts=total-published;
-  var totalPrepas=prepasCache.length;
-  var featuredPrepas=prepasCache.filter(function(p){return p.featured}).length;
-  var coupDeCoeur=prepasCache.filter(function(p){return p.coup_de_coeur}).length;
-
-  var html='<div class="admin-dashboard-home">';
-  html+='<div class="admin-welcome"><h2>Bienvenue sur le backoffice PrepaMedecine</h2>';
-  html+='<p>Gerez les prepas et articles de votre site depuis cette interface.</p></div>';
-  html+='<div class="admin-stats-grid">';
-  html+=statCard(totalPrepas,'Prepas','prepas');
-  html+=statCard(total,'Articles','articles');
-  html+=statCard(published,'Articles publies',null);
-  html+=statCard(featuredPrepas,'Prepas mises en avant',null);
-  html+=statCard(coupDeCoeur,'Coup de coeur',null);
-  html+=statCard(drafts,'Brouillons',null);
-  html+='</div>';
-
-  var recent=articlesCache.slice(0,8);
-  if(recent.length){
-    html+='<div class="admin-recent"><div class="admin-recent-header">Articles recemment modifies</div>';
-    recent.forEach(function(a){
-      html+='<div class="admin-recent-item" onclick="editArticle('+a.id+')">';
-      html+='<span class="ri-title">'+esc(a.title||'Sans titre')+'</span>';
-      html+='<span class="ri-cat">'+(a.category||'—')+'</span>';
-      html+='<span class="ri-date">'+formatDate(a.updated_at)+'</span>';
-      html+='</div>';
-    });
-    html+='</div>';
-  }
-  html+='</div>';
-  main.innerHTML=html;
-}
-
-function statCard(num,label,navId){
-  var onclick=navId?' onclick="navigate(\''+navId+'\')"':'';
-  return'<div class="admin-stat-card"'+onclick+'><div class="stat-number">'+num+'</div><div class="stat-label">'+label+'</div></div>';
-}
-
-/* Article List */
-function renderArticleList(){
-  var main=document.getElementById('admin-main');
-  var html='<div class="admin-page-list">';
-  html+='<div class="admin-page-list-header"><h2>Articles</h2>';
-  html+='<div class="admin-page-list-actions"><button class="btn-primary" onclick="showAddModal()">+ Nouvel article</button>';
-  html+='<span class="list-count">'+articlesCache.length+' articles</span></div></div>';
-
-  html+='<div class="table-scroll"><table class="admin-table"><thead><tr><th>Titre</th><th>Categorie</th><th>SEO</th><th>GEO</th><th>Statut</th><th>Date</th><th>Actions</th></tr></thead><tbody>';
-  articlesCache.forEach(function(a){
-    var seo=calculateSEO(a);var geo=calculateGEO(a);
-    html+='<tr>';
-    html+='<td class="page-title-cell" onclick="editArticle('+a.id+')">'+esc(a.title||'Sans titre')+'</td>';
-    html+='<td>'+(a.category||'—')+'</td>';
-    html+='<td>'+scoreBadge(seo)+'</td>';
-    html+='<td>'+scoreBadge(geo)+'</td>';
-    html+='<td><span class="status-dot '+(a.published?'published':'draft')+'"></span>'+(a.published?'Publie':'Brouillon')+'</td>';
-    html+='<td>'+formatDate(a.updated_at)+'</td>';
-    html+='<td class="row-actions"><a href="javascript:void(0)" onclick="editArticle('+a.id+')">Modifier</a>';
-    html+='<a href="javascript:void(0)" class="action-delete" onclick="deleteArticle('+a.id+')">Supprimer</a></td>';
-    html+='</tr>';
-  });
-  html+='</tbody></table></div></div>';
-  main.innerHTML=html;
-}
-
-/* Load article data */
-async function loadArticleData(id){
-  var main=document.getElementById('admin-main');
-  main.innerHTML='<div style="padding:60px;text-align:center;color:#787c82;">Chargement...</div>';
-  var r=await sb.from(TABLE).select('*').eq('id',id).maybeSingle();
-  state.articleData=r.data;
-  renderEditor();
-}
-
-/* Render Editor */
-function renderEditor(){
-  var d=state.articleData||{};
-  var main=document.getElementById('admin-main');
-  var html='<div class="admin-editor">';
-
-  html+='<div class="admin-editor-breadcrumb"><a href="javascript:void(0)" onclick="navigate(\'dashboard\')">Tableau de bord</a> &rsaquo; <a href="javascript:void(0)" onclick="navigate(\'articles\')">Articles</a> &rsaquo; '+esc(d.title||'Nouvel article')+'</div>';
-  html+='<div class="admin-editor-header"><h2>'+esc(d.title||'Nouvel article')+'</h2>';
-  html+='<button class="btn-back" onclick="navigate(\'articles\')">&larr; Retour</button>';
-  html+='<button class="btn-ai-regen" onclick="regenerateArticle()">&#129302; Regenerer avec l\'IA</button>';
-  html+='</div>';
-
-  html+='<div class="admin-editor-layout"><div class="admin-editor-content">';
-
-  // General info
-  html+=metaBoxOpen('Informations generales',false);
-  html+=field('title','Titre (H1)',d.title||'','text');
-  html+=field('meta_description','Description SEO',d.meta_description||'','textarea','150-160 caracteres recommandes.');
-  html+=field('subtitle','Sous-titre',d.subtitle||'','text');
-  html+=field('category','Categorie',d.category||'','text','Ex: Orientation, Methodologie, Budget, Anticipation...');
-  html+=field('icon_name','Icone',d.icon_name||'fileText','text','stethoscope, wallet, fileText, graduationCap, alertTriangle, clipboard, bookOpen, heartPulse...');
-  html+=metaBoxClose();
-
-  // Sections
-  var sections=d.sections||[];
-  html+=metaBoxOpen('Contenu des sections ('+sections.length+')',false);
-  html+='<div id="sections-list">';
-  sections.forEach(function(sec,i){html+=renderSectionBlock(i,sec)});
-  html+='</div>';
-  html+='<button class="btn-add" onclick="addSection()">+ Ajouter une section</button>';
-  html+=metaBoxClose();
-
-  // FAQ
-  var faq=d.faq||[];
-  html+=metaBoxOpen('FAQ ('+faq.length+' questions)',true);
-  html+='<div id="faq-list">';
-  faq.forEach(function(item,i){html+=renderFaqBlock(i,item)});
-  html+='</div>';
-  html+='<button class="btn-add" onclick="addFaq()">+ Ajouter une question</button>';
-  html+=metaBoxClose();
-
-  html+='</div>'; // end content
-
-  // Right sidebar
-  html+='<div class="admin-editor-sidebar">';
-
-  // Publish
-  html+='<div class="admin-publish-box"><div class="admin-publish-box-header">Publier</div>';
-  html+='<div class="admin-publish-box-body">';
-  html+='<div class="pub-info">Statut : <strong>'+(d.published?'Publie':'Brouillon')+'</strong>';
-  html+='<label class="toggle-switch"><input type="checkbox" id="toggle-published" '+(d.published?'checked':'')+' onchange="markUnsaved()"><span class="toggle-slider"></span></label></div>';
-  if(d.updated_at)html+='<div class="pub-info">Modifie : <strong>'+formatDate(d.updated_at)+'</strong></div>';
-  html+='</div>';
-  html+='<div class="admin-publish-box-footer"><button class="btn-primary" onclick="saveArticle()" id="btn-save">Mettre a jour</button></div></div>';
-
-  // Score panel
-  html+='<div class="admin-score-panel" id="score-panel"><div class="admin-meta-box-header">Optimisation</div>';
-  html+='<div class="score-panel-body">';
-  html+='<div class="score-summary" id="score-summary"></div>';
-  html+='<button class="btn-improve" onclick="improveArticle()">&#10024; Ameliorer avec l\'IA</button>';
-  html+='<div class="score-checks" id="score-checks"></div>';
-  html+='</div></div>';
-
-  html+='</div>'; // end sidebar
-  html+='</div></div>'; // end layout, editor
-
-  main.innerHTML=html;
-  main.scrollTop=0;
-  updateScorePanel();
-  bindScoreUpdates();
-}
-
-/* Meta box helpers */
-function metaBoxOpen(title,collapsed){
-  return'<div class="admin-meta-box'+(collapsed?' collapsed':'')+'">'+
-    '<div class="admin-meta-box-header'+(collapsed?' collapsed':'')+'" onclick="this.classList.toggle(\'collapsed\');this.parentElement.classList.toggle(\'collapsed\')">'+
-    title+'<span class="toggle-icon">&#9660;</span></div><div class="admin-meta-box-body">';
-}
-function metaBoxClose(){return'</div></div>'}
-
-function field(name,label,value,type,hint){
-  var h='<div class="admin-field">';
-  if(label)h+='<label>'+label+'</label>';
-  if(type==='textarea')h+='<textarea name="'+name+'" oninput="markUnsaved()">'+esc(value)+'</textarea>';
-  else h+='<input type="'+(type||'text')+'" name="'+name+'" value="'+escAttr(value)+'" oninput="markUnsaved()">';
-  if(hint)h+='<div class="admin-field-hint">'+hint+'</div>';
-  h+='</div>';return h;
-}
-
-function renderSectionBlock(idx,sec){
-  return'<div class="admin-content-section" data-idx="'+idx+'">'+
-    '<button class="btn-rm-section" onclick="removeBlock(\'sections-list\','+idx+')">&#10005;</button>'+
-    field('section_heading_'+idx,'Titre',sec.heading||'','text')+
-    field('section_html_'+idx,'Contenu (HTML)',sec.html||'','textarea')+
-    '</div>';
-}
-
-function renderFaqBlock(idx,item){
-  return'<div class="admin-faq-item" data-idx="'+idx+'">'+
-    '<button class="admin-faq-remove" onclick="removeBlock(\'faq-list\','+idx+')">&#10005;</button>'+
-    field('faq_q_'+idx,'Question',item.question||'','text')+
-    field('faq_a_'+idx,'Reponse',item.answer||'','textarea')+
-    '</div>';
-}
-
-/* Dynamic add/remove */
-window.addSection=function(){var l=document.getElementById('sections-list');l.insertAdjacentHTML('beforeend',renderSectionBlock(l.children.length,{}));markUnsaved()};
-window.addFaq=function(){var l=document.getElementById('faq-list');l.insertAdjacentHTML('beforeend',renderFaqBlock(l.children.length,{}));markUnsaved()};
-window.removeBlock=function(listId,idx){var l=document.getElementById(listId);if(l&&l.children[idx]){l.children[idx].remove();markUnsaved()}};
-window.markUnsaved=function(){state.unsaved=true};
-
-/* Add article modal */
-window.showAddModal=function(){
-  var html='<div class="admin-modal-overlay" id="add-modal" onclick="if(event.target===this)closeAddModal()">';
-  html+='<div class="admin-modal admin-modal-wide"><h3>Nouvel article</h3>';
-  html+='<div class="admin-field"><label>Titre</label><input type="text" id="new-title" placeholder="Ex: Comment reussir le PASS ?" autofocus></div>';
-  html+='<div class="admin-field"><label>Categorie</label><input type="text" id="new-category" placeholder="Ex: Orientation, Methodologie..."></div>';
-
-  // AI source
-  html+='<div class="ai-source-section">';
-  html+='<div class="ai-source-header">&#129302; Generation IA (optionnel)</div>';
-  html+='<div class="admin-field"><label>S\'inspirer d\'un article concurrent</label>';
-  html+='<select id="ai-competitor-select"><option value="">-- Chargement des articles... --</option></select>';
-  html+='<div class="admin-field-hint">Selectionne un article concurrent ou colle une URL ci-dessous</div></div>';
-  html+='<div class="admin-field"><label>Ou coller une URL source</label>';
-  html+='<input type="url" id="ai-source-url" placeholder="https://example.com/article"></div>';
-  html+='</div>';
-
-  html+='<div class="admin-modal-actions">';
-  html+='<button class="btn-secondary" onclick="closeAddModal()">Annuler</button>';
-  html+='<button class="btn-primary btn-ai-generate" onclick="createArticle()">&#129302; Creer &amp; Generer</button>';
-  html+='</div></div></div>';
-  document.body.insertAdjacentHTML('beforeend',html);
-  document.getElementById('new-title').focus();
-
-  // Load competitors
-  loadCompetitorArticles();
-  document.getElementById('ai-competitor-select').onchange=function(){
-    if(this.value)document.getElementById('ai-source-url').value=this.value;
-  };
-};
-
-async function loadCompetitorArticles(){
-  var sel=document.getElementById('ai-competitor-select');
-  if(!sel)return;
-  if(competitorCache){renderCompetitorSelect(sel,competitorCache);return}
-  try{
-    var res=await fetch(SUPABASE_URL+'/functions/v1/fetch-competitor-articles');
-    var data=await res.json();
-    if(data.sources){competitorCache=data.sources;renderCompetitorSelect(sel,data.sources)}
-    else{sel.innerHTML='<option value="">Erreur de chargement</option>'}
-  }catch(e){console.error(e);sel.innerHTML='<option value="">Erreur de chargement</option>'}
-}
-
-function renderCompetitorSelect(sel,sources){
-  var html='<option value="">-- Choisir un article concurrent --</option>';
-  sources.forEach(function(src){
-    if(src.articles.length===0)return;
-    html+='<optgroup label="'+esc(src.site)+' ('+src.articles.length+' articles)">';
-    src.articles.forEach(function(a){
-      var t=a.title.length>70?a.title.substring(0,67)+'...':a.title;
-      html+='<option value="'+esc(a.url)+'">'+esc(t)+'</option>';
-    });
-    html+='</optgroup>';
-  });
-  sel.innerHTML=html;
-}
-
-window.closeAddModal=function(){var m=document.getElementById('add-modal');if(m)m.remove()};
-
-window.createArticle=async function(){
-  var title=document.getElementById('new-title').value.trim();
-  var category=document.getElementById('new-category').value.trim();
-  if(!title){showToast('Titre requis','error');return}
-
-  var slug=title.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
-  var sourceUrl=(document.getElementById('ai-source-url').value||'').trim();
-  var useAI=!!(sourceUrl||title);
-
-  var btn=document.querySelector('#add-modal .btn-primary');
-  btn.disabled=true;
-  if(useAI){btn.innerHTML='&#129302; Generation IA...';showAIOverlay('Generation de l\'article en cours...<br><small>Cela peut prendre 20-30 secondes</small>')}
-  else btn.textContent='Creation...';
-
-  try{
-    var insertData={slug:slug,title:title,category:category,icon_name:'fileText',published:false};
-    var r=await sb.from(TABLE).insert(insertData).select().single();
-    if(r.error)throw r.error;
-    var newId=r.data.id;
-
-    if(useAI){
-      try{
-        var existing=articlesCache.map(function(a){return{title:a.title,slug:a.slug}});
-        var aiRes=await fetch(SUPABASE_URL+'/functions/v1/generate-article',{
-          method:'POST',headers:{'Content-Type':'application/json'},
-          body:JSON.stringify({title:title,source_url:sourceUrl,existing_articles:existing})
-        });
-        var aiData=await aiRes.json();
-        if(aiData.error){showToast('IA: '+aiData.error+' -- article cree vide','error')}
-        else{
-          var update={title:aiData.title||title,meta_description:aiData.meta_description||null,subtitle:aiData.subtitle||null,sections:aiData.sections||[],faq:aiData.faq||[]};
-          await sb.from(TABLE).update(update).eq('id',newId);
-          showToast('Article genere par l\'IA','success');
-        }
-      }catch(aiErr){console.error(aiErr);showToast('Erreur IA -- article cree vide','error')}
-    }
-
-    hideAIOverlay();closeAddModal();
-    await loadArticles();
-    if(!useAI)showToast('Article "'+title+'" cree','success');
-    editArticle(newId);
-  }catch(err){
-    hideAIOverlay();showToast('Erreur : '+(err.message||'Echec'),'error');
-    btn.disabled=false;btn.textContent='Creer';
-  }
-};
-
-/* AI Overlay */
-function showAIOverlay(msg){
-  if(document.getElementById('ai-overlay'))return;
-  document.body.insertAdjacentHTML('beforeend','<div id="ai-overlay" class="ai-overlay"><div class="ai-overlay-content"><div class="ai-spinner"></div><p>'+msg+'</p></div></div>');
-}
-function hideAIOverlay(){var el=document.getElementById('ai-overlay');if(el)el.remove()}
-
-/* Regenerate */
-window.regenerateArticle=async function(){
-  if(!state.currentId)return;
-  var title=document.querySelector('[name="title"]');
-  if(!title||!title.value.trim()){showToast('Titre requis','error');return}
-  if(!confirm('Regenerer l\'article avec l\'IA ? Le contenu actuel sera remplace.'))return;
-  showAIOverlay('Regeneration en cours...<br><small>~20-30 secondes</small>');
-  try{
-    var existing=articlesCache.filter(function(a){return a.id!==state.currentId}).map(function(a){return{title:a.title,slug:a.slug}});
-    var aiRes=await fetch(SUPABASE_URL+'/functions/v1/generate-article',{
-      method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({title:title.value.trim(),existing_articles:existing})
-    });
-    var aiData=await aiRes.json();
-    if(aiData.error){hideAIOverlay();showToast('Erreur IA: '+aiData.error,'error');return}
-    var update={title:aiData.title||title.value.trim(),meta_description:aiData.meta_description||null,subtitle:aiData.subtitle||null,sections:aiData.sections||[],faq:aiData.faq||[]};
-    var r=await sb.from(TABLE).update(update).eq('id',state.currentId);
-    if(r.error)throw r.error;
-    hideAIOverlay();showToast('Article regenere','success');
-    await loadArticles();editArticle(state.currentId);
-  }catch(err){hideAIOverlay();showToast('Erreur : '+(err.message||'Echec'),'error')}
-};
-
-/* Improve */
-window.improveArticle=async function(){
-  if(!state.currentId)return;
-  var d=collectFormData();
-  if(!d.title){showToast('Titre requis','error');return}
-  if(!confirm('Ameliorer l\'article avec l\'IA ? Le contenu sera reecrit.'))return;
-  var seo=calculateSEO(d);var geo=calculateGEO(d);
-  showAIOverlay('Amelioration en cours...<br><small>~30-40 secondes</small>');
-  try{
-    var aiRes=await fetch(SUPABASE_URL+'/functions/v1/improve-article',{
-      method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({title:d.title,meta_description:d.meta_description,subtitle:d.subtitle,sections:d.sections,faq:d.faq,scores:{seo:seo,geo:geo}})
-    });
-    var aiData=await aiRes.json();
-    if(aiData.error){hideAIOverlay();showToast('Erreur IA: '+aiData.error,'error');return}
-    var update={title:aiData.title||d.title,meta_description:aiData.meta_description||null,subtitle:aiData.subtitle||null,sections:aiData.sections||[],faq:aiData.faq||[]};
-    var r=await sb.from(TABLE).update(update).eq('id',state.currentId);
-    if(r.error)throw r.error;
-    hideAIOverlay();showToast('Article ameliore','success');
-    await loadArticles();editArticle(state.currentId);
-  }catch(err){hideAIOverlay();showToast('Erreur : '+(err.message||'Echec'),'error')}
-};
-
-/* Score panel */
-var _scoreTimer=null;
-
-function collectFormData(){
-  var d={title:getVal('title'),meta_description:getVal('meta_description'),subtitle:getVal('subtitle'),sections:[],faq:[]};
-  document.querySelectorAll('#sections-list .admin-content-section').forEach(function(el){
-    var h=el.querySelector('[name^="section_heading_"]');var c=el.querySelector('[name^="section_html_"]');
-    d.sections.push({heading:h?h.value.trim():'',html:c?c.value.trim():''});
-  });
-  document.querySelectorAll('#faq-list .admin-faq-item').forEach(function(el){
-    var q=el.querySelector('[name^="faq_q_"]');var a=el.querySelector('[name^="faq_a_"]');
-    if(q||a)d.faq.push({question:q?q.value.trim():'',answer:a?a.value.trim():''});
-  });
-  return d;
-}
-
-function updateScorePanel(){
-  var panel=document.getElementById('score-panel');if(!panel)return;
-  var d=collectFormData();var seo=calculateSEO(d);var geo=calculateGEO(d);
-  document.getElementById('score-summary').innerHTML='<div class="score-row"><span>SEO</span>'+scoreBadge(seo)+'</div><div class="score-row"><span>GEO</span>'+scoreBadge(geo)+'</div>';
-
-  var t=d.title||'';var md=d.meta_description||'';var secs=d.sections||[];var faq=d.faq||[];
-  var filled=secs.filter(function(s){return s.html&&s.html.length>30});
-  var headed=secs.filter(function(s){return s.heading&&s.heading.length>0});
-  var tw=0;var allH='';secs.forEach(function(s){tw+=countWords(s.html);allH+=(s.html||'')});
-  var hasList=/<(ul|ol)\b/i.test(allH);
-  var detailed=faq.filter(function(f){return(f.answer||'').length>50});
-
-  var c='<div class="score-check-label">SEO</div>';
-  c+=chk(t.length>=50&&t.length<=65,'Titre '+t.length+'/50-65 car.',t.length>0?'Titre : '+t.length+' car. (ideal 50-65)':'Titre manquant');
-  c+=chk(md.length>=140&&md.length<=160,'Meta '+md.length+'/140-160 car.',md.length>0?'Meta : '+md.length+' car. (ideal 140-160)':'Meta description manquante');
-  c+=chk(!!d.subtitle,'Sous-titre present','Sous-titre manquant');
-  c+=chk(filled.length>=3,filled.length+' sections avec contenu','Moins de 3 sections ('+filled.length+')');
-  c+=chk(headed.length>=secs.length&&secs.length>0,'Toutes sections ont un titre',(secs.length-headed.length)+' section(s) sans titre');
-  c+=chk(tw>=800,tw+' mots (min. 800)',tw+' mots (min. 800)');
-  c+=chk(faq.length>=3,faq.length+' questions FAQ',faq.length>0?faq.length+' FAQ (min. 3)':'Pas de FAQ');
-  c+='<div class="score-check-label">GEO</div>';
-  c+=chk(faq.length>=5,faq.length+'/5 questions FAQ',faq.length+'/5 questions FAQ min');
-  c+=chk(tw>=1500,tw+' mots (min. 1500)',tw+'/1500 mots min');
-  c+=chk(hasList,'Listes HTML presentes','Pas de listes (ul/ol)');
-  c+=chk(secs.length>=5,secs.length+'/5 sections min',secs.length+'/5 sections min');
-  c+=chk(detailed.length>=faq.length&&faq.length>0,'Reponses FAQ detaillees',detailed.length+'/'+faq.length+' reponses detaillees');
-  document.getElementById('score-checks').innerHTML=c;
-}
-
-function chk(pass,good,bad){return'<div class="score-check '+(pass?'pass':'fail')+'"><span>'+(pass?'&#10003;':'&#10007;')+'</span><span>'+(pass?good:bad)+'</span></div>'}
-
-function bindScoreUpdates(){
-  var content=document.querySelector('.admin-editor-content');if(!content)return;
-  content.addEventListener('input',function(){clearTimeout(_scoreTimer);_scoreTimer=setTimeout(updateScorePanel,500)});
-  ['sections-list','faq-list'].forEach(function(id){
-    var el=document.getElementById(id);if(!el)return;
-    new MutationObserver(function(){clearTimeout(_scoreTimer);_scoreTimer=setTimeout(updateScorePanel,300)}).observe(el,{childList:true});
-  });
-}
-
-/* Save */
-function getVal(n){var el=document.querySelector('[name="'+n+'"]');return el?el.value.trim():''}
-
-window.saveArticle=async function(){
-  var btn=document.getElementById('btn-save');btn.disabled=true;btn.textContent='Sauvegarde...';
-  try{
-    var d=collectFormData();
-    var data={
-      title:d.title||null,meta_description:d.meta_description||null,subtitle:d.subtitle||null,
-      category:getVal('category')||null,icon_name:getVal('icon_name')||'fileText',
-      sections:d.sections,faq:d.faq,
-      published:document.getElementById('toggle-published').checked,
-      updated_at:new Date().toISOString()
-    };
-    var r=await sb.from(TABLE).update(data).eq('id',state.currentId);
-    if(r.error)throw r.error;
-    state.unsaved=false;
-    await loadArticles();
-    showToast('Modifications enregistrees','success');
-  }catch(err){console.error(err);showToast('Erreur : '+(err.message||'Echec'),'error')}
-  btn.disabled=false;btn.textContent='Mettre a jour';
-};
-
-/* Delete */
-window.deleteArticle=async function(id){
-  if(!confirm('Supprimer cet article ? Cette action est irreversible.'))return;
-  try{
-    var r=await sb.from(TABLE).delete().eq('id',id);
-    if(r.error)throw r.error;
-    await loadArticles();showToast('Article supprime','success');navigate('articles');
-  }catch(err){showToast('Erreur : '+(err.message||'Echec'),'error')}
-};
-
-/* ============ PREPAS MANAGEMENT ============ */
-
-/* Prepa List */
-function renderPrepaList(){
-  var main=document.getElementById('admin-main');
-  var html='<div class="admin-page-list">';
-  html+='<div class="admin-page-list-header"><h2>Prepas</h2>';
-  html+='<div class="admin-page-list-actions"><button class="btn-primary" onclick="showAddPrepaModal()">+ Nouvelle prepa</button>';
-  html+='<span class="list-count">'+prepasCache.length+' prepas</span></div></div>';
-  html+='<div class="table-scroll"><table class="admin-table"><thead><tr><th>Nom</th><th>Ville</th><th>Format</th><th>Taux</th><th>Featured</th><th>Coup de coeur</th><th>Actions</th></tr></thead><tbody>';
-  prepasCache.forEach(function(p){
-    html+='<tr>';
-    html+='<td class="page-title-cell" onclick="editPrepa('+p.id+')">'+esc(p.name)+'</td>';
-    html+='<td>'+esc(p.ville||'')+'</td>';
-    html+='<td>'+esc(p.format||'')+'</td>';
-    html+='<td>'+esc(p.taux||'')+'</td>';
-    html+='<td>'+(p.featured?'<span class="status-dot published"></span>Oui':'<span class="status-dot draft"></span>Non')+'</td>';
-    html+='<td>'+(p.coup_de_coeur?'<span style="color:#046bd2;font-weight:700">&#10084; Oui</span>':'Non')+'</td>';
-    html+='<td class="row-actions"><a href="javascript:void(0)" onclick="editPrepa('+p.id+')">Modifier</a> ';
-    html+='<a href="javascript:void(0)" class="action-delete" onclick="deletePrepa('+p.id+')">Supprimer</a></td>';
-    html+='</tr>';
-  });
-  html+='</tbody></table></div></div>';
-  main.innerHTML=html;
-}
-
-/* Load prepa data */
-async function loadPrepaData(id){
-  var main=document.getElementById('admin-main');
-  main.innerHTML='<div style="padding:60px;text-align:center;color:#787c82;">Chargement...</div>';
-  var r=await sb.from(TABLE_PREPAS).select('*').eq('id',id).maybeSingle();
-  state.prepaData=r.data;
-  renderPrepaEditor();
-}
-
-/* Render Prepa Editor */
-function renderPrepaEditor(){
-  var d=state.prepaData||{};
-  var main=document.getElementById('admin-main');
-  var html='<div class="admin-editor">';
-  html+='<div class="admin-editor-breadcrumb"><a href="javascript:void(0)" onclick="navigate(\'dashboard\')">Tableau de bord</a> &rsaquo; <a href="javascript:void(0)" onclick="navigate(\'prepas\')">Prepas</a> &rsaquo; '+esc(d.name||'Nouvelle prepa')+'</div>';
-  html+='<div class="admin-editor-header"><h2>'+esc(d.name||'Nouvelle prepa')+'</h2>';
-  html+='<button class="btn-back" onclick="navigate(\'prepas\')">&larr; Retour</button></div>';
-  html+='<div class="admin-editor-layout"><div class="admin-editor-content">';
-
-  // General info
-  html+=metaBoxOpen('Informations generales',false);
-  html+=field('p_name','Nom',d.name||'','text');
-  html+=field('p_slug','Slug (URL)',d.slug||'','text','Identifiant unique (ex: diploma-sante)');
-  html+=field('p_ville','Ville principale',d.ville||'','text');
-  html+=field('p_villes','Toutes les villes',(d.villes||[]).join(', '),'text','Separees par des virgules');
-  html+=field('p_taux','Taux de reussite',d.taux||'','text','Ex: 79%, 93% satisfaction');
-  html+=field('p_anciennete','Anciennete',d.anciennete||'','text','Ex: 10+ ans, Depuis 2013');
-  html+=field('p_etudiants','Etudiants',d.etudiants||'','text','Ex: 1 200+');
-  html+='<div class="admin-field"><label>Format</label><select name="p_format" onchange="markUnsaved()">';
-  ['Présentiel','En ligne','Hybride'].forEach(function(f){html+='<option'+(d.format===f?' selected':'')+'>'+f+'</option>'});
-  html+='</select></div>';
-  html+=field('p_intro','Introduction',d.intro||'','textarea','Description courte de la prepa');
-  html+=field('p_avis','Avis PrepaMedecine',d.avis||'','textarea','Votre avis editorial');
-  html+=metaBoxClose();
-
-  // Filieres & Tags
-  html+=metaBoxOpen('Filieres & Tags',false);
-  var allFilieres=['PASS','LAS','LSPS','Terminale Santé','Première Santé','P0','Internat'];
-  html+='<div class="admin-field"><label>Filieres</label><div style="display:flex;flex-wrap:wrap;gap:8px">';
-  var curFil=d.filieres||[];
-  allFilieres.forEach(function(f){
-    html+='<label style="display:flex;align-items:center;gap:4px;font-size:12px;cursor:pointer"><input type="checkbox" class="p_filiere" value="'+f+'"'+(curFil.indexOf(f)>=0?' checked':'')+' onchange="markUnsaved()"> '+f+'</label>';
-  });
-  html+='</div></div>';
-  html+=field('p_tags','Tags',(d.tags||[]).join(', '),'text','Separees par des virgules. Ex: PASS, LAS, Paris, Présentiel');
-  html+=metaBoxClose();
-
-  // Stats
-  var stats=d.stats||[];
-  html+=metaBoxOpen('Statistiques ('+stats.length+')',false);
-  html+='<div id="prepa-stats-list">';
-  stats.forEach(function(s,i){html+=renderPrepaStatBlock(i,s)});
-  html+='</div>';
-  html+='<button class="btn-add" onclick="addPrepaStat()">+ Ajouter une stat</button>';
-  html+=metaBoxClose();
-
-  // Modele
-  var modele=d.modele||[];
-  html+=metaBoxOpen('Modele ('+modele.length+' points)',false);
-  html+='<div id="prepa-modele-list">';
-  modele.forEach(function(m,i){html+=renderPrepaBlock('modele',i,m)});
-  html+='</div>';
-  html+='<button class="btn-add" onclick="addPrepaBlock(\'modele\')">+ Ajouter un point</button>';
-  html+=metaBoxClose();
-
-  // Pedagogie
-  var ped=d.pedagogie||[];
-  html+=metaBoxOpen('Pedagogie ('+ped.length+' points)',false);
-  html+='<div id="prepa-pedagogie-list">';
-  ped.forEach(function(p,i){html+=renderPrepaBlock('pedagogie',i,p)});
-  html+='</div>';
-  html+='<button class="btn-add" onclick="addPrepaBlock(\'pedagogie\')">+ Ajouter un point</button>';
-  html+=metaBoxClose();
-
-  // Extra sections
-  var extra=d.extra_sections||[];
-  html+=metaBoxOpen('Sections supplementaires ('+extra.length+')',true);
-  html+='<div id="prepa-extra-list">';
-  extra.forEach(function(sec,i){html+=renderPrepaExtraSection(i,sec)});
-  html+='</div>';
-  html+='<button class="btn-add" onclick="addPrepaExtra()">+ Ajouter une section</button>';
-  html+=metaBoxClose();
-
-  html+='</div>'; // end content
-
-  // Right sidebar
-  html+='<div class="admin-editor-sidebar">';
-  html+='<div class="admin-publish-box"><div class="admin-publish-box-header">Publication</div>';
-  html+='<div class="admin-publish-box-body">';
-  html+='<div class="pub-info">Publiee : <strong>'+(d.published!==false?'Oui':'Non')+'</strong>';
-  html+='<label class="toggle-switch"><input type="checkbox" id="toggle-p-published" '+(d.published!==false?'checked':'')+' onchange="markUnsaved()"><span class="toggle-slider"></span></label></div>';
-  html+='<div class="pub-info">Mise en avant : <strong>'+(d.featured?'Oui':'Non')+'</strong>';
-  html+='<label class="toggle-switch"><input type="checkbox" id="toggle-p-featured" '+(d.featured?'checked':'')+' onchange="markUnsaved()"><span class="toggle-slider"></span></label></div>';
-  html+='<div class="pub-info">Coup de coeur : <strong>'+(d.coup_de_coeur?'Oui':'Non')+'</strong>';
-  html+='<label class="toggle-switch"><input type="checkbox" id="toggle-p-coeur" '+(d.coup_de_coeur?'checked':'')+' onchange="markUnsaved()"><span class="toggle-slider"></span></label></div>';
-  if(d.updated_at)html+='<div class="pub-info">Modifiee : <strong>'+formatDate(d.updated_at)+'</strong></div>';
-  html+='</div>';
-  html+='<div class="admin-publish-box-footer"><button class="btn-primary" onclick="savePrepa()" id="btn-save-prepa">Mettre a jour</button></div></div>';
-  html+='</div>'; // end sidebar
-  html+='</div></div>'; // end layout, editor
-  main.innerHTML=html;
-  main.scrollTop=0;
-}
-
-/* Prepa block renderers */
-function renderPrepaStatBlock(idx,s){
-  return'<div class="admin-content-section" data-idx="'+idx+'"><button class="btn-rm-section" onclick="removePrepaBlock(\'prepa-stats-list\','+idx+')">&#10005;</button>'+
-    field('ps_val_'+idx,'Valeur',s.val||'','text','Ex: 79%')+
-    field('ps_lbl_'+idx,'Label',s.lbl||'','text','Ex: Admis medecine')+
-    '</div>';
-}
-
-function renderPrepaBlock(type,idx,b){
-  return'<div class="admin-content-section" data-idx="'+idx+'"><button class="btn-rm-section" onclick="removePrepaBlock(\'prepa-'+type+'-list\','+idx+')">&#10005;</button>'+
-    field('p'+type[0]+'_t_'+idx,'Titre',b.t||'','text')+
-    field('p'+type[0]+'_d_'+idx,'Description',b.d||'','textarea')+
-    '</div>';
-}
-
-function renderPrepaExtraSection(idx,sec){
-  var html='<div class="admin-content-section" data-idx="'+idx+'" style="border-left:3px solid var(--wp-accent)">';
-  html+='<button class="btn-rm-section" onclick="removePrepaBlock(\'prepa-extra-list\','+idx+')">&#10005;</button>';
-  html+=field('pe_title_'+idx,'Titre de la section',sec.title||'','text');
-  html+='<div id="pe_blocks_'+idx+'">';
-  (sec.blocks||[]).forEach(function(b,j){
-    html+='<div class="admin-faq-item" data-idx="'+j+'"><button class="admin-faq-remove" onclick="this.parentElement.remove();markUnsaved()">&#10005;</button>'+
-      field('pe_bt_'+idx+'_'+j,'Titre',b.t||'','text')+
-      field('pe_bd_'+idx+'_'+j,'Description',b.d||'','textarea')+'</div>';
-  });
-  html+='</div>';
-  html+='<button class="btn-add" onclick="addPrepaExtraBlock('+idx+')">+ Ajouter un bloc</button>';
-  html+='</div>';
-  return html;
-}
-
-/* Dynamic add/remove for prepas */
-window.addPrepaStat=function(){var l=document.getElementById('prepa-stats-list');l.insertAdjacentHTML('beforeend',renderPrepaStatBlock(l.children.length,{}));markUnsaved()};
-window.addPrepaBlock=function(type){var l=document.getElementById('prepa-'+type+'-list');l.insertAdjacentHTML('beforeend',renderPrepaBlock(type,l.children.length,{}));markUnsaved()};
-window.addPrepaExtra=function(){var l=document.getElementById('prepa-extra-list');l.insertAdjacentHTML('beforeend',renderPrepaExtraSection(l.children.length,{title:'',blocks:[]}));markUnsaved()};
-window.addPrepaExtraBlock=function(secIdx){
-  var l=document.getElementById('pe_blocks_'+secIdx);if(!l)return;
-  var j=l.children.length;
-  l.insertAdjacentHTML('beforeend','<div class="admin-faq-item" data-idx="'+j+'"><button class="admin-faq-remove" onclick="this.parentElement.remove();markUnsaved()">&#10005;</button>'+
-    field('pe_bt_'+secIdx+'_'+j,'Titre','','text')+field('pe_bd_'+secIdx+'_'+j,'Description','','textarea')+'</div>');
-  markUnsaved();
-};
-window.removePrepaBlock=function(listId,idx){var l=document.getElementById(listId);if(l&&l.children[idx]){l.children[idx].remove();markUnsaved()}};
-
-/* Collect prepa form data */
-function collectPrepaData(){
-  var d={};
-  d.name=getVal('p_name');d.slug=getVal('p_slug');d.ville=getVal('p_ville');
-  d.villes=getVal('p_villes').split(',').map(function(v){return v.trim()}).filter(Boolean);
-  d.taux=getVal('p_taux');d.anciennete=getVal('p_anciennete');d.etudiants=getVal('p_etudiants');
-  d.format=getVal('p_format');d.intro=getVal('p_intro');d.avis=getVal('p_avis');
-  d.filieres=[];document.querySelectorAll('.p_filiere:checked').forEach(function(cb){d.filieres.push(cb.value)});
-  d.tags=getVal('p_tags').split(',').map(function(t){return t.trim()}).filter(Boolean);
-  d.stats=[];document.querySelectorAll('#prepa-stats-list .admin-content-section').forEach(function(el,i){
-    var v=el.querySelector('[name^="ps_val_"]');var l=el.querySelector('[name^="ps_lbl_"]');
-    if(v&&l)d.stats.push({val:v.value.trim(),lbl:l.value.trim()});
-  });
-  d.modele=[];document.querySelectorAll('#prepa-modele-list .admin-content-section').forEach(function(el){
-    var t=el.querySelector('[name^="pm_t_"]');var dd=el.querySelector('[name^="pm_d_"]');
-    if(t&&dd)d.modele.push({t:t.value.trim(),d:dd.value.trim()});
-  });
-  d.pedagogie=[];document.querySelectorAll('#prepa-pedagogie-list .admin-content-section').forEach(function(el){
-    var t=el.querySelector('[name^="pp_t_"]');var dd=el.querySelector('[name^="pp_d_"]');
-    if(t&&dd)d.pedagogie.push({t:t.value.trim(),d:dd.value.trim()});
-  });
-  d.extra_sections=[];document.querySelectorAll('#prepa-extra-list > .admin-content-section').forEach(function(secEl,i){
-    var title=secEl.querySelector('[name^="pe_title_"]');
-    var blocks=[];
-    secEl.querySelectorAll('.admin-faq-item').forEach(function(bEl){
-      var bt=bEl.querySelector('[name^="pe_bt_"]');var bd=bEl.querySelector('[name^="pe_bd_"]');
-      if(bt&&bd)blocks.push({t:bt.value.trim(),d:bd.value.trim()});
-    });
-    d.extra_sections.push({title:title?title.value.trim():'',blocks:blocks});
-  });
-  d.published=document.getElementById('toggle-p-published').checked;
-  d.featured=document.getElementById('toggle-p-featured').checked;
-  d.coup_de_coeur=document.getElementById('toggle-p-coeur').checked;
-  return d;
-}
-
-/* Save prepa */
-window.savePrepa=async function(){
-  var btn=document.getElementById('btn-save-prepa');btn.disabled=true;btn.textContent='Sauvegarde...';
-  try{
-    var d=collectPrepaData();
-    d.updated_at=new Date().toISOString();
-    var r=await sb.from(TABLE_PREPAS).update(d).eq('id',state.currentId);
-    if(r.error)throw r.error;
-    state.unsaved=false;
-    await loadPrepas();
-    showToast('Prepa enregistree','success');
-  }catch(err){console.error(err);showToast('Erreur : '+(err.message||'Echec'),'error')}
-  btn.disabled=false;btn.textContent='Mettre a jour';
-};
-
-/* Delete prepa */
-window.deletePrepa=async function(id){
-  if(!confirm('Supprimer cette prepa ? Cette action est irreversible.'))return;
-  try{
-    var r=await sb.from(TABLE_PREPAS).delete().eq('id',id);
-    if(r.error)throw r.error;
-    await loadPrepas();showToast('Prepa supprimee','success');navigate('prepas');
-  }catch(err){showToast('Erreur : '+(err.message||'Echec'),'error')}
-};
-
-/* Add prepa modal */
-window.showAddPrepaModal=function(){
-  var html='<div class="admin-modal-overlay" id="add-prepa-modal" onclick="if(event.target===this)this.remove()">';
-  html+='<div class="admin-modal"><h3>Nouvelle prepa</h3>';
-  html+='<div class="admin-field"><label>Nom</label><input type="text" id="new-prepa-name" placeholder="Ex: Ma Prepa Sante" autofocus></div>';
-  html+='<div class="admin-field"><label>Ville</label><input type="text" id="new-prepa-ville" placeholder="Ex: Paris"></div>';
-  html+='<div class="admin-field"><label>Format</label><select id="new-prepa-format"><option>Présentiel</option><option>En ligne</option><option>Hybride</option></select></div>';
-  html+='<div class="admin-modal-actions">';
-  html+='<button class="btn-secondary" onclick="document.getElementById(\'add-prepa-modal\').remove()">Annuler</button>';
-  html+='<button class="btn-primary" onclick="createPrepa()">Creer</button>';
-  html+='</div></div></div>';
-  document.body.insertAdjacentHTML('beforeend',html);
-  document.getElementById('new-prepa-name').focus();
-};
-
-window.createPrepa=async function(){
-  var name=document.getElementById('new-prepa-name').value.trim();
-  var ville=document.getElementById('new-prepa-ville').value.trim();
-  var format=document.getElementById('new-prepa-format').value;
-  if(!name){showToast('Nom requis','error');return}
-  var slug=name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
-  try{
-    var r=await sb.from(TABLE_PREPAS).insert({slug:slug,name:name,ville:ville,villes:ville?[ville]:[],format:format,published:true}).select().single();
-    if(r.error)throw r.error;
-    document.getElementById('add-prepa-modal').remove();
-    await loadPrepas();showToast('Prepa "'+name+'" creee','success');
-    editPrepa(r.data.id);
-  }catch(err){showToast('Erreur : '+(err.message||'Echec'),'error')}
-};
-
-/* Helpers */
-function esc(s){var d=document.createElement('div');d.textContent=s||'';return d.innerHTML}
-function escAttr(s){return String(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
-function formatDate(iso){if(!iso)return'--';var d=new Date(iso);return d.toLocaleDateString('fr-FR',{day:'2-digit',month:'short',year:'numeric'})}
-function showToast(msg,type){var t=document.getElementById('admin-toast');t.textContent=msg;t.className='admin-toast'+(type?' '+type:'');setTimeout(function(){t.classList.add('show')},10);setTimeout(function(){t.classList.remove('show')},3000)}
-
-/* Start */
-if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
-})();
-</script>
+<script src="/admin-app.js"></script>
 </body>
 </html>
