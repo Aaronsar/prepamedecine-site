@@ -911,6 +911,8 @@ window.saveArticle=async function(){
       excerpt:d.excerpt||null,subtitle:d.excerpt||null,slug:d.slug||null,
       tag:d.tag||'Guide',focus_keyword:d.focus_keyword||null,
       status:d.status||'draft',sections:d.sections,
+      cover_image:d.cover_image||null,cover_image_alt:d.cover_image_alt||null,
+      scheduled_at:d.scheduled_at||null,
       read_time:Math.max(1,Math.round(countWords(extractTextFromBlocks(d.sections))/200))+' min',
       updated_at:new Date().toISOString()
     };
