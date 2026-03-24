@@ -384,8 +384,10 @@ body{overflow-x:hidden}
   var drawer  = document.getElementById('navLinks');
   var burger  = document.getElementById('burger');
   var btnClose= document.getElementById('navClose');
-  if(overlay) document.body.appendChild(overlay);
-  if(drawer)  document.body.appendChild(drawer);
+  if(window.innerWidth<=768){
+    if(overlay) document.body.appendChild(overlay);
+    if(drawer)  document.body.appendChild(drawer);
+  }
 
   function open(){
     if(drawer)  drawer.classList.add('open');
