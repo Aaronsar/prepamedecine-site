@@ -757,6 +757,13 @@ function renderArticleEditor(){
   html+=field('art_focus_kw','Mot-cle focus',d.focus_keyword||'','text','Mot-cle principal pour l\'analyse SEO');
   html+=metaBoxClose();
 
+  // Cover image
+  html+=metaBoxOpen('Image a la une',true);
+  html+='<div class="admin-field"><label>URL de l\'image</label><input type="url" name="art_cover_image" value="'+escAttr(d.cover_image||'')+'" oninput="markUnsaved();previewCoverImage()" placeholder="https://images.unsplash.com/..."></div>';
+  html+='<div class="admin-field"><label>Texte alternatif (alt)</label><input type="text" name="art_cover_image_alt" value="'+escAttr(d.cover_image_alt||'')+'" oninput="markUnsaved()" placeholder="Description de l\'image pour le SEO"></div>';
+  html+='<div id="cover-preview" style="margin-top:8px;border-radius:8px;overflow:hidden;max-height:200px">'+(d.cover_image?'<img src="'+escAttr(d.cover_image)+'" alt="'+escAttr(d.cover_image_alt||'')+'" style="width:100%;height:200px;object-fit:cover;border-radius:8px">':'<div style="background:#f1f5f9;border:2px dashed #cbd5e1;border-radius:8px;padding:40px;text-align:center;color:#94a3b8;font-size:13px">Aucune image. Colle une URL pour voir l\'apercu.</div>')+'</div>';
+  html+=metaBoxClose();
+
   // Blocks
   var sections=normalizeSections(d.sections||[]);d.sections=sections;
   html+=metaBoxOpen('Contenu ('+sections.length+' blocs)',false);
@@ -809,9 +816,18 @@ function collectArticleFormData(){
     title:getVal('art_title'),meta_title:getVal('art_meta_title'),meta_description:getVal('art_meta_desc'),
     excerpt:getVal('art_excerpt'),tag:getVal('art_tag'),slug:getVal('art_slug'),
     focus_keyword:getVal('art_focus_kw'),status:getVal('art_status'),
+    cover_image:getVal('art_cover_image'),cover_image_alt:getVal('art_cover_image_alt'),
     sections:collectBlocks('art')
   };
 }
+window.previewCoverImage=function(){
+  var url=(document.querySelector('[name="art_cover_image"]')||{}).value||'';
+  var alt=(document.querySelector('[name="art_cover_image_alt"]')||{}).value||'';
+  var el=document.getElementById('cover-preview');
+  if(!el)return;
+  if(url)el.innerHTML='<img src="'+escAttr(url)+'" alt="'+escAttr(alt)+'" style="width:100%;height:200px;object-fit:cover;border-radius:8px" onerror="this.parentNode.innerHTML=\'<div style=padding:20px;text-align:center;color:#ef4444;font-size:13px>Image introuvable</div>\'">';
+  else el.innerHTML='<div style="background:#f1f5f9;border:2px dashed #cbd5e1;border-radius:8px;padding:40px;text-align:center;color:#94a3b8;font-size:13px">Aucune image. Colle une URL pour voir l\'apercu.</div>';
+};
 
 function updateArticleScorePanel(){
   var d=collectArticleFormData();

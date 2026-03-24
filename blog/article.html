@@ -107,6 +107,8 @@ input,select{font-family:inherit}
 .article-hero .article-meta .meta-item{display:inline-flex;align-items:center;gap:6px}
 .article-hero .article-meta svg{width:16px;height:16px;color:var(--text-light)}
 .article-hero .article-excerpt{font-size:17px;color:var(--text-muted);line-height:1.7;margin-top:16px;max-width:680px}
+.article-cover{margin-top:28px;border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-md)}
+.article-cover img{width:100%;height:auto;max-height:400px;object-fit:cover;display:block}
 
 /* ============ ARTICLE LAYOUT ============ */
 .article-layout{display:flex;gap:40px;padding:48px 0 60px;max-width:var(--max-w);margin:0 auto;padding-left:24px;padding-right:24px}
@@ -297,6 +299,9 @@ body{overflow-x:hidden}
       </span>
     </div>
     <p class="article-excerpt" id="articleExcerpt"></p>
+    <div class="article-cover" id="articleCover" style="display:none">
+      <img id="coverImg" src="" alt="" loading="lazy">
+    </div>
   </div>
 </section>
 
@@ -743,6 +748,20 @@ function renderArticle(article, slug) {
     document.getElementById('articleExcerpt').style.display = 'none';
   }
   document.getElementById('articleHero').style.display = 'block';
+
+  // Cover image
+  if (article.cover_image) {
+    var coverEl = document.getElementById('articleCover');
+    var coverImgEl = document.getElementById('coverImg');
+    coverImgEl.src = article.cover_image;
+    coverImgEl.alt = article.cover_image_alt || title;
+    coverEl.style.display = 'block';
+    // Also update OG image
+    var ogImg = document.querySelector('meta[property="og:image"]');
+    if (ogImg) ogImg.content = article.cover_image;
+    var twImg = document.querySelector('meta[name="twitter:image"]');
+    if (twImg) twImg.content = article.cover_image;
+  }
 
   // Generate TOC
   var toc = generateToc(normalized);
