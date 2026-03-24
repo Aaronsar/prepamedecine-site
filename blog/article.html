@@ -190,8 +190,11 @@ input,select{font-family:inherit}
 @media(max-width:600px){
   .article-grid.cols-2,.article-grid.cols-3{grid-template-columns:1fr}
 }
-.article-grid-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius-sm);padding:20px;transition:border-color .2s,box-shadow .2s}
+.article-grid-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius-sm);padding:20px;transition:border-color .2s,box-shadow .2s,transform .2s;text-decoration:none;display:block}
 .article-grid-card:hover{border-color:var(--blue);box-shadow:var(--shadow)}
+a.article-grid-card{cursor:pointer}
+a.article-grid-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-md)}
+a.article-grid-card h4{color:var(--blue)}
 .article-grid-card h4{font-size:15px;font-weight:700;color:var(--text);margin-bottom:6px}
 .article-grid-card p{font-size:14px;color:var(--text-muted);line-height:1.6;margin:0}
 
@@ -543,7 +546,9 @@ function renderBlock(block) {
     case 'grid':
       var cols = block.columns === 3 ? 'cols-3' : 'cols-2';
       var gridItems = (block.items || []).map(function(item) {
-        return '<div class="article-grid-card"><h4>' + escapeHtml(item.title || '') + '</h4><p>' + escapeHtml(item.description || '') + '</p></div>';
+        var tag = item.href ? 'a' : 'div';
+        var hrefAttr = item.href ? ' href="' + escapeAttr(item.href) + '"' : '';
+        return '<' + tag + hrefAttr + ' class="article-grid-card"><h4>' + escapeHtml(item.title || '') + '</h4><p>' + (item.description || '') + '</p></' + tag + '>';
       }).join('');
       return '<div class="article-grid ' + cols + '">' + gridItems + '</div>';
 
