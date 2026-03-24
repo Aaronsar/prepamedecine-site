@@ -712,7 +712,9 @@ function getElVal(parent,sel){var el=parent.querySelector(sel);return el?el.valu
 async function loadArticleData(id){
   var main=document.getElementById('admin-main');
   main.innerHTML='<div style="padding:60px;text-align:center;color:#787c82">Chargement...</div>';
+  try{
   var r=await sb.from(TABLE).select('*').eq('id',id).maybeSingle();
+  if(r.error)throw r.error;
   var data=r.data||{};
   // Convert old format {heading, html} to block format if needed
   if(data.sections&&data.sections.length>0&&!data.sections[0].type){
@@ -725,9 +727,10 @@ async function loadArticleData(id){
     data.sections=converted;
   }
   state.articleData=data;renderArticleEditor();
+  }catch(e){console.error('loadArticleData error:',e);document.getElementById('admin-main').innerHTML='<div style="padding:40px;color:red">Erreur chargement article: '+e.message+'<br><a href="javascript:void(0)" onclick="navigate(\'articles\')" style="color:#046bd2">Retour aux articles</a></div>';}
 }
 
-function renderArticleEditor(){
+function renderArticleEditor(){try{
   var d=state.articleData||{};
   var main=document.getElementById('admin-main');
   var html='<div class="admin-editor">';
@@ -809,7 +812,7 @@ function renderArticleEditor(){
 
   main.innerHTML=html;main.scrollTop=0;
   updateArticleScorePanel();bindScoreUpdates();
-}
+}catch(e){console.error('renderArticleEditor error:',e);document.getElementById('admin-main').innerHTML='<div style="padding:40px;color:red">Erreur editeur: '+e.message+'<br><a href="javascript:void(0)" onclick="navigate(\'articles\')" style="color:#046bd2">Retour aux articles</a></div>'}}
 
 /* Score panel updates */
 var _scoreTimer=null;
