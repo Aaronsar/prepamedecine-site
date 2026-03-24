@@ -36,6 +36,6 @@
     { "source": "/index.php/:path*", "destination": "/", "permanent": true }
   ],
   "rewrites": [
-    { "source": "/blog/:slug([^/.]+)", "destination": "/blog/article.html" }
+    { "source": "/blog/:match*", "destination": "/blog/article.html" }
   ]
 }
