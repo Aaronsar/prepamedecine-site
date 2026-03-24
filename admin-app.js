@@ -1000,15 +1000,14 @@ window.improveArticle=async function(){
   try{
     var seo=analyzeSEO({title:d.title,metaTitle:d.meta_title||d.title,metaDescription:d.meta_description,slug:d.slug,focusKeyword:d.focus_keyword,sections:d.sections});
     var geo=analyzeGEO({sections:d.sections});
-    var res=await fetch(SUPABASE_URL+'/functions/v1/generate-article',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({title:d.title,focusKeyword:d.focus_keyword||'',tag:d.tag||''})});
+    var res=await fetch(SUPABASE_URL+'/functions/v1/improve-prepa-article',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({title:d.title,meta_title:d.meta_title||d.title,meta_description:d.meta_description,slug:d.slug,focus_keyword:d.focus_keyword,sections:d.sections,scores:{seo:seo.score,geo:geo.score}})});
     var data=await res.json();
-    if(!data.success||!data.article){hideAIOverlay();showToast('Erreur IA: '+(data.error||'inconnue'),'error');return}
-    var art=data.article;
+    if(data.error){hideAIOverlay();showToast('Erreur IA: '+data.error,'error');return}
     var update={};
-    if(art.metaTitle)update.meta_title=art.metaTitle;
-    if(art.metaDescription)update.meta_description=art.metaDescription;
-    if(art.excerpt)update.excerpt=art.excerpt;
-    if(art.sections&&art.sections.length>0)update.sections=art.sections;
+    if(data.meta_title)update.meta_title=data.meta_title;
+    if(data.meta_description)update.meta_description=data.meta_description;
+    if(data.focus_keyword)update.focus_keyword=data.focus_keyword;
+    if(data.sections&&data.sections.length>0)update.sections=data.sections;
     update.updated_at=new Date().toISOString();
     var r=await sb.from(TABLE).update(update).eq('id',state.currentId);
     if(r.error)throw r.error;
