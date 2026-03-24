@@ -205,6 +205,16 @@ function stripHtml(html){return(html||'').replace(/<[^>]*>/g,'').trim()}
 function normalize(text){return(text||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim()}
 function countWords(text){var t=stripHtml(text);return t.split(/\s+/).filter(function(w){return w.length>0}).length}
 
+function normalizeSections(sections){
+  if(!sections||!sections.length)return[];
+  return sections.map(function(s){
+    if(s&&s.type)return s;
+    if(s&&s.heading)return{type:'heading',level:'h2',text:s.heading};
+    if(s&&s.html)return{type:'paragraph',html:s.html};
+    return{type:'paragraph',html:''};
+  });
+}
+
 function extractTextFromBlocks(sections){
   return(sections||[]).map(function(s){
     switch(s.type){
@@ -389,8 +399,9 @@ function renderArticleList(){
 }
 
 function articleRow(a){
-  var seo=analyzeSEO({title:a.title,metaTitle:a.meta_title||a.title,metaDescription:a.meta_description||'',slug:a.slug,focusKeyword:a.focus_keyword||'',sections:a.sections||[]});
-  var geo=analyzeGEO({sections:a.sections||[]});
+  var safeSections=normalizeSections(a.sections||[]);
+  var seo,geo;try{seo=analyzeSEO({title:a.title,metaTitle:a.meta_title||a.title,metaDescription:a.meta_description||'',slug:a.slug,focusKeyword:a.focus_keyword||'',sections:safeSections})}catch(e){seo={score:0,checks:[]}}
+  try{geo=analyzeGEO({sections:safeSections})}catch(e){geo={score:0,checks:[]}}
   var h='<tr data-title="'+escAttr(a.title||'')+'" data-tag="'+escAttr(a.tag||'')+'" data-status="'+escAttr(a.status||'draft')+'">';
   h+='<td class="page-title-cell" onclick="editArticle('+a.id+')">'+esc(a.title||'Sans titre')+'</td>';
   h+='<td>'+tagBadge(a.tag||a.category)+'</td>';
@@ -434,6 +445,7 @@ function newBlock(type){
 
 function renderBlockItem(block,idx,prefix){
   prefix=prefix||'blk';
+  if(!block||!block.type){block=block||{};if(block.heading){block={type:'heading',level:'h2',text:block.heading}}else if(block.html){block={type:'paragraph',html:block.html}}else{block={type:'paragraph',html:''}}}
   var t=block.type;
   var h='<div class="block-item" data-idx="'+idx+'" data-type="'+t+'" id="'+prefix+'-'+idx+'">';
   h+='<div class="block-header"><span class="block-type-badge '+t+'">'+(t==='heading'?'H'+(block.level||'2').replace('h',''):BLOCK_TYPES.find(function(b){return b.type===t})?.badge||t.toUpperCase())+'</span>';
@@ -746,7 +758,7 @@ function renderArticleEditor(){
   html+=metaBoxClose();
 
   // Blocks
-  var sections=d.sections||[];
+  var sections=normalizeSections(d.sections||[]);d.sections=sections;
   html+=metaBoxOpen('Contenu ('+sections.length+' blocs)',false);
   html+='<div id="art-list">';
   sections.forEach(function(block,i){html+=renderBlockItem(block,i,'art')});
@@ -1272,7 +1284,7 @@ function renderPageEditor(){
   html+=metaBoxClose();
 
   // Blocks
-  var sections=d.sections||[];
+  var sections=normalizeSections(d.sections||[]);d.sections=sections;
   html+=metaBoxOpen('Contenu ('+sections.length+' blocs)',false);
   html+='<div id="pg-list">';
   sections.forEach(function(block,i){html+=renderBlockItem(block,i,'pg')});
