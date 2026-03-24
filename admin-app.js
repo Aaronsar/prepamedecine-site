@@ -89,7 +89,16 @@ async function showDashboard(){
   document.getElementById('admin-login').style.display='none';
   document.getElementById('admin-dashboard').style.display='flex';
   await Promise.all([loadArticles(),loadPrepas(),loadPages()]);
-  renderSidebar();navigate('dashboard');
+  renderSidebar();
+  // Route from hash on load
+  var initHash=(location.hash||'').replace('#','');
+  if(initHash==='articles')navigate('articles');
+  else if(initHash==='prepas')navigate('prepas');
+  else if(initHash==='pages')navigate('pages');
+  else if(initHash.startsWith('article/')){var aid=parseInt(initHash.split('/')[1]);if(aid)editArticle(aid);else navigate('dashboard')}
+  else if(initHash.startsWith('prepa/')){var pid=parseInt(initHash.split('/')[1]);if(pid)editPrepa(pid);else navigate('dashboard')}
+  else if(initHash.startsWith('page/')){var ps=decodeURIComponent(initHash.split('/').slice(1).join('/'));if(ps)editPage(ps);else navigate('dashboard')}
+  else navigate('dashboard');
 }
 
 async function loadArticles(){var r=await sb.from(TABLE).select('*').order('updated_at',{ascending:false});articlesCache=r.data||[]}
@@ -117,9 +126,12 @@ function navItem(view,icon,label,count,active){
 }
 
 /* ========== NAVIGATION ========== */
+function pushHash(hash){if(location.hash!=='#'+hash)history.pushState(null,null,'#'+hash)}
+
 window.navigate=function(viewId){
   if(state.unsaved&&!confirm('Modifications non sauvegardees. Continuer ?'))return;
   state.unsaved=false;state.view=viewId;state.currentId=null;
+  pushHash(viewId);
   if(viewId==='dashboard')renderDashboardHome();
   else if(viewId==='articles')renderArticleList();
   else if(viewId==='prepas')renderPrepaList();
@@ -130,18 +142,32 @@ window.navigate=function(viewId){
 window.editArticle=function(id){
   if(state.unsaved&&!confirm('Modifications non sauvegardees. Continuer ?'))return;
   state.unsaved=false;state.currentId=id;state.view='editor';
+  pushHash('article/'+id);
   loadArticleData(id);renderSidebar();
 };
 window.editPrepa=function(id){
   if(state.unsaved&&!confirm('Modifications non sauvegardees. Continuer ?'))return;
   state.unsaved=false;state.currentId=id;state.view='prepa-editor';
+  pushHash('prepa/'+id);
   loadPrepaData(id);renderSidebar();
 };
 window.editPage=function(slug){
   if(state.unsaved&&!confirm('Modifications non sauvegardees. Continuer ?'))return;
   state.unsaved=false;state.currentId=slug;state.view='page-editor';
+  pushHash('page/'+encodeURIComponent(slug));
   loadPageData(slug);renderSidebar();
 };
+
+window.addEventListener('popstate',function(){
+  var h=(location.hash||'').replace('#','');
+  if(!h||h==='dashboard')navigate('dashboard');
+  else if(h==='articles')navigate('articles');
+  else if(h==='prepas')navigate('prepas');
+  else if(h==='pages')navigate('pages');
+  else if(h.startsWith('article/')){var id=parseInt(h.split('/')[1]);if(id)editArticle(id)}
+  else if(h.startsWith('prepa/')){var id=parseInt(h.split('/')[1]);if(id)editPrepa(id)}
+  else if(h.startsWith('page/')){var slug=decodeURIComponent(h.split('/').slice(1).join('/'));if(slug)editPage(slug)}
+});
 
 /* ========== HELPERS ========== */
 function esc(s){var d=document.createElement('div');d.textContent=s||'';return d.innerHTML}
