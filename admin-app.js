@@ -208,10 +208,14 @@ function countWords(text){var t=stripHtml(text);return t.split(/\s+/).filter(fun
 function normalizeSections(sections){
   if(!sections||!sections.length)return[];
   return sections.map(function(s){
-    if(s&&s.type)return s;
-    if(s&&s.heading)return{type:'heading',level:'h2',text:s.heading};
-    if(s&&s.html)return{type:'paragraph',html:s.html};
-    return{type:'paragraph',html:''};
+    if(!s)return{type:'paragraph',html:''};
+    if(!s.type){
+      if(s.heading)return{type:'heading',level:'h2',text:s.heading};
+      if(s.html)return{type:'paragraph',html:s.html};
+      return{type:'paragraph',html:''};
+    }
+    if(s.type==='heading'&&s.level!=null){var lv=String(s.level);if(!lv.startsWith('h'))lv='h'+lv;s.level=lv}
+    return s;
   });
 }
 
@@ -448,7 +452,7 @@ function renderBlockItem(block,idx,prefix){
   if(!block||!block.type){block=block||{};if(block.heading){block={type:'heading',level:'h2',text:block.heading}}else if(block.html){block={type:'paragraph',html:block.html}}else{block={type:'paragraph',html:''}}}
   var t=block.type;
   var h='<div class="block-item" data-idx="'+idx+'" data-type="'+t+'" id="'+prefix+'-'+idx+'">';
-  h+='<div class="block-header"><span class="block-type-badge '+t+'">'+(t==='heading'?'H'+(block.level||'2').replace('h',''):BLOCK_TYPES.find(function(b){return b.type===t})?.badge||t.toUpperCase())+'</span>';
+  h+='<div class="block-header"><span class="block-type-badge '+t+'">'+(t==='heading'?'H'+String(block.level||'h2').replace('h',''):BLOCK_TYPES.find(function(b){return b.type===t})?.badge||t.toUpperCase())+'</span>';
   h+='<span style="font-size:12px;color:var(--wp-text-light)">'+(BLOCK_TYPES.find(function(b){return b.type===t})?.label||t)+'</span>';
   h+='<div class="block-actions">';
   h+='<button onclick="moveBlock(\''+prefix+'\','+idx+',-1)" title="Monter">&#9650;</button>';
