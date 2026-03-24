@@ -173,6 +173,7 @@ window.addEventListener('popstate',function(){
 function esc(s){var d=document.createElement('div');d.textContent=s||'';return d.innerHTML}
 function escAttr(s){return String(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
 function formatDate(iso){if(!iso)return'--';var d=new Date(iso);return d.toLocaleDateString('fr-FR',{day:'2-digit',month:'short',year:'numeric'})}
+function formatDateTime(iso){if(!iso)return'--';var d=new Date(iso);return d.toLocaleDateString('fr-FR',{day:'2-digit',month:'short',year:'numeric'})+' a '+d.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit',timeZone:'Europe/Paris'})}
 function showToast(msg,type){var t=document.getElementById('admin-toast');t.textContent=msg;t.className='admin-toast'+(type?' '+type:'');setTimeout(function(){t.classList.add('show')},10);setTimeout(function(){t.classList.remove('show')},3000)}
 function slugify(s){return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'')}
 
@@ -821,11 +822,11 @@ function renderArticleEditor(){try{
   html+='<div class="admin-field"><label>Statut</label><select name="art_status" onchange="markUnsaved();toggleScheduleField()">';
   ['draft','published','scheduled','archived'].forEach(function(s){html+='<option value="'+s+'"'+((d.status||'draft')===s?' selected':'')+'>'+(s==='draft'?'Brouillon':s==='published'?'Publie':s==='scheduled'?'Programme':'Archive')+'</option>'});
   html+='</select></div>';
-  var schedVal=d.scheduled_at?new Date(d.scheduled_at).toISOString().slice(0,16):'';
+  var schedVal='';if(d.scheduled_at){var sd=new Date(d.scheduled_at);schedVal=sd.getFullYear()+'-'+String(sd.getMonth()+1).padStart(2,'0')+'-'+String(sd.getDate()).padStart(2,'0')+'T'+String(sd.getHours()).padStart(2,'0')+':'+String(sd.getMinutes()).padStart(2,'0')}
   html+='<div class="admin-field" id="schedule-field" style="display:'+((d.status==='scheduled')?'block':'none')+'"><label>Date de publication</label><input type="datetime-local" name="art_scheduled_at" value="'+schedVal+'" onchange="markUnsaved()" min="'+new Date().toISOString().slice(0,16)+'"></div>';
   if(d.updated_at)html+='<div class="pub-info">Modifie : <strong>'+formatDate(d.updated_at)+'</strong></div>';
   if(d.published_at)html+='<div class="pub-info">Publie : <strong>'+formatDate(d.published_at)+'</strong></div>';
-  if(d.scheduled_at&&d.status==='scheduled')html+='<div class="pub-info" style="color:#f59e0b">&#128197; Programme : <strong>'+formatDate(d.scheduled_at)+'</strong></div>';
+  if(d.scheduled_at&&d.status==='scheduled')html+='<div class="pub-info" style="color:#f59e0b">&#128197; Programme le : <strong>'+formatDateTime(d.scheduled_at)+'</strong> (heure de Paris)</div>';
   html+='</div>';
   html+='<div class="admin-publish-box-footer"><button class="btn-primary" onclick="saveArticle()" id="btn-save">Sauvegarder</button></div></div>';
 
