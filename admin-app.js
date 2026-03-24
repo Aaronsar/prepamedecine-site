@@ -177,7 +177,7 @@ function getPageLiveUrl(slug,type){
 function getVal(n){var el=document.querySelector('[name="'+n+'"]');return el?el.value.trim():''}
 window.markUnsaved=function(){state.unsaved=true};
 function scoreBadge(val){var cls=val<50?'score-low':val<=75?'score-mid':'score-good';return'<span class="score-badge '+cls+'">'+val+'</span>'}
-function statusLabel(s){if(s==='published')return'<span class="status-dot published"></span>Publie';if(s==='archived')return'<span class="status-dot archived"></span>Archive';return'<span class="status-dot draft"></span>Brouillon'}
+function statusLabel(s){if(s==='published')return'<span class="status-dot published"></span>Publie';if(s==='scheduled')return'<span class="status-dot" style="background:#f59e0b"></span>Programme';if(s==='archived')return'<span class="status-dot archived"></span>Archive';return'<span class="status-dot draft"></span>Brouillon'}
 function tagBadge(tag){var c=TAG_COLORS[tag]||'#6b7280';return'<span class="tag-badge" style="background:'+c+'">'+esc(tag||'--')+'</span>'}
 
 function metaBoxOpen(title,collapsed){
@@ -376,7 +376,7 @@ function statCard(num,label,navId){
 }
 
 /* ========== ARTICLE LIST ========== */
-function renderArticleList(){
+function renderArticleList(){try{
   var main=document.getElementById('admin-main');
   var html='<div class="admin-page-list">';
   html+='<div class="admin-page-list-header"><h2>Articles</h2>';
@@ -389,14 +389,14 @@ function renderArticleList(){
   html+='<select id="article-tag-filter" onchange="filterArticles()"><option value="">Tous les tags</option>';
   TAG_OPTIONS.forEach(function(t){html+='<option>'+t+'</option>'});
   html+='</select>';
-  html+='<select id="article-status-filter" onchange="filterArticles()"><option value="">Tous statuts</option><option value="published">Publie</option><option value="draft">Brouillon</option><option value="archived">Archive</option></select>';
+  html+='<select id="article-status-filter" onchange="filterArticles()"><option value="">Tous statuts</option><option value="published">Publie</option><option value="scheduled">Programme</option><option value="draft">Brouillon</option><option value="archived">Archive</option></select>';
   html+='</div>';
 
   html+='<div class="table-scroll"><table class="admin-table"><thead><tr><th>Titre</th><th>Tag</th><th>SEO</th><th>GEO</th><th>Statut</th><th>Date</th><th>Actions</th></tr></thead><tbody id="article-tbody">';
   articlesCache.forEach(function(a){html+=articleRow(a)});
   html+='</tbody></table></div></div>';
   main.innerHTML=html;
-}
+}catch(e){console.error('renderArticleList error:',e);document.getElementById('admin-main').innerHTML='<div style="padding:40px;color:red">Erreur affichage articles: '+e.message+'</div>'}}
 
 function articleRow(a){
   var safeSections=normalizeSections(a.sections||[]);
@@ -785,11 +785,14 @@ function renderArticleEditor(){
   // Publish box
   html+='<div class="admin-publish-box"><div class="admin-publish-box-header">Publier</div>';
   html+='<div class="admin-publish-box-body">';
-  html+='<div class="admin-field"><label>Statut</label><select name="art_status" onchange="markUnsaved()">';
-  ['draft','published','archived'].forEach(function(s){html+='<option value="'+s+'"'+((d.status||'draft')===s?' selected':'')+'>'+(s==='draft'?'Brouillon':s==='published'?'Publie':'Archive')+'</option>'});
+  html+='<div class="admin-field"><label>Statut</label><select name="art_status" onchange="markUnsaved();toggleScheduleField()">';
+  ['draft','published','scheduled','archived'].forEach(function(s){html+='<option value="'+s+'"'+((d.status||'draft')===s?' selected':'')+'>'+(s==='draft'?'Brouillon':s==='published'?'Publie':s==='scheduled'?'Programme':'Archive')+'</option>'});
   html+='</select></div>';
+  var schedVal=d.scheduled_at?new Date(d.scheduled_at).toISOString().slice(0,16):'';
+  html+='<div class="admin-field" id="schedule-field" style="display:'+((d.status==='scheduled')?'block':'none')+'"><label>Date de publication</label><input type="datetime-local" name="art_scheduled_at" value="'+schedVal+'" onchange="markUnsaved()" min="'+new Date().toISOString().slice(0,16)+'"></div>';
   if(d.updated_at)html+='<div class="pub-info">Modifie : <strong>'+formatDate(d.updated_at)+'</strong></div>';
   if(d.published_at)html+='<div class="pub-info">Publie : <strong>'+formatDate(d.published_at)+'</strong></div>';
+  if(d.scheduled_at&&d.status==='scheduled')html+='<div class="pub-info" style="color:#f59e0b">&#128197; Programme : <strong>'+formatDate(d.scheduled_at)+'</strong></div>';
   html+='</div>';
   html+='<div class="admin-publish-box-footer"><button class="btn-primary" onclick="saveArticle()" id="btn-save">Sauvegarder</button></div></div>';
 
@@ -817,9 +820,15 @@ function collectArticleFormData(){
     excerpt:getVal('art_excerpt'),tag:getVal('art_tag'),slug:getVal('art_slug'),
     focus_keyword:getVal('art_focus_kw'),status:getVal('art_status'),
     cover_image:getVal('art_cover_image'),cover_image_alt:getVal('art_cover_image_alt'),
+    scheduled_at:getVal('art_status')==='scheduled'?getVal('art_scheduled_at')||null:null,
     sections:collectBlocks('art')
   };
 }
+window.toggleScheduleField=function(){
+  var status=getVal('art_status');
+  var field=document.getElementById('schedule-field');
+  if(field)field.style.display=status==='scheduled'?'block':'none';
+};
 window.previewCoverImage=function(){
   var url=(document.querySelector('[name="art_cover_image"]')||{}).value||'';
   var alt=(document.querySelector('[name="art_cover_image_alt"]')||{}).value||'';
