@@ -888,13 +888,11 @@ window.showAddModal=function(){
   html+='<div class="admin-field"><label>Mot-cle focus</label><input type="text" id="new-kw" placeholder="Ex: prepa medecine"></div>';
   html+='</div>';
 
-  // AI source
-  html+='<div class="ai-source-section"><div class="ai-source-header">&#129302; Generation IA (optionnel)</div>';
-  html+='<div class="admin-field"><label>URL source</label><input type="url" id="ai-source-url" placeholder="https://example.com/article"></div></div>';
+  html+='<div class="ai-source-section" style="background:#f0f7ff;border:1px solid #d0e3f7;border-radius:8px;padding:12px 16px;margin-top:12px"><div style="font-size:13px;color:#046bd2;font-weight:600;margin-bottom:4px">&#129302; Generation IA automatique</div><div style="font-size:12px;color:#64748b">L\'IA va generer un article complet a partir du titre, en utilisant les donnees reelles des prepas et la recherche Google.</div></div>';
 
   html+='<div class="admin-modal-actions">';
   html+='<button class="btn-secondary" onclick="closeAddModal()">Annuler</button>';
-  html+='<button class="btn-primary btn-ai-generate" onclick="createArticle()">Creer</button>';
+  html+='<button class="btn-primary btn-ai-generate" onclick="createArticle()">&#129302; Generer l\'article</button>';
   html+='</div></div></div>';
   document.body.insertAdjacentHTML('beforeend',html);
   document.querySelector('[name="new_title"]').focus();
@@ -906,11 +904,9 @@ window.createArticle=async function(){
   var title=getVal('new_title');if(!title){showToast('Titre requis','error');return}
   var tag=document.getElementById('new-tag').value;
   var kw=(document.getElementById('new-kw').value||'').trim();
-  var sourceUrl=(document.getElementById('ai-source-url').value||'').trim();
   var slug=slugify(title);
   var btn=document.querySelector('#add-modal .btn-primary');btn.disabled=true;
-  var useAI=!!sourceUrl;
-  if(useAI)showAIOverlay('Generation IA en cours...<br><small>~20-30 secondes</small>');
+  showAIOverlay('Generation IA en cours...<br><small>L\'IA redige l\'article avec les donnees des prepas (~30-40s)</small>');
 
   try{
     var insertData={slug:slug,title:title,tag:tag,focus_keyword:kw||null,status:'draft',meta_title:title,sections:[]};
@@ -918,18 +914,25 @@ window.createArticle=async function(){
     if(r.error)throw r.error;
     var newId=r.data.id;
 
-    if(useAI){
-      try{
-        var existing=articlesCache.map(function(a){return{title:a.title,slug:a.slug}});
-        var aiRes=await fetch(SUPABASE_URL+'/functions/v1/generate-article',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({title:title,source_url:sourceUrl,existing_articles:existing})});
-        var aiData=await aiRes.json();
-        if(!aiData.error){
-          var update={title:aiData.title||title,meta_description:aiData.meta_description||null,subtitle:aiData.subtitle||null,sections:aiData.sections||[],faq:aiData.faq||[]};
-          await sb.from(TABLE).update(update).eq('id',newId);
-          showToast('Article genere par IA','success');
-        }else{showToast('IA: '+aiData.error,'error')}
-      }catch(e){showToast('Erreur IA','error')}
-    }
+    try{
+      var aiRes=await fetch(SUPABASE_URL+'/functions/v1/generate-article',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({title:title,focusKeyword:kw||null,tag:tag})});
+      var aiData=await aiRes.json();
+      if(aiData.success&&aiData.article){
+        var art=aiData.article;
+        var update={
+          slug:art.slug||slug,
+          meta_title:art.metaTitle||title,
+          meta_description:art.metaDescription||null,
+          excerpt:art.excerpt||null,
+          read_time:art.readTime||'5 min',
+          hero_pills:art.heroPills||[],
+          related_slugs:art.relatedSlugs||[],
+          sections:art.sections||[]
+        };
+        await sb.from(TABLE).update(update).eq('id',newId);
+        showToast('Article genere par IA !','success');
+      }else{showToast('IA: '+(aiData.error||'Erreur inconnue'),'error')}
+    }catch(e){console.error('AI error:',e);showToast('Erreur IA: '+e.message,'error')}
 
     hideAIOverlay();closeAddModal();await loadArticles();editArticle(newId);
   }catch(err){hideAIOverlay();showToast('Erreur : '+(err.message||'Echec'),'error');btn.disabled=false}
@@ -939,17 +942,19 @@ window.createArticle=async function(){
 window.regenerateArticle=async function(){
   if(!state.currentId)return;
   var title=getVal('art_title');if(!title){showToast('Titre requis','error');return}
+  var kw=(document.querySelector('[name="art_focus_kw"]')||{}).value||'';
+  var tag=(document.querySelector('[name="art_tag"]')||{}).value||'';
   if(!confirm('Regenerer avec l\'IA ? Le contenu sera remplace.'))return;
-  showAIOverlay('Regeneration en cours...');
+  showAIOverlay('Regeneration en cours...<br><small>~30-40 secondes</small>');
   try{
-    var existing=articlesCache.filter(function(a){return a.id!==state.currentId}).map(function(a){return{title:a.title,slug:a.slug}});
-    var res=await fetch(SUPABASE_URL+'/functions/v1/generate-article',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({title:title,existing_articles:existing})});
+    var res=await fetch(SUPABASE_URL+'/functions/v1/generate-article',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({title:title,focusKeyword:kw,tag:tag})});
     var data=await res.json();
-    if(data.error){hideAIOverlay();showToast('Erreur IA','error');return}
-    var update={title:data.title||title,meta_description:data.meta_description||null,subtitle:data.subtitle||null,sections:data.sections||[],faq:data.faq||[]};
+    if(!data.success||!data.article){hideAIOverlay();showToast('Erreur IA: '+(data.error||'inconnue'),'error');return}
+    var art=data.article;
+    var update={slug:art.slug||state.articleData.slug,meta_title:art.metaTitle||title,meta_description:art.metaDescription||null,excerpt:art.excerpt||null,read_time:art.readTime||'5 min',hero_pills:art.heroPills||[],related_slugs:art.relatedSlugs||[],sections:art.sections||[]};
     await sb.from(TABLE).update(update).eq('id',state.currentId);
-    hideAIOverlay();showToast('Article regenere','success');await loadArticles();editArticle(state.currentId);
-  }catch(err){hideAIOverlay();showToast('Erreur','error')}
+    hideAIOverlay();showToast('Article regenere !','success');await loadArticles();editArticle(state.currentId);
+  }catch(err){hideAIOverlay();showToast('Erreur: '+err.message,'error')}
 };
 
 window.improveArticle=async function(){
