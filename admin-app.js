@@ -854,7 +854,7 @@ function collectArticleFormData(){
     excerpt:getVal('art_excerpt'),tag:getVal('art_tag'),slug:getVal('art_slug'),
     focus_keyword:getVal('art_focus_kw'),status:getVal('art_status'),
     cover_image:getVal('art_cover_image'),cover_image_alt:getVal('art_cover_image_alt'),
-    scheduled_at:getVal('art_status')==='scheduled'?getVal('art_scheduled_at')||null:null,
+    scheduled_at:getVal('art_status')==='scheduled'&&getVal('art_scheduled_at')?new Date(getVal('art_scheduled_at')).toISOString():null,
     sections:collectBlocks('art')
   };
 }
