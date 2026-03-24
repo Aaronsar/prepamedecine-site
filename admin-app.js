@@ -920,7 +920,10 @@ window.createArticle=async function(){
   var title=getVal('new_title');if(!title){showToast('Titre requis','error');return}
   var tag=document.getElementById('new-tag').value;
   var kw=(document.getElementById('new-kw').value||'').trim();
-  var slug=slugify(title);
+  var baseSlug=slugify(title);
+  var slug=baseSlug;
+  var existing=articlesCache.map(function(a){return a.slug});
+  var n=2;while(existing.indexOf(slug)>=0){slug=baseSlug+'-'+n;n++}
   var btn=document.querySelector('#add-modal .btn-primary');btn.disabled=true;
   showAIOverlay('Generation IA en cours...<br><small>L\'IA redige l\'article avec les donnees des prepas (~30-40s)</small>');
 
