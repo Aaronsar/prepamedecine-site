@@ -772,6 +772,7 @@ function renderArticleEditor(){try{
   html+='<button class="btn-preview" onclick="showArticlePreview()">&#128065; Preview</button>';
   if(d.slug)html+='<a href="/blog/'+escAttr(d.slug)+'" target="_blank" class="btn-secondary" style="text-decoration:none">&#128279; Voir sur le site</a>';
   html+='<button class="btn-ai-regen" onclick="regenerateArticle()">&#129302; Regenerer IA</button>';
+  html+='<button class="btn-ai-regen" onclick="humanizeArticle()" style="background:linear-gradient(135deg,#f59e0b,#d97706)">&#9998; Humaniser</button>';
   html+='</div>';
 
   html+='<div class="admin-editor-layout"><div class="admin-editor-content">';
@@ -1041,6 +1042,27 @@ window.improveArticle=async function(){
     var r=await sb.from(TABLE).update(update).eq('id',state.currentId);
     if(r.error)throw r.error;
     hideAIOverlay();showToast('Article ameliore !','success');await loadArticles();editArticle(state.currentId);
+  }catch(err){console.error(err);hideAIOverlay();showToast('Erreur : '+(err.message||'Echec'),'error')}
+};
+
+/* ========== HUMANIZE ARTICLE ========== */
+window.humanizeArticle=async function(){
+  if(!state.currentId)return;
+  var d=collectArticleFormData();if(!d.title){showToast('Titre requis','error');return}
+  if(!confirm('Humaniser l\'article ? L\'IA va reecrire le contenu pour un ton plus naturel (~30-40 sec)'))return;
+  showAIOverlay('Humanisation en cours...<br><small>L\'IA reecrit l\'article avec un ton naturel (~30-40s)</small>');
+  try{
+    var res=await fetch(SUPABASE_URL+'/functions/v1/humanize-article',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({title:d.title,excerpt:d.excerpt||'',sections:d.sections||[]})});
+    var data=await res.json();
+    if(!data.success||!data.humanized){hideAIOverlay();showToast('Erreur IA: '+(data.error||'inconnue'),'error');return}
+    var h=data.humanized;
+    var update={};
+    if(h.excerpt)update.excerpt=h.excerpt;
+    if(h.sections&&h.sections.length>0)update.sections=h.sections;
+    update.updated_at=new Date().toISOString();
+    var r=await sb.from(TABLE).update(update).eq('id',state.currentId);
+    if(r.error)throw r.error;
+    hideAIOverlay();showToast('Article humanise !','success');await loadArticles();editArticle(state.currentId);
   }catch(err){console.error(err);hideAIOverlay();showToast('Erreur : '+(err.message||'Echec'),'error')}
 };
 
