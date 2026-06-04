@@ -21,7 +21,6 @@
 <meta name="twitter:title" id="twTitle" content="">
 <meta name="twitter:description" id="twDesc" content="">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" defer></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
 <style>
@@ -305,10 +304,6 @@ body{overflow-x:hidden}
 /* Hide Diploma's default form title (we use our own header) */
 .pdf-modal .diploma-form__title{display:none!important}
 
-/* During PDF generation: cover everything with a white overlay, render target sits on top */
-.pdf-mode{overflow:hidden!important}
-.pdf-mode::before{content:'';position:fixed;inset:0;background:#fff;z-index:9998}
-.pdf-mode .pdf-render-target{position:relative;z-index:9999;background:#fff;margin:0 auto;display:block}
 </style>
 <script id="jsonLdScript" type="application/ld+json">{}</script>
 </head>
@@ -873,6 +868,7 @@ var PDF_CTA_CONFIG = {
     title: 'Récupère le calendrier PASS 2026-2027 en PDF',
     subtitle: 'Toutes les dates clés à imprimer et garder sous la main toute l\'année.',
     pdf_filename: 'calendrier-pass-2026-2027.pdf',
+    pdf_url: 'https://jhopwqpbaiyjfoggvcaf.supabase.co/storage/v1/object/public/exports/pdfs/calendrier-pass-2026-2027-officiel.pdf',
     cta_label: 'Télécharger le PDF maintenant'
   }
 };
@@ -1028,168 +1024,46 @@ function closePdfModal() {
   document.body.style.overflow = '';
 }
 
-/* ============ PDF — Single-page recap, on-brand ============ */
-function buildPdfDocument() {
-  // Extract calendar rows from the article's first table
-  var rows = [];
-  var firstTable = document.querySelector('.article-table');
-  if (firstTable) {
-    firstTable.querySelectorAll('tbody tr').forEach(function(tr) {
-      var cells = Array.from(tr.querySelectorAll('td')).map(function(td) { return td.textContent.trim(); });
-      if (cells.length >= 4) rows.push({ month: cells[0], event: cells[1], date: cells[2], action: cells[3] });
+/* Download the static PDF stored in Supabase (the official guide) */
+function downloadStaticPdf(url, filename) {
+  // Fetch as blob to force download (avoid opening in a new tab)
+  fetch(url, { cache: 'no-store' })
+    .then(function(res) {
+      if (!res.ok) throw new Error('Fetch ' + res.status);
+      return res.blob();
+    })
+    .then(function(blob) {
+      var blobUrl = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = blobUrl;
+      a.download = filename || 'calendrier-pass-2026-2027.pdf';
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(function() {
+        URL.revokeObjectURL(blobUrl);
+        if (a.parentNode) a.parentNode.removeChild(a);
+      }, 100);
+    })
+    .catch(function(err) {
+      console.error('Static PDF download error:', err);
+      window.open(url, '_blank');
     });
-  }
-
-  // A4 portrait at 96dpi ≈ 794×1123 px. Use width 794 and design to fit ~1100 px tall.
-  var page = document.createElement('div');
-  page.style.cssText = 'font-family:Inter,Arial,sans-serif;background:#fff;color:#0f172a;width:794px;line-height:1.4;font-size:12px';
-
-  /* ----- HEADER (band bleu, comme l'article hero) ----- */
-  var header = document.createElement('div');
-  header.style.cssText = 'background:#046bd2;color:#fff;padding:22px 32px 24px;display:flex;justify-content:space-between;align-items:flex-start;gap:24px';
-  header.innerHTML =
-    '<div style="flex:1">' +
-      '<div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;opacity:.85;font-weight:700;margin-bottom:6px">Guide officiel · prepamedecine.fr</div>' +
-      '<h1 style="font-size:24px;font-weight:800;letter-spacing:-0.5px;line-height:1.2;margin:0 0 6px;color:#fff">Calendrier complet du PASS 2026-2027</h1>' +
-      '<p style="font-size:12px;line-height:1.45;opacity:.92;margin:0;max-width:480px">Toutes les dates clés pour réussir ta première année de médecine. Imprime et garde sous la main.</p>' +
-    '</div>' +
-    '<div style="text-align:right;flex-shrink:0;display:flex;flex-direction:column;align-items:flex-end;gap:6px">' +
-      '<img src="' + location.origin + '/logo-prepamedecine-white.svg" alt="prepamedecine.fr" style="height:38px;width:auto;display:block">' +
-      '<div style="font-size:10px;opacity:.85;letter-spacing:0.3px">Comparateur indépendant</div>' +
-    '</div>';
-  page.appendChild(header);
-
-  /* ----- STATS BAR ----- */
-  var stats = document.createElement('div');
-  stats.style.cssText = 'background:#e8f2fc;padding:14px 32px;display:flex;gap:18px;border-bottom:1px solid #cfe2f6';
-  stats.innerHTML =
-    '<div style="flex:1"><div style="font-size:22px;font-weight:900;color:#046bd2;line-height:1">10</div><div style="font-size:10px;color:#64748b;margin-top:2px;letter-spacing:0.3px">mois d\'études</div></div>' +
-    '<div style="flex:1"><div style="font-size:22px;font-weight:900;color:#046bd2;line-height:1">7</div><div style="font-size:10px;color:#64748b;margin-top:2px;letter-spacing:0.3px">étapes clés</div></div>' +
-    '<div style="flex:1"><div style="font-size:22px;font-weight:900;color:#10b981;line-height:1">79%</div><div style="font-size:10px;color:#64748b;margin-top:2px;letter-spacing:0.3px">de réussite avec Diploma</div></div>' +
-    '<div style="flex:1"><div style="font-size:22px;font-weight:900;color:#046bd2;line-height:1">2026</div><div style="font-size:10px;color:#64748b;margin-top:2px;letter-spacing:0.3px">rentrée septembre</div></div>';
-  page.appendChild(stats);
-
-  /* ----- BODY ----- */
-  var body = document.createElement('div');
-  body.style.cssText = 'padding:22px 32px';
-
-  // Table of key dates (style ".article-table" du site)
-  var tableHtml =
-    '<div style="font-size:10px;color:#0891b2;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px">Vue d\'ensemble</div>' +
-    '<h2 style="font-size:16px;font-weight:800;color:#0f172a;letter-spacing:-0.3px;margin:0 0 10px">Ton année en 7 étapes clés</h2>' +
-    '<table style="width:100%;border-collapse:collapse;border:1px solid #e2e8f0;border-radius:8px;overflow:hidden;font-size:11px;margin-bottom:18px">' +
-      '<thead><tr style="background:#046bd2;color:#fff">' +
-        '<th style="padding:8px 10px;text-align:left;font-weight:700;font-size:10px;letter-spacing:0.3px">Période</th>' +
-        '<th style="padding:8px 10px;text-align:left;font-weight:700;font-size:10px;letter-spacing:0.3px">Événement clé</th>' +
-        '<th style="padding:8px 10px;text-align:left;font-weight:700;font-size:10px;letter-spacing:0.3px">Date</th>' +
-        '<th style="padding:8px 10px;text-align:left;font-weight:700;font-size:10px;letter-spacing:0.3px">Action à prévoir</th>' +
-      '</tr></thead><tbody>';
-  rows.forEach(function(r, i) {
-    var alt = i % 2 === 1 ? 'background:#f8fafc;' : '';
-    tableHtml +=
-      '<tr style="' + alt + 'border-bottom:1px solid #e2e8f0">' +
-        '<td style="padding:8px 10px;font-weight:700;color:#046bd2">' + escapeHtml(r.month) + '</td>' +
-        '<td style="padding:8px 10px;color:#0f172a;font-weight:600">' + escapeHtml(r.event) + '</td>' +
-        '<td style="padding:8px 10px;color:#334155">' + escapeHtml(r.date) + '</td>' +
-        '<td style="padding:8px 10px;color:#475569">' + escapeHtml(r.action) + '</td>' +
-      '</tr>';
-  });
-  tableHtml += '</tbody></table>';
-
-  // Conseils (4 cards 2x2 - style ".article-callout" du site)
-  var tipsHtml =
-    '<div style="font-size:10px;color:#0891b2;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px">Conseils</div>' +
-    '<h2 style="font-size:16px;font-weight:800;color:#0f172a;letter-spacing:-0.3px;margin:0 0 10px">Pour tenir sur la durée</h2>' +
-    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px">' +
-      '<div style="background:#f0f7ff;border-left:3px solid #046bd2;border-radius:6px;padding:10px 12px">' +
-        '<div style="font-size:11px;font-weight:800;color:#046bd2;margin-bottom:3px">Planning hebdomadaire</div>' +
-        '<div style="font-size:10.5px;color:#334155;line-height:1.5">Utilise Notion ou Google Calendar pour planifier tes révisions semaine par semaine, avec des objectifs clairs et mesurables.</div>' +
-      '</div>' +
-      '<div style="background:#ecfdf5;border-left:3px solid #10b981;border-radius:6px;padding:10px 12px">' +
-        '<div style="font-size:11px;font-weight:800;color:#065f46;margin-bottom:3px">Sommeil & sport</div>' +
-        '<div style="font-size:10.5px;color:#334155;line-height:1.5">Ne zappe pas tes activités physiques et tes moments de repos : ils sont essentiels pour tenir le rythme du PASS.</div>' +
-      '</div>' +
-      '<div style="background:#fffbeb;border-left:3px solid #f59e0b;border-radius:6px;padding:10px 12px">' +
-        '<div style="font-size:11px;font-weight:800;color:#92400e;margin-bottom:3px">Groupe de travail</div>' +
-        '<div style="font-size:10.5px;color:#334155;line-height:1.5">Rejoins un groupe d\'étudiants PASS pour partager ressources, fiches et conseils. La solitude est ton ennemi.</div>' +
-      '</div>' +
-      '<div style="background:#fef2f2;border-left:3px solid #ef4444;border-radius:6px;padding:10px 12px">' +
-        '<div style="font-size:11px;font-weight:800;color:#991b1b;margin-bottom:3px">QCM & annales</div>' +
-        '<div style="font-size:10.5px;color:#334155;line-height:1.5">Entraîne-toi sur des annales chaque semaine dès octobre. Identifie tes matières faibles tôt pour les renforcer.</div>' +
-      '</div>' +
-    '</div>';
-
-  // Bandeau Diploma (style ".article-link-card")
-  var cta =
-    '<div style="background:#046bd2;border-radius:10px;padding:14px 18px;color:#fff;display:flex;justify-content:space-between;align-items:center;gap:14px">' +
-      '<div>' +
-        '<div style="font-size:13px;font-weight:800;margin-bottom:2px">⭐ Diploma Santé · 79% de réussite au PASS</div>' +
-        '<div style="font-size:11px;opacity:.92;line-height:1.4">Suivi individuel, planning clé en main, coaching Hermione. Le coup de cœur prepamedecine.fr.</div>' +
-      '</div>' +
-      '<div style="background:#fff;color:#046bd2;padding:8px 16px;border-radius:6px;font-size:11px;font-weight:800;flex-shrink:0">diploma-sante.fr</div>' +
-    '</div>';
-
-  body.innerHTML = tableHtml + tipsHtml + cta;
-  page.appendChild(body);
-
-  /* ----- FOOTER ----- */
-  var footer = document.createElement('div');
-  footer.style.cssText = 'background:#0f172a;color:#94a3b8;padding:12px 32px;display:flex;justify-content:space-between;align-items:center;gap:16px;font-size:10px';
-  footer.innerHTML =
-    '<div style="display:flex;align-items:center;gap:10px">' +
-      '<img src="' + location.origin + '/logo-prepamedecine-white.svg" alt="prepamedecine.fr" style="height:22px;width:auto;display:block">' +
-      '<span style="opacity:.4">·</span>' +
-      '<span>Comparateur indépendant des prépas médecine</span>' +
-    '</div>' +
-    '<div style="text-align:right">' +
-      'prepamedecine.fr/blog/calendrier-pass · © ' + new Date().getFullYear() +
-    '</div>';
-  page.appendChild(footer);
-
-  return page;
 }
 
 function handlePdfDownload(btn, filename) {
-  if (typeof html2pdf === 'undefined') {
-    alert('La génération du PDF est encore en chargement, réessaie dans une seconde.');
-    return;
+  var slug = (window.location.pathname.replace(/\/+$/, '').split('/').pop()) || '';
+  var cfg = PDF_CTA_CONFIG[slug];
+  if (cfg && cfg.pdf_url) {
+    downloadStaticPdf(cfg.pdf_url, cfg.pdf_filename || filename);
+    if (btn) {
+      var orig = btn.innerHTML;
+      btn.disabled = true;
+      btn.innerHTML = '<span>Téléchargement…</span>';
+      setTimeout(function() { btn.disabled = false; btn.innerHTML = orig; }, 1500);
+    }
+  } else {
+    console.warn('No static PDF URL configured for slug:', slug);
   }
-  var original = btn ? btn.innerHTML : null;
-  if (btn) {
-    btn.disabled = true;
-    btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" stroke-dasharray="40" stroke-dashoffset="10"><animateTransform attributeName="transform" type="rotate" from="0 12 12" to="360 12 12" dur="1s" repeatCount="indefinite"/></circle></svg><span>Génération du PDF…</span>';
-  }
-
-  document.body.classList.add('pdf-mode');
-
-  var wrap = buildPdfDocument();
-  // Must be in normal flow (NOT position:fixed) for html2pdf/html2canvas to render content
-  wrap.className = 'pdf-render-target';
-  document.body.appendChild(wrap);
-
-  var opts = {
-    margin: 0,
-    filename: filename || 'calendrier-pass-2026-2027.pdf',
-    image: { type: 'jpeg', quality: 0.95 },
-    html2canvas: { scale: 2, useCORS: true, backgroundColor: '#ffffff' },
-    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait', compress: true },
-    pagebreak: { mode: ['css', 'legacy'] }
-  };
-
-  html2pdf().set(opts).from(wrap).save().then(function() {
-    document.body.classList.remove('pdf-mode');
-    if (wrap.parentNode) wrap.parentNode.removeChild(wrap);
-    if (btn) { btn.disabled = false; btn.innerHTML = original; }
-  }).catch(function(err) {
-    document.body.classList.remove('pdf-mode');
-    if (btn) { btn.disabled = false; btn.innerHTML = original; }
-  }).catch(function(err) {
-    console.error('PDF error:', err);
-    document.body.classList.remove('pdf-mode');
-    if (wrap && wrap.parentNode) wrap.parentNode.removeChild(wrap);
-    if (btn) { btn.disabled = false; btn.innerHTML = original; }
-    alert('Erreur lors de la génération du PDF, réessaie.');
-  });
 }
 
 async function loadRelatedArticles(currentSlug) {
