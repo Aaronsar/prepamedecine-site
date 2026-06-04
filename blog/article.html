@@ -21,6 +21,7 @@
 <meta name="twitter:title" id="twTitle" content="">
 <meta name="twitter:description" id="twDesc" content="">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" defer></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
 <style>
@@ -258,6 +259,31 @@ a.article-grid-card h4{color:var(--blue)}
 
 /* ============ MISC ============ */
 body{overflow-x:hidden}
+
+/* ============ PDF CTA BLOCK ============ */
+.pdf-cta{margin:32px 0;padding:24px 28px;border-radius:var(--radius-lg);background:linear-gradient(135deg,#eff6ff 0%,#ecfeff 100%);border:1px solid #bfdbfe;position:relative;overflow:hidden}
+.pdf-cta::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--blue),#0891b2,#059669)}
+.pdf-cta-header{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+.pdf-cta-icon{width:48px;height:48px;border-radius:12px;background:var(--blue);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 4px 12px rgba(4,107,210,.25)}
+.pdf-cta-icon svg{width:24px;height:24px;color:#fff}
+.pdf-cta-text h3{font-size:18px;font-weight:800;color:var(--text);line-height:1.3;margin:0 0 4px}
+.pdf-cta-text p{font-size:14px;color:var(--text-muted);margin:0;line-height:1.5}
+.pdf-cta-body{display:flex;flex-direction:column;gap:14px}
+.pdf-cta-form-wrap{background:#fff;border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px}
+.pdf-cta-or{font-size:12px;text-align:center;color:var(--text-light);text-transform:uppercase;letter-spacing:1px;font-weight:600;display:flex;align-items:center;gap:10px}
+.pdf-cta-or::before,.pdf-cta-or::after{content:'';flex:1;height:1px;background:var(--border)}
+.pdf-cta-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:13px 22px;background:var(--blue);color:#fff;border:none;border-radius:var(--radius-sm);font-size:15px;font-weight:700;font-family:inherit;cursor:pointer;transition:background .2s,transform .15s,box-shadow .2s}
+.pdf-cta-btn:hover{background:var(--blue-dark);transform:translateY(-1px);box-shadow:0 6px 16px rgba(4,107,210,.25)}
+.pdf-cta-btn:disabled{opacity:.7;cursor:wait;transform:none}
+.pdf-cta-btn svg{width:18px;height:18px}
+.pdf-cta-mini{font-size:12px;color:var(--text-light);margin-top:6px;text-align:center}
+
+/* Hide elements when printing/generating PDF */
+.pdf-mode .nav,.pdf-mode .footer,.pdf-mode .article-sidebar,.pdf-mode .pdf-cta,
+.pdf-mode .related-section,.pdf-mode .breadcrumbs,.pdf-mode .article-cover{display:none!important}
+.pdf-mode .article-hero{padding:24px 0!important;background:#fff!important}
+.pdf-mode .article-layout{padding:16px 0!important}
+.pdf-mode .article-main{max-width:100%!important}
 </style>
 <script id="jsonLdScript" type="application/ld+json">{}</script>
 </head>
@@ -804,12 +830,166 @@ function renderArticle(article, slug) {
   // JSON-LD
   setJsonLd(article, slug);
 
+  // Inject PDF + form CTAs (only for slugs that have a downloadable resource)
+  injectPdfCtas(slug, title);
+
   // Show content, hide loading
   document.getElementById('loadingState').style.display = 'none';
   document.getElementById('articleLayout').style.display = 'flex';
 
   // Init scroll spy
   initScrollSpy();
+}
+
+/* ============ PDF + FORM CTA INJECTION ============ */
+var PDF_CTA_CONFIG = {
+  'calendrier-complet-pass-2026-2027-toutes-les-dates-cles': {
+    form_id: 'prepamedecine-fr-contact-hs21ba39',
+    title: 'Récupère le calendrier PASS 2026-2027 en PDF',
+    subtitle: 'Toutes les dates clés à imprimer et garder sous la main toute l\'année.',
+    pdf_filename: 'calendrier-pass-2026-2027.pdf',
+    cta_label: 'Télécharger le PDF maintenant'
+  }
+};
+
+function injectPdfCtas(slug, articleTitle) {
+  var cfg = PDF_CTA_CONFIG[slug];
+  if (!cfg) return;
+
+  var content = document.getElementById('articleContent');
+  if (!content) return;
+
+  var blocks = Array.prototype.slice.call(content.children);
+  if (blocks.length === 0) return;
+
+  // Find anchor blocks
+  // - Position 1: after the first paragraph-block sequence (intro)
+  // - Position 2: middle of article (just before a middle h2)
+  // - Position 3: right before FAQ (or near the end)
+  var h2s = [];
+  var faqIdx = -1;
+  blocks.forEach(function(el, idx) {
+    if (el.tagName === 'H2') h2s.push(idx);
+    if (el.classList && el.classList.contains('article-faq') && faqIdx === -1) faqIdx = idx;
+  });
+
+  var positions = [];
+  // Position 1: after intro (before first H2 OR after 3rd block whichever comes first)
+  positions.push(h2s.length > 0 ? h2s[0] : Math.min(3, blocks.length));
+  // Position 2: middle (around the H2 closest to half)
+  if (h2s.length >= 3) {
+    positions.push(h2s[Math.floor(h2s.length / 2)]);
+  } else if (h2s.length === 2) {
+    positions.push(h2s[1]);
+  } else {
+    positions.push(Math.floor(blocks.length / 2));
+  }
+  // Position 3: just before FAQ (or near end)
+  positions.push(faqIdx >= 0 ? faqIdx : Math.max(blocks.length - 2, 0));
+
+  // De-dup and sort descending so insertions don't shift later indices
+  positions = positions.filter(function(v, i, a) { return a.indexOf(v) === i; }).sort(function(a, b) { return b - a; });
+
+  positions.forEach(function(pos, i) {
+    var variant = (i === positions.length - 1) ? 'top'
+                : (i === 0) ? 'bottom' : 'mid';
+    var cta = buildPdfCtaEl(cfg, variant);
+    if (pos >= blocks.length) {
+      content.appendChild(cta);
+    } else {
+      content.insertBefore(cta, blocks[pos]);
+    }
+  });
+
+  // Load the Diploma embed script once (it will pick up all data-diploma-form divs)
+  if (!document.getElementById('diploma-embed-script')) {
+    var s = document.createElement('script');
+    s.id = 'diploma-embed-script';
+    s.async = true;
+    s.src = 'https://hub.diploma-sante.fr/api/forms/' + cfg.form_id + '/embed.js';
+    document.head.appendChild(s);
+  }
+}
+
+function buildPdfCtaEl(cfg, variant) {
+  var wrap = document.createElement('div');
+  wrap.className = 'pdf-cta pdf-cta-' + variant;
+  wrap.innerHTML =
+    '<div class="pdf-cta-header">' +
+      '<div class="pdf-cta-icon">' +
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><polyline points="9 15 12 18 15 15"/></svg>' +
+      '</div>' +
+      '<div class="pdf-cta-text">' +
+        '<h3>' + escapeHtml(cfg.title) + '</h3>' +
+        '<p>' + escapeHtml(cfg.subtitle) + '</p>' +
+      '</div>' +
+    '</div>' +
+    '<div class="pdf-cta-body">' +
+      '<div class="pdf-cta-form-wrap">' +
+        '<div data-diploma-form="' + escapeAttr(cfg.form_id) + '"></div>' +
+      '</div>' +
+      '<div class="pdf-cta-or">ou</div>' +
+      '<button type="button" class="pdf-cta-btn" data-pdf-trigger="1" data-pdf-filename="' + escapeAttr(cfg.pdf_filename) + '">' +
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>' +
+        '<span>' + escapeHtml(cfg.cta_label) + '</span>' +
+      '</button>' +
+      '<div class="pdf-cta-mini">PDF généré à partir de cette page — gratuit, pas d\'inscription requise</div>' +
+    '</div>';
+
+  var btn = wrap.querySelector('[data-pdf-trigger]');
+  btn.addEventListener('click', function() { handlePdfDownload(btn, cfg.pdf_filename); });
+  return wrap;
+}
+
+function handlePdfDownload(btn, filename) {
+  if (typeof html2pdf === 'undefined') {
+    alert('La génération du PDF est encore en chargement, réessaie dans une seconde.');
+    return;
+  }
+  var original = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" stroke-dasharray="40" stroke-dashoffset="10"><animateTransform attributeName="transform" type="rotate" from="0 12 12" to="360 12 12" dur="1s" repeatCount="indefinite"/></circle></svg><span>Génération du PDF…</span>';
+
+  // Enter pdf-mode to hide nav/footer/sidebar/CTAs
+  document.body.classList.add('pdf-mode');
+
+  // Clone the article main so we control what goes in the PDF
+  var hero = document.getElementById('articleHero').cloneNode(true);
+  var main = document.querySelector('.article-main').cloneNode(true);
+  // Remove every pdf-cta in the clone
+  main.querySelectorAll('.pdf-cta').forEach(function(el) { el.remove(); });
+
+  var wrap = document.createElement('div');
+  wrap.style.cssText = 'background:#fff;color:#0f172a;padding:24px 28px;font-family:Inter,Arial,sans-serif;line-height:1.6;font-size:13px;max-width:780px;margin:0 auto';
+  wrap.appendChild(hero);
+  wrap.appendChild(main);
+
+  // Append footer with source URL
+  var fnote = document.createElement('div');
+  fnote.style.cssText = 'margin-top:32px;padding-top:16px;border-top:1px solid #e2e8f0;font-size:11px;color:#64748b;text-align:center';
+  fnote.innerHTML = 'Source : <strong>prepamedecine.fr</strong> — ' + location.href;
+  wrap.appendChild(fnote);
+
+  var opts = {
+    margin: [12, 10, 12, 10],
+    filename: filename || 'document.pdf',
+    image: { type: 'jpeg', quality: 0.92 },
+    html2canvas: { scale: 2, useCORS: true, backgroundColor: '#ffffff' },
+    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+    pagebreak: { mode: ['css', 'legacy'] }
+  };
+
+  html2pdf().set(opts).from(wrap).save().then(function() {
+    document.body.classList.remove('pdf-mode');
+    btn.disabled = false;
+    btn.innerHTML = original;
+  }).catch(function(err) {
+    console.error('PDF error:', err);
+    document.body.classList.remove('pdf-mode');
+    btn.disabled = false;
+    btn.innerHTML = original;
+    alert('Erreur lors de la génération du PDF, réessaie.');
+  });
 }
 
 async function loadRelatedArticles(currentSlug) {
