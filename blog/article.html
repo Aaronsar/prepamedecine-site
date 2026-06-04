@@ -295,6 +295,9 @@ body{overflow-x:hidden}
 .pdf-modal-reassure{display:flex;justify-content:center;align-items:center;gap:14px;margin-top:16px;font-size:12px;color:var(--text-muted);flex-wrap:wrap}
 .pdf-modal-reassure span{display:inline-flex;align-items:center;gap:4px}
 .pdf-modal-reassure svg{width:12px;height:12px;color:var(--green)}
+.pdf-modal-success{margin-top:14px;padding:14px 16px;background:var(--green-light);border:1px solid #a7f3d0;border-radius:10px;display:flex;align-items:center;gap:10px;font-size:14px;color:#065f46;line-height:1.5}
+.pdf-modal-success-icon{width:28px;height:28px;border-radius:50%;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.pdf-modal-success-icon svg{width:14px;height:14px}
 
 /* Style Diploma embed inside the modal to match the site */
 .pdf-modal [data-diploma-form] form > *,
@@ -981,6 +984,29 @@ function ensurePdfModal(cfg) {
   overlay.addEventListener('click', function(e) { if (e.target === overlay) closePdfModal(); });
   document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closePdfModal(); });
 
+  // Observe the Diploma form to detect submission success → auto-trigger PDF download
+  var formWrap = overlay.querySelector('[data-diploma-form]');
+  var pdfTriggered = false;
+  var successPattern = /(message envoy|merci.*envoy|bien re[çc]u|thank you|success(fully)?\b)/i;
+  if (formWrap && typeof MutationObserver !== 'undefined') {
+    var obs = new MutationObserver(function() {
+      if (pdfTriggered) return;
+      var txt = formWrap.textContent || '';
+      if (successPattern.test(txt)) {
+        pdfTriggered = true;
+        // Show inline confirmation + auto-download
+        var note = document.createElement('div');
+        note.className = 'pdf-modal-success';
+        note.innerHTML =
+          '<div class="pdf-modal-success-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>' +
+          '<div><strong>Merci !</strong> Ton PDF se télécharge automatiquement…</div>';
+        formWrap.parentNode.insertBefore(note, formWrap.nextSibling);
+        setTimeout(function() { handlePdfDownload(null, cfg.pdf_filename); }, 600);
+      }
+    });
+    obs.observe(formWrap, { childList: true, subtree: true, characterData: true });
+  }
+
   // Load the Diploma embed script once (it will populate the single data-diploma-form)
   if (!document.getElementById('diploma-embed-script')) {
     var s = document.createElement('script');
@@ -1010,9 +1036,11 @@ function handlePdfDownload(btn, filename) {
     alert('La génération du PDF est encore en chargement, réessaie dans une seconde.');
     return;
   }
-  var original = btn.innerHTML;
-  btn.disabled = true;
-  btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" stroke-dasharray="40" stroke-dashoffset="10"><animateTransform attributeName="transform" type="rotate" from="0 12 12" to="360 12 12" dur="1s" repeatCount="indefinite"/></circle></svg><span>Génération du PDF…</span>';
+  var original = btn ? btn.innerHTML : null;
+  if (btn) {
+    btn.disabled = true;
+    btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" stroke-dasharray="40" stroke-dashoffset="10"><animateTransform attributeName="transform" type="rotate" from="0 12 12" to="360 12 12" dur="1s" repeatCount="indefinite"/></circle></svg><span>Génération du PDF…</span>';
+  }
 
   // Enter pdf-mode to hide nav/footer/sidebar/CTAs
   document.body.classList.add('pdf-mode');
@@ -1045,13 +1073,11 @@ function handlePdfDownload(btn, filename) {
 
   html2pdf().set(opts).from(wrap).save().then(function() {
     document.body.classList.remove('pdf-mode');
-    btn.disabled = false;
-    btn.innerHTML = original;
+    if (btn) { btn.disabled = false; btn.innerHTML = original; }
   }).catch(function(err) {
     console.error('PDF error:', err);
     document.body.classList.remove('pdf-mode');
-    btn.disabled = false;
-    btn.innerHTML = original;
+    if (btn) { btn.disabled = false; btn.innerHTML = original; }
     alert('Erreur lors de la génération du PDF, réessaie.');
   });
 }
