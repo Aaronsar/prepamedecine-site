@@ -296,9 +296,11 @@ body{overflow-x:hidden}
 .pdf-modal-reassure span{display:inline-flex;align-items:center;gap:4px}
 .pdf-modal-reassure svg{width:12px;height:12px;color:var(--green)}
 
-/* Try to style Diploma embed inside the modal to match the site */
+/* Style Diploma embed inside the modal to match the site */
 .pdf-modal [data-diploma-form] form > *,
 .pdf-modal [data-diploma-form] form{font-family:inherit!important}
+/* Hide Diploma's default form title (we use our own header) */
+.pdf-modal .diploma-form__title{display:none!important}
 
 /* Hide elements when printing/generating PDF */
 .pdf-mode .nav,.pdf-mode .footer,.pdf-mode .article-sidebar,.pdf-mode .pdf-cta,
@@ -965,11 +967,6 @@ function ensurePdfModal(cfg) {
       '<div class="pdf-modal-form-wrap">' +
         '<div data-diploma-form="' + escapeAttr(cfg.form_id) + '"></div>' +
       '</div>' +
-      '<div class="pdf-modal-or">ou télécharge directement</div>' +
-      '<button type="button" class="pdf-modal-dl-btn" data-pdf-trigger="1" data-pdf-filename="' + escapeAttr(cfg.pdf_filename) + '">' +
-        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>' +
-        '<span>' + escapeHtml(cfg.cta_label) + '</span>' +
-      '</button>' +
       '<div class="pdf-modal-reassure">' +
         '<span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> 100% gratuit</span>' +
         '<span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> PDF immédiat</span>' +
@@ -983,10 +980,6 @@ function ensurePdfModal(cfg) {
   overlay.querySelector('.pdf-modal-close').addEventListener('click', closePdfModal);
   overlay.addEventListener('click', function(e) { if (e.target === overlay) closePdfModal(); });
   document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closePdfModal(); });
-
-  // PDF download from inside the modal
-  var dl = overlay.querySelector('[data-pdf-trigger]');
-  dl.addEventListener('click', function() { handlePdfDownload(dl, cfg.pdf_filename); });
 
   // Load the Diploma embed script once (it will populate the single data-diploma-form)
   if (!document.getElementById('diploma-embed-script')) {
