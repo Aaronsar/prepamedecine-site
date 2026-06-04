@@ -260,27 +260,50 @@ a.article-grid-card h4{color:var(--blue)}
 /* ============ MISC ============ */
 body{overflow-x:hidden}
 
-/* ============ PDF CTA BLOCK ============ */
-.pdf-cta{margin:32px 0;padding:24px 28px;border-radius:var(--radius-lg);background:linear-gradient(135deg,#eff6ff 0%,#ecfeff 100%);border:1px solid #bfdbfe;position:relative;overflow:hidden}
+/* ============ PDF CTA — inline banner ============ */
+.pdf-cta{margin:32px 0;padding:20px 24px;border-radius:var(--radius-lg);background:linear-gradient(135deg,#eff6ff 0%,#ecfeff 100%);border:1px solid #bfdbfe;position:relative;overflow:hidden;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
 .pdf-cta::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--blue),#0891b2,#059669)}
-.pdf-cta-header{display:flex;align-items:center;gap:14px;margin-bottom:14px}
 .pdf-cta-icon{width:48px;height:48px;border-radius:12px;background:var(--blue);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 4px 12px rgba(4,107,210,.25)}
 .pdf-cta-icon svg{width:24px;height:24px;color:#fff}
-.pdf-cta-text h3{font-size:18px;font-weight:800;color:var(--text);line-height:1.3;margin:0 0 4px}
-.pdf-cta-text p{font-size:14px;color:var(--text-muted);margin:0;line-height:1.5}
-.pdf-cta-body{display:flex;flex-direction:column;gap:14px}
-.pdf-cta-form-wrap{background:#fff;border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px}
-.pdf-cta-or{font-size:12px;text-align:center;color:var(--text-light);text-transform:uppercase;letter-spacing:1px;font-weight:600;display:flex;align-items:center;gap:10px}
-.pdf-cta-or::before,.pdf-cta-or::after{content:'';flex:1;height:1px;background:var(--border)}
-.pdf-cta-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:13px 22px;background:var(--blue);color:#fff;border:none;border-radius:var(--radius-sm);font-size:15px;font-weight:700;font-family:inherit;cursor:pointer;transition:background .2s,transform .15s,box-shadow .2s}
-.pdf-cta-btn:hover{background:var(--blue-dark);transform:translateY(-1px);box-shadow:0 6px 16px rgba(4,107,210,.25)}
-.pdf-cta-btn:disabled{opacity:.7;cursor:wait;transform:none}
-.pdf-cta-btn svg{width:18px;height:18px}
-.pdf-cta-mini{font-size:12px;color:var(--text-light);margin-top:6px;text-align:center}
+.pdf-cta-text{flex:1;min-width:200px}
+.pdf-cta-text h3{font-size:17px;font-weight:800;color:var(--text);line-height:1.3;margin:0 0 4px}
+.pdf-cta-text p{font-size:13.5px;color:var(--text-muted);margin:0;line-height:1.5}
+.pdf-cta-open{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 22px;background:var(--blue);color:#fff;border:none;border-radius:var(--radius-sm);font-size:14px;font-weight:700;font-family:inherit;cursor:pointer;transition:background .2s,transform .15s,box-shadow .2s;white-space:nowrap;flex-shrink:0}
+.pdf-cta-open:hover{background:var(--blue-dark);transform:translateY(-1px);box-shadow:0 6px 16px rgba(4,107,210,.25)}
+.pdf-cta-open svg{width:18px;height:18px}
+@media(max-width:600px){.pdf-cta-open{width:100%}}
+
+/* ============ PDF Modal (site style — "Demande de rappel") ============ */
+.pdf-modal-overlay{position:fixed;inset:0;background:rgba(15,23,42,.6);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);z-index:10000;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;visibility:hidden;transition:opacity .2s,visibility .2s}
+.pdf-modal-overlay.open{opacity:1;visibility:visible}
+.pdf-modal{background:#fff;border-radius:18px;box-shadow:0 20px 60px rgba(0,0,0,.25);width:100%;max-width:440px;max-height:90vh;overflow-y:auto;position:relative;padding:28px 26px 22px;transform:translateY(20px) scale(.96);transition:transform .25s cubic-bezier(.4,0,.2,1)}
+.pdf-modal-overlay.open .pdf-modal{transform:translateY(0) scale(1)}
+.pdf-modal-close{position:absolute;top:14px;right:14px;width:32px;height:32px;border-radius:50%;background:var(--bg-alt);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-muted);font-size:18px;transition:background .15s,color .15s;font-family:inherit;padding:0}
+.pdf-modal-close:hover{background:var(--border);color:var(--text)}
+.pdf-modal-header{display:flex;align-items:center;gap:10px;margin-bottom:6px;padding-right:36px}
+.pdf-modal-header .modal-icon{width:32px;height:32px;border-radius:8px;background:var(--blue-light);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.pdf-modal-header .modal-icon svg{width:18px;height:18px;color:var(--blue)}
+.pdf-modal-header h3{font-size:18px;font-weight:800;color:var(--text);margin:0;line-height:1.3}
+.pdf-modal-sub{font-size:14px;color:var(--text-muted);line-height:1.5;margin:0 0 18px}
+.pdf-modal-form-wrap{margin-bottom:14px}
+.pdf-modal-or{font-size:11px;text-align:center;color:var(--text-light);text-transform:uppercase;letter-spacing:1px;font-weight:700;display:flex;align-items:center;gap:10px;margin:8px 0 12px}
+.pdf-modal-or::before,.pdf-modal-or::after{content:'';flex:1;height:1px;background:var(--border)}
+.pdf-modal-dl-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:13px 22px;background:var(--green);color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;font-family:inherit;cursor:pointer;transition:background .2s,transform .15s,box-shadow .2s}
+.pdf-modal-dl-btn:hover{background:#059669;transform:translateY(-1px);box-shadow:0 6px 16px rgba(16,185,129,.25)}
+.pdf-modal-dl-btn:disabled{opacity:.7;cursor:wait;transform:none}
+.pdf-modal-dl-btn svg{width:18px;height:18px}
+.pdf-modal-reassure{display:flex;justify-content:center;align-items:center;gap:14px;margin-top:16px;font-size:12px;color:var(--text-muted);flex-wrap:wrap}
+.pdf-modal-reassure span{display:inline-flex;align-items:center;gap:4px}
+.pdf-modal-reassure svg{width:12px;height:12px;color:var(--green)}
+
+/* Try to style Diploma embed inside the modal to match the site */
+.pdf-modal [data-diploma-form] form > *,
+.pdf-modal [data-diploma-form] form{font-family:inherit!important}
 
 /* Hide elements when printing/generating PDF */
 .pdf-mode .nav,.pdf-mode .footer,.pdf-mode .article-sidebar,.pdf-mode .pdf-cta,
-.pdf-mode .related-section,.pdf-mode .breadcrumbs,.pdf-mode .article-cover{display:none!important}
+.pdf-mode .related-section,.pdf-mode .breadcrumbs,.pdf-mode .article-cover,
+.pdf-mode .pdf-modal-overlay{display:none!important}
 .pdf-mode .article-hero{padding:24px 0!important;background:#fff!important}
 .pdf-mode .article-layout{padding:16px 0!important}
 .pdf-mode .article-main{max-width:100%!important}
@@ -890,18 +913,82 @@ function injectPdfCtas(slug, articleTitle) {
   // De-dup and sort descending so insertions don't shift later indices
   positions = positions.filter(function(v, i, a) { return a.indexOf(v) === i; }).sort(function(a, b) { return b - a; });
 
-  positions.forEach(function(pos, i) {
-    var variant = (i === positions.length - 1) ? 'top'
-                : (i === 0) ? 'bottom' : 'mid';
-    var cta = buildPdfCtaEl(cfg, variant);
+  // Make sure the shared modal exists (creates form ONCE — Diploma embed loaded once)
+  ensurePdfModal(cfg);
+
+  positions.forEach(function(pos) {
+    var cta = buildPdfCtaEl(cfg);
     if (pos >= blocks.length) {
       content.appendChild(cta);
     } else {
       content.insertBefore(cta, blocks[pos]);
     }
   });
+}
 
-  // Load the Diploma embed script once (it will pick up all data-diploma-form divs)
+function buildPdfCtaEl(cfg) {
+  var wrap = document.createElement('div');
+  wrap.className = 'pdf-cta';
+  wrap.innerHTML =
+    '<div class="pdf-cta-icon">' +
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><polyline points="9 15 12 18 15 15"/></svg>' +
+    '</div>' +
+    '<div class="pdf-cta-text">' +
+      '<h3>' + escapeHtml(cfg.title) + '</h3>' +
+      '<p>' + escapeHtml(cfg.subtitle) + '</p>' +
+    '</div>' +
+    '<button type="button" class="pdf-cta-open" data-pdf-modal-open="1">' +
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>' +
+      '<span>' + escapeHtml(cfg.cta_label) + '</span>' +
+    '</button>';
+
+  wrap.querySelector('[data-pdf-modal-open]').addEventListener('click', openPdfModal);
+  return wrap;
+}
+
+function ensurePdfModal(cfg) {
+  if (document.getElementById('pdf-modal-overlay')) return;
+
+  var overlay = document.createElement('div');
+  overlay.id = 'pdf-modal-overlay';
+  overlay.className = 'pdf-modal-overlay';
+  overlay.innerHTML =
+    '<div class="pdf-modal" role="dialog" aria-modal="true" aria-labelledby="pdf-modal-title">' +
+      '<button type="button" class="pdf-modal-close" aria-label="Fermer">&times;</button>' +
+      '<div class="pdf-modal-header">' +
+        '<div class="modal-icon">' +
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><polyline points="9 15 12 18 15 15"/></svg>' +
+        '</div>' +
+        '<h3 id="pdf-modal-title">' + escapeHtml(cfg.title) + '</h3>' +
+      '</div>' +
+      '<p class="pdf-modal-sub">' + escapeHtml(cfg.subtitle) + '</p>' +
+      '<div class="pdf-modal-form-wrap">' +
+        '<div data-diploma-form="' + escapeAttr(cfg.form_id) + '"></div>' +
+      '</div>' +
+      '<div class="pdf-modal-or">ou télécharge directement</div>' +
+      '<button type="button" class="pdf-modal-dl-btn" data-pdf-trigger="1" data-pdf-filename="' + escapeAttr(cfg.pdf_filename) + '">' +
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>' +
+        '<span>' + escapeHtml(cfg.cta_label) + '</span>' +
+      '</button>' +
+      '<div class="pdf-modal-reassure">' +
+        '<span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> 100% gratuit</span>' +
+        '<span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> PDF immédiat</span>' +
+        '<span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Sans engagement</span>' +
+      '</div>' +
+    '</div>';
+
+  document.body.appendChild(overlay);
+
+  // Close handlers
+  overlay.querySelector('.pdf-modal-close').addEventListener('click', closePdfModal);
+  overlay.addEventListener('click', function(e) { if (e.target === overlay) closePdfModal(); });
+  document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closePdfModal(); });
+
+  // PDF download from inside the modal
+  var dl = overlay.querySelector('[data-pdf-trigger]');
+  dl.addEventListener('click', function() { handlePdfDownload(dl, cfg.pdf_filename); });
+
+  // Load the Diploma embed script once (it will populate the single data-diploma-form)
   if (!document.getElementById('diploma-embed-script')) {
     var s = document.createElement('script');
     s.id = 'diploma-embed-script';
@@ -911,34 +998,18 @@ function injectPdfCtas(slug, articleTitle) {
   }
 }
 
-function buildPdfCtaEl(cfg, variant) {
-  var wrap = document.createElement('div');
-  wrap.className = 'pdf-cta pdf-cta-' + variant;
-  wrap.innerHTML =
-    '<div class="pdf-cta-header">' +
-      '<div class="pdf-cta-icon">' +
-        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><polyline points="9 15 12 18 15 15"/></svg>' +
-      '</div>' +
-      '<div class="pdf-cta-text">' +
-        '<h3>' + escapeHtml(cfg.title) + '</h3>' +
-        '<p>' + escapeHtml(cfg.subtitle) + '</p>' +
-      '</div>' +
-    '</div>' +
-    '<div class="pdf-cta-body">' +
-      '<div class="pdf-cta-form-wrap">' +
-        '<div data-diploma-form="' + escapeAttr(cfg.form_id) + '"></div>' +
-      '</div>' +
-      '<div class="pdf-cta-or">ou</div>' +
-      '<button type="button" class="pdf-cta-btn" data-pdf-trigger="1" data-pdf-filename="' + escapeAttr(cfg.pdf_filename) + '">' +
-        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>' +
-        '<span>' + escapeHtml(cfg.cta_label) + '</span>' +
-      '</button>' +
-      '<div class="pdf-cta-mini">PDF généré à partir de cette page — gratuit, pas d\'inscription requise</div>' +
-    '</div>';
+function openPdfModal() {
+  var overlay = document.getElementById('pdf-modal-overlay');
+  if (!overlay) return;
+  overlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
 
-  var btn = wrap.querySelector('[data-pdf-trigger]');
-  btn.addEventListener('click', function() { handlePdfDownload(btn, cfg.pdf_filename); });
-  return wrap;
+function closePdfModal() {
+  var overlay = document.getElementById('pdf-modal-overlay');
+  if (!overlay) return;
+  overlay.classList.remove('open');
+  document.body.style.overflow = '';
 }
 
 function handlePdfDownload(btn, filename) {
