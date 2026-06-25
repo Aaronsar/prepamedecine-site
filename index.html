@@ -19,7 +19,6 @@
 <link rel="canonical" href="https://prepamedecine.fr">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
 <link rel="apple-touch-icon" href="/favicon.png">
-<script charset="utf-8" type="text/javascript" src="//js-eu1.hsforms.net/forms/embed/v2.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=DM+Sans:wght@400;500;600;700&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
@@ -453,6 +452,8 @@ input,select{font-family:inherit}
 .form-submit:hover{background:#047857;transform:translateY(-1px)}
 .form-trust{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:16px;font-size:12px;color:var(--text-muted)}
 .form-trust span{display:flex;align-items:center;gap:4px}
+.modal [data-diploma-form] form,.modal [data-diploma-form] form *{font-family:inherit!important}
+.modal .diploma-form__title{display:none!important}
 @media(max-width:600px){.form-row{flex-direction:column;gap:0}.modal-body{padding:20px 24px 28px}.modal-header{padding:24px 24px 0}}
 
 /* ============ DETAIL CTA ============ */
@@ -892,7 +893,7 @@ input,select{font-family:inherit}
       <button class="modal-close" onclick="closeModal()">&times;</button>
     </div>
     <div class="modal-body">
-      <div id="hubspotFormContainer"></div>
+      <div data-diploma-form="prepamedecine-fr-contact-hs21ba39"></div>
       <div class="form-trust" style="margin-top:16px">
         <span><span data-ic="shieldCheck" data-s="14"></span> 100% gratuit</span>
         <span><span data-ic="zap" data-s="14"></span> Réponse sous 24h</span>
@@ -2058,17 +2059,20 @@ document.querySelectorAll('.nav-links a[data-page]').forEach(a => {
 
 /* ============ CONTACT MODAL ============ */
 var hsFormLoaded = false;
+var DIPLOMA_FORM_ID = 'prepamedecine-fr-contact-hs21ba39';
 function openModal(prepa) {
   document.getElementById('contactModal').classList.add('active');
   document.body.style.overflow = 'hidden';
-  if (!hsFormLoaded && typeof hbspt !== 'undefined') {
-    hbspt.forms.create({
-      portalId: "26711031",
-      formId: "21ba398a-7e85-4a0a-8621-309d35cd4d7f",
-      region: "eu1",
-      target: "#hubspotFormContainer"
-    });
+  if (!hsFormLoaded) {
     hsFormLoaded = true;
+    // Embed Diploma : le script scanne le DOM et remplit le [data-diploma-form].
+    if (!document.getElementById('diploma-embed-script')) {
+      var s = document.createElement('script');
+      s.id = 'diploma-embed-script';
+      s.async = true;
+      s.src = 'https://hub.diploma-sante.fr/api/forms/' + DIPLOMA_FORM_ID + '/embed.js';
+      document.head.appendChild(s);
+    }
   }
 }
 function closeModal() {

@@ -853,6 +853,9 @@ function renderArticle(article, slug) {
   // Inject PDF + form CTAs (only for slugs that have a downloadable resource)
   injectPdfCtas(slug, title);
 
+  // Inject generic "Etre rappele" CTAs in the body (all articles without a PDF resource)
+  injectInlineCallbackCta(slug);
+
   // Show content, hide loading
   document.getElementById('loadingState').style.display = 'none';
   document.getElementById('articleLayout').style.display = 'flex';
@@ -872,6 +875,46 @@ var PDF_CTA_CONFIG = {
     cta_label: 'Télécharger le PDF maintenant'
   }
 };
+
+/* Generic in-article callback CTA banner -> opens the shared widget modal.
+   Skipped for slugs that already expose a PDF/resource CTA. */
+function injectInlineCallbackCta(slug) {
+  if (PDF_CTA_CONFIG[slug]) return;
+  var content = document.getElementById('articleContent');
+  if (!content) return;
+  var blocks = content.querySelectorAll('h2');
+  if (!blocks.length) return;
+
+  function makeBanner(variant) {
+    var el = document.createElement('div');
+    el.className = 'inline-cta';
+    el.style.cssText = 'margin:32px 0;padding:24px 28px;border-radius:14px;background:linear-gradient(135deg,#046bd2,#0284c7);color:#fff;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;box-shadow:0 8px 24px rgba(4,107,210,.18)';
+    var txt = variant === 'b'
+      ? { h: 'Tu hésites encore sur ta prépa médecine ?', p: 'Un conseiller t\u2019aide gratuitement à choisir la prépa la plus adaptée à ton profil.' }
+      : { h: 'Besoin d\u2019un conseil personnalisé pour ta réussite en PASS/LAS ?', p: 'Parle à un conseiller : il te rappelle gratuitement sous 24h, sans engagement.' };
+    el.innerHTML =
+      '<div style="flex:1;min-width:240px">' +
+        '<div style="font-size:18px;font-weight:800;margin-bottom:4px;color:#fff">' + txt.h + '</div>' +
+        '<div style="font-size:14px;opacity:.92;color:#fff">' + txt.p + '</div>' +
+      '</div>' +
+      '<button type="button" class="inline-cta-btn" style="background:#fff;color:#046bd2;border:none;padding:14px 26px;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:inherit">Être rappelé gratuitement →</button>';
+    el.querySelector('.inline-cta-btn').addEventListener('click', function () {
+      if (typeof window.openModal === 'function') window.openModal();
+      else if (typeof window.ctawOpen === 'function') window.ctawOpen();
+    });
+    return el;
+  }
+
+  // First banner after the 1st H2 (early engagement)
+  var first = blocks[0];
+  if (first && first.parentNode) first.parentNode.insertBefore(makeBanner('a'), first.nextSibling);
+
+  // Second banner before the last H2 (often FAQ / conclusion)
+  if (blocks.length >= 3) {
+    var last = blocks[blocks.length - 1];
+    if (last && last.parentNode) last.parentNode.insertBefore(makeBanner('b'), last);
+  }
+}
 
 function injectPdfCtas(slug, articleTitle) {
   var cfg = PDF_CTA_CONFIG[slug];
@@ -1094,5 +1137,6 @@ async function loadRelatedArticles(currentSlug) {
   }
 }
 </script>
+<script src="/cta-widget.js" defer></script>
 </body>
 </html>

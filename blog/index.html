@@ -277,9 +277,9 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
     try {
       var res = await sb
         .from('prepamedecine_articles')
-        .select('id, slug, title, meta_description, tag, tag_color, category, excerpt, status, updated_at, cover_image, cover_image_alt')
+        .select('id, slug, title, meta_description, tag, tag_color, category, excerpt, status, published_at, updated_at, cover_image, cover_image_alt')
         .eq('status', 'published')
-        .order('updated_at', { ascending: false });
+        .order('published_at', { ascending: false });
 
       if(res.error) throw res.error;
       allArticles = res.data || [];
@@ -342,7 +342,7 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
       var tagColor = article.tag_color || TAG_COLORS[tag] || '#6b7280';
       var title = escHtml(article.title || 'Sans titre');
       var excerpt = escHtml(truncate(article.meta_description || '', 140));
-      var date = formatDate(article.updated_at);
+      var date = formatDate(article.published_at || article.updated_at);
       var slug = article.slug || '';
       var href = '/blog/' + slug;
 
@@ -389,5 +389,6 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
   loadArticles();
 })();
 </script>
+<script src="/cta-widget.js" defer></script>
 </body>
 </html>
